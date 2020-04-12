@@ -1,13 +1,16 @@
 Package: flametree
-Title: What the Package Does (One Line, Title Case)
+Title: Generate random tree-like images
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Danielle",
+           family = "Navarro",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: What license it uses
+           email = "d.navarro@unsw.edu.au")
+Description: A generative art system for producing tree-like
+    images using an L-system to create the structures and 
+    ggplot2 to draw them
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/djnavarro/flametree
+BugReports: https://github.com/djnavarro/flametree/issues
