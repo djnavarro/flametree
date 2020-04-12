@@ -14,3 +14,12 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/djnavarro/flametree
 BugReports: https://github.com/djnavarro/flametree/issues
+Imports: 
+    tibble,
+    dplyr,
+    purrr,
+    tidyr,
+    ggplot2,
+    ggforce,
+    paletteer
+RoxygenNote: 7.1.0
