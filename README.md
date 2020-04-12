@@ -5,20 +5,16 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/djnavarro/flametree.svg?branch=master)](https://travis-ci.org/djnavarro/flametree)
 <!-- badges: end -->
 
-The goal of flametree is to …
+The goal of flametree is to make pretty pictures.
 
 ## Installation
 
-You can install the released version of flametree from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("flametree")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version of flametree from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -26,8 +22,6 @@ devtools::install_github("djnavarro/flametree")
 ```
 
 ## Example
-
-This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(flametree)
