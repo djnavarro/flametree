@@ -46,9 +46,7 @@ flametree_grow <- function(
 flametree_plot <- function(
   tree = flametree_grow(),
   background = "antiquewhite4",
-  palette = "viridis::inferno",
-  filename = NULL,
-  ...
+  palette = "viridis::inferno"
 ) {
 
   picture <- ggplot2::ggplot(
@@ -72,10 +70,10 @@ flametree_plot <- function(
 
 #' Save a flametree image
 #'
-#' @param plot the plot
-#' @param filename the filename
-#' @param pixels pixels
-#' @param ... other arguments to ggsave
+#' @param plot the plot to save
+#' @param filename path to file
+#' @param pixels height and width of the image in pixels
+#' @param ... arguments passed to ggsave
 #'
 #' @export
 flametree_save <- function(plot, filename, pixels = 5000, ...) {

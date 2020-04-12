@@ -7,13 +7,13 @@
 flametree_save(plot, filename, pixels = 5000, ...)
 }
 \arguments{
-\item{plot}{the plot}
+\item{plot}{the plot to save}
 
-\item{filename}{the filename}
+\item{filename}{path to file}
 
-\item{pixels}{pixels}
+\item{pixels}{height and width of the image in pixels}
 
-\item{...}{other arguments to ggsave}
+\item{...}{arguments passed to ggsave}
 }
 \description{
 Save a flametree image

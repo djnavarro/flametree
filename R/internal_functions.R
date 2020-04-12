@@ -1,5 +1,3 @@
-#' @importFrom dplyr %>%
-NULL
 
 # convert an angle from degrees to radians
 degrees_to_radians <- function(degree) {
@@ -82,7 +80,7 @@ grow_tree <- function(tree_param) {
     tidyr::pivot_longer(cols = x_0:y_2, names_to = "type", values_to = "coord") %>%
     tidyr::separate(col = type, into = c("axis", "type")) %>%
     tidyr::pivot_wider(names_from = axis, values_from = coord) %>%
-    dplyr:::mutate(type = as.numeric(type))
+    dplyr::mutate(type = as.numeric(type))
 
   return(tree)
 }

@@ -7,9 +7,7 @@
 flametree_plot(
   tree = flametree_grow(),
   background = "antiquewhite4",
-  palette = "viridis::inferno",
-  filename = NULL,
-  ...
+  palette = "viridis::inferno"
 )
 }
 \arguments{
