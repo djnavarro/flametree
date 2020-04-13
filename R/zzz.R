@@ -2,6 +2,19 @@
 NULL
 
 utils::globalVariables(c(
-  "x", "y", "id", "generation", "type", "angle", "x_0", "y_0", "x_2", "y_2",
-  "type", "axis", "coord"
+  "coord_x",
+  "coord_y",
+  "seg_deg",
+  "seg_len",
+  "id_time",
+  "id_step",
+  "id_path",
+  "x_0",
+  "y_0",
+  "x_2",
+  "y_2",
+  "axis",
+  "coord",
+  "x",
+  "y"
 ))

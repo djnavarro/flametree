@@ -49,20 +49,20 @@ flametree_plot <- function(
   palette = "viridis::inferno"
 ) {
 
-  picture <- ggplot2::ggplot(
-    data = tree,
-    mapping = ggplot2::aes(
-      x = x,
-      y = y,
-      group = id,
-      size = exp(-.1 *(generation * 5 + type)),
-      color = generation + sqrt(x^2 + y^2) + (angle-90)/10
-    )
-  ) +
-    ggforce::geom_bezier2(show.legend = FALSE, lineend = "round", alpha = 1) +
-    ggplot2::theme_void() +
-    ggplot2::theme(panel.background = ggplot2::element_rect(fill = background, colour = background)) +
-    paletteer::scale_color_paletteer_c(palette = palette)
+  # construct the mapping from tree object to the plot
+  mapping <- ggplot2::aes(
+    x = coord_x,
+    y = coord_y,
+    group = id_path,
+    size = exp(-.5 * id_time),
+    color = sqrt(coord_x ^ 2 + coord_y ^ 2) + (seg_deg - 90) / 10
+  )
+
+  # build the ggplot
+  picture <- ggplot2::ggplot(data = tree, mapping = mapping) +
+    ggforce::geom_bezier2(show.legend = FALSE, lineend = "round") +
+    paletteer::scale_color_paletteer_c(palette = palette) +
+    theme_mono(color = background)
 
   return(picture)
 }

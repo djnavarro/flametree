@@ -5,13 +5,38 @@ degrees_to_radians <- function(degree) {
   return(radian)
 }
 
+# a theme that is entirely blank, like theme_void(), with
+# one exception: the user can specify the background colour
+theme_mono <- function(color = "black") {
+  th <- ggplot2::theme_void() +
+    ggplot2::theme(
+      panel.background = ggplot2::element_rect(
+        fill = color,
+        colour = color
+      )
+    )
+
+  # return the theme
+  return(th)
+}
+
 # generate parameter values for the shoots
-define_shoots <- function(n_tips, tree_param, child_number) {
+define_shoots <- function(n_tips, tree_param, shoot_number) {
+
   shoot_param <- tibble::tibble(
-    child = child_number,
-    scale_shift = sample(x = tree_param$scale_shifts, size = n_tips, replace = TRUE),
-    angle_shift = sample(x = tree_param$angle_shifts, size = n_tips, replace = TRUE)
+    scale_shift = sample(
+      x = tree_param$scale_shifts,
+      size = n_tips,
+      replace = TRUE
+    ),
+    angle_shift = sample(
+      x = tree_param$angle_shifts,
+      size = n_tips,
+      replace = TRUE
+    )
   )
+
+  return(shoot_param)
 }
 
 grow_shoots <- function(tips, shoot_param, tree_param) {
@@ -27,15 +52,13 @@ grow_shoots <- function(tips, shoot_param, tree_param) {
     dplyr::mutate(
       x_0 = x_2,
       y_0 = y_2,
-      scale = scale * shoot_param$scale_shift,
-      angle = angle + shoot_param$angle_shift,
-      generation = generation + 1,
-      family = 1:dplyr::n(),
-      child = shoot_param$child,
-      x_2 = x_0 + scale * cos(degrees_to_radians(angle)),
-      y_2 = y_0 + scale * sin(degrees_to_radians(angle)),
-      x_1 = x_0 + (scale/2) * cos(degrees_to_radians(angle - shoot_param$angle_shift)),
-      y_1 = y_0 + (scale/2) * sin(degrees_to_radians(angle - shoot_param$angle_shift))
+      seg_len = seg_len * shoot_param$scale_shift,
+      seg_deg = seg_deg + shoot_param$angle_shift,
+      id_time = id_time + 1L,
+      x_2 = x_0 + seg_len * cos(degrees_to_radians(seg_deg)),
+      y_2 = y_0 + seg_len * sin(degrees_to_radians(seg_deg)),
+      x_1 = x_0 + (seg_len/2) * cos(degrees_to_radians(seg_deg - shoot_param$angle_shift)),
+      y_1 = y_0 + (seg_len/2) * sin(degrees_to_radians(seg_deg - shoot_param$angle_shift))
     ) %>%
     dplyr::sample_n(size = n_keep)
 
@@ -43,7 +66,7 @@ grow_shoots <- function(tips, shoot_param, tree_param) {
 }
 
 
-grow_generation <- function(tips, tree_param) {
+grow_generation <- function(tips, gen, tree_param) {
 
   n_tips <- nrow(tips)
   n_shoots <- tree_param$n_shoots
@@ -64,23 +87,29 @@ grow_tree <- function(tree_param) {
     y_1 = .5,
     x_2 = 0,
     y_2 = 1,
-    angle = 90,
-    scale = 1,
-    generation = 1L,
-    family = 1L,
-    child = 1L
+    seg_deg = 90,
+    seg_len = 1,
+    id_time = 1L
   )
 
   g <- tree_param$generations
-  fern <- purrr::accumulate(1:g, .f = ~grow_generation(.x, tree_param), .init = acorn)
+  fern <- purrr::accumulate(
+    .x = 1:g,
+    .f = grow_generation,
+    .init = acorn,
+    tree_param = tree_param
+  )
+
   fern <- dplyr::bind_rows(fern)
 
   tree <- fern %>%
-    dplyr::mutate(id = 1:dplyr::n()) %>%
-    tidyr::pivot_longer(cols = x_0:y_2, names_to = "type", values_to = "coord") %>%
-    tidyr::separate(col = type, into = c("axis", "type")) %>%
+    dplyr::mutate(id_path = as.integer(1:dplyr::n())) %>%
+    tidyr::pivot_longer(cols = x_0:y_2, names_to = "id_step", values_to = "coord") %>%
+    tidyr::separate(col = id_step, into = c("axis", "id_step")) %>%
     tidyr::pivot_wider(names_from = axis, values_from = coord) %>%
-    dplyr::mutate(type = as.numeric(type))
+    dplyr::mutate(id_step = as.integer(id_step)) %>%
+    dplyr::rename(coord_x = x, coord_y = y) %>%
+    dplyr::select(coord_x, coord_y, seg_deg, seg_len, id_time, id_path, id_step)
 
   return(tree)
 }
