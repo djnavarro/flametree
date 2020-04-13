@@ -5,10 +5,9 @@
 \title{Create a plot from a flametree data frame}
 \usage{
 flametree_plot(
-  tree = flametree_grow(),
+  tree,
   background = "antiquewhite4",
-  palette = "viridis::inferno",
-  mapping = NULL
+  palette = "viridis::inferno"
 )
 }
 \arguments{
@@ -17,8 +16,6 @@ flametree_plot(
 \item{background}{the background colour}
 
 \item{palette}{the palette}
-
-\item{mapping}{an aesthetic mapping passed to ggplot}
 }
 \value{
 a ggplot2 object

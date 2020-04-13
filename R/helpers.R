@@ -1,3 +1,5 @@
+# convenience functions that are handy to have
+
 
 # convert an angle from degrees to radians
 radians <- function(degree) {

@@ -1,3 +1,4 @@
+# the three user-facing functions of the package
 
 
 #' Generate data for a flametree
@@ -11,14 +12,12 @@
 #'
 #' @return a tibble
 #' @export
-flametree_grow <- function(
-  seed = 1,
-  time = 6,
-  scale = c(.8, .9),
-  angle = c(-30, -20, 20, 30),
-  split = 2,
-  prune = 0
-) {
+flametree_grow <- function(seed = 1,
+                           time = 8,
+                           scale = c(.8, .9),
+                           angle = c(-30, -20, 20, 30),
+                           split = 2,
+                           prune = 0) {
 
   # parameters defining the tree
   param <- list(
@@ -34,12 +33,13 @@ flametree_grow <- function(
   set.seed(param$seed)
 
   # growing the tree is a 3-step process
-  acorn <- build_acorn()              # acorn is the first segment
-  shrub <- build_shrub(acorn, param)  # grow the tree structure
-  ftree <- shape_shrub(shrub)         # make it suitable for plotting
+  tree <- grow_sapling() %>%  # sapling is the first segment
+    grow_tree(param) %>%      # grow the tree with
+    shape_tree()
 
-  return(ftree)
+  return(tree)
 }
+
 
 
 #' Create a plot from a flametree data frame
@@ -47,27 +47,21 @@ flametree_grow <- function(
 #' @param tree the data frame
 #' @param background the background colour
 #' @param palette the palette
-#' @param mapping an aesthetic mapping passed to ggplot
 #'
 #' @return a ggplot2 object
 #' @export
-flametree_plot <- function(
-  tree = flametree_grow(),
-  background = "antiquewhite4",
-  palette = "viridis::inferno",
-  mapping = NULL
-) {
+flametree_plot <- function(tree,
+                           background = "antiquewhite4",
+                           palette = "viridis::inferno") {
 
-  # in most cases, the user would probably use this mapping
-  if(is.null(mapping)) {
-    mapping <- ggplot2::aes(
-      x = coord_x,      # x-coordinate
-      y = coord_y,      # y-coordinate
-      group = id_path,  # each segment/path is a single bezier curve
-      size = seg_wid,   # the seg_wid variable is used to set line width
-      color = seg_col   # the seg_col variable is used to set line colour
-    )
-  }
+  # specify the mapping
+  mapping <- ggplot2::aes(
+    x = coord_x,      # x-coordinate
+    y = coord_y,      # y-coordinate
+    group = id_path,  # each segment/path is a single bezier curve
+    size = seg_wid,   # the seg_wid variable is used to set line width
+    color = seg_col   # the seg_col variable is used to set line colour
+  )
 
   # build the ggplot
   picture <- ggplot2::ggplot(data = tree, mapping = mapping) +
@@ -79,6 +73,7 @@ flametree_plot <- function(
 }
 
 
+
 #' Save a flametree image
 #'
 #' @param plot the plot to save
@@ -88,6 +83,7 @@ flametree_plot <- function(
 #'
 #' @export
 flametree_save <- function(plot, filename, pixels = 5000, ...) {
+
   ggplot2::ggsave(
     filename = filename,
     plot = plot,
@@ -97,4 +93,6 @@ flametree_save <- function(plot, filename, pixels = 5000, ...) {
     ...
   )
 }
+
+
 

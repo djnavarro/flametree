@@ -6,7 +6,7 @@
 \usage{
 flametree_grow(
   seed = 1,
-  time = 6,
+  time = 8,
   scale = c(0.8, 0.9),
   angle = c(-30, -20, 20, 30),
   split = 2,

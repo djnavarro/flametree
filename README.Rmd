@@ -34,8 +34,8 @@ devtools::install_github("djnavarro/flametree")
 ```{r example, fig.width=10, fig.height=10, dpi=300, cache=TRUE}
 library(flametree)
 
-ftree <- flametree_grow(seed = 4, generations = 13)
-image <- flametree_plot(tree = ftree)
-plot(image)
+dat <- flametree_grow(seed = 4, time = 13)
+img <- flametree_plot(tree = dat)
+plot(img)
 ```
 

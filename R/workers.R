@@ -1,5 +1,23 @@
+# functions that do the bulk of the work
 
 
+# the very first shoot is the "sapling"
+grow_sapling <- function() {
+
+  sapling <- tibble::tibble(
+    x_0 = 0, y_0 = 0,  # first shoot starts at origin
+    x_1 = 0, y_1 = .5, # first shoot guide is its midpoint
+    x_2 = 0, y_2 = 1,  # first shoot grow to y = 1
+    seg_deg = 90,      # segment orientation is vertical
+    seg_len = 1,       # segment length is 1
+    id_time = 1L       # the acorn grows at "time 1"
+  )
+  return(sapling)
+}
+
+
+# for each existing shoot on the tree, grow an additional shoot that
+# extends it; then prune some of them away
 grow_shoots <- function(time, shoots, param) {
 
   n_shoots <- nrow(shoots)
@@ -26,22 +44,10 @@ grow_shoots <- function(time, shoots, param) {
 }
 
 
+# to grow a "layer" of the shrub, we extend (and possibly prune) each
+# existing shoot multiple times
+grow_layer <- function(shoots, time, param) {
 
-# the flame tree "grows" from an acorn, a tibble with a
-# single row that defines the very first segment
-build_acorn <- function() {
-  acorn <- tibble::tibble(
-    x_0 = 0, y_0 = 0,  # first shoot starts at origin
-    x_1 = 0, y_1 = .5, # first shoot guide is its midpoint
-    x_2 = 0, y_2 = 1,  # first shoot grow to y = 1
-    seg_deg = 90,      # segment orientation is vertical
-    seg_len = 1,       # segment length is 1
-    id_time = 1L       # the acorn grows at "time 1"
-  )
-  return(acorn)
-}
-
-build_layer <- function(shoots, time, param) {
   new_shoots <- purrr::map_dfr(
     .x = 1:param$split,
     .f = grow_shoots,
@@ -52,20 +58,27 @@ build_layer <- function(shoots, time, param) {
 }
 
 
-build_shrub <- function(acorn, param) {
+# to grow the whole tree we need to "accumulate" the growth: starting with
+# the sapling (a single shoot) we grow the second layer; the set of shoots
+# that make the second layer are then used to grow the third later; and so on
+grow_tree <- function(sapling, param) {
 
-  shrub <- purrr::accumulate(
+  tree <- purrr::accumulate(
     .x = 1:param$time,
-    .f = build_layer,
-    .init = acorn,
+    .f = grow_layer,
+    .init = sapling,
     param = param
   )
-  return(shrub)
+  return(tree)
 }
 
-shape_shrub <- function(shrub) {
 
-  ftree <- shrub %>%
+# the data structure that we used to grow the tree is designed to allow
+# efficient computation, but is not optimal for ggplot3 so it needs to
+# be reshaped into a convenient form
+shape_tree <- function(tree) {
+
+  tree <- tree %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(id_path = as.integer(1:dplyr::n())) %>%
     tidyr::pivot_longer(
@@ -86,7 +99,7 @@ shape_shrub <- function(shrub) {
       id_time, id_path, id_step
     )
 
-  return(ftree)
+  return(tree)
 }
 
 
