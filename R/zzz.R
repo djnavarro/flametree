@@ -6,6 +6,8 @@ utils::globalVariables(c(
   "coord_y",
   "seg_deg",
   "seg_len",
+  "seg_col",
+  "seg_wid",
   "id_time",
   "id_step",
   "id_path",
