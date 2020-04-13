@@ -7,14 +7,18 @@
 flametree_save(plot, filename, pixels = 5000, ...)
 }
 \arguments{
-\item{plot}{the plot to save}
+\item{plot}{The ggplot objevt to save}
 
-\item{filename}{path to file}
+\item{filename}{The path to file to be saved}
 
-\item{pixels}{height and width of the image in pixels}
+\item{pixels}{The height and width of the image in pixels}
 
-\item{...}{arguments passed to ggsave}
+\item{...}{Other arguments passed to ggsave}
 }
 \description{
 Save a flametree image
+}
+\details{
+This function is just a wrapper to ggsave. It's not strictly
+necessary but I find it convenient to override the default image size.
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate data for a flametree — flametree_grow • flametree</title>
+<title>Generate the data specifying a flametree — flametree_grow • flametree</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Generate data for a flametree — flametree_grow" />
-<meta property="og:description" content="Generate data for a flametree" />
+<meta property="og:title" content="Generate the data specifying a flametree — flametree_grow" />
+<meta property="og:description" content="Generate the data specifying a flametree" />
 
 
 
@@ -108,13 +108,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate data for a flametree</h1>
+    <h1>Generate the data specifying a flametree</h1>
     <small class="dont-index">Source: <a href='https://github.com/djnavarro/flametree/blob/master/R/exports.R'><code>R/exports.R</code></a></small>
     <div class="hidden name"><code>flametree_grow.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate data for a flametree</p>
+    <p>Generate the data specifying a flametree</p>
     </div>
 
     <pre class="usage"><span class='fu'>flametree_grow</span>(
@@ -131,33 +131,44 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>seed</th>
-      <td><p>for the random number generator</p></td>
+      <td><p>Integer-valued seed for the random number generator</p></td>
     </tr>
     <tr>
       <th>time</th>
-      <td><p>number of generations to iterate</p></td>
+      <td><p>Number of generations to run the iterative process</p></td>
     </tr>
     <tr>
       <th>scale</th>
-      <td><p>vector of possible rescales</p></td>
+      <td><p>Vector of possible values for the "size rescaling" at each iteration</p></td>
     </tr>
     <tr>
       <th>angle</th>
-      <td><p>vector of possible angle changes</p></td>
+      <td><p>Vector of possible angle changes (in degrees) at each iteration</p></td>
     </tr>
     <tr>
       <th>split</th>
-      <td><p>maximum number of shoots from each tip</p></td>
+      <td><p>Maximum number of shoots to generate from each tip at each iteration</p></td>
     </tr>
     <tr>
       <th>prune</th>
-      <td><p>probability a shoot is pruned</p></td>
+      <td><p>Probability with which a generated shoot is pruned</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a tibble</p>
+    <p>A tibble with the following columns: coord_x, coord_y, seg_deg,
+seg_len, seg_col, seg_wid, id_time, id_path, id_step.</p>
+<p>The two "coord" columns
+specify the locations of a point. The "id" columns uniquely identify each
+point: id_time specifies the generation, id_path identifies each segment, and
+id_step contains the three values (0, 1 or 2) for the points that define each
+segment. The segments consist of two end points (0 and 2) and one "control"
+point (1) that is used to define a Bezier curve.</p>
+<p>The three "seg" columns provide summary information about each segment:
+seg_len is the length of the segment, seg_col is a value used to colour
+the segment, and seg_wid is a size parameter used to define the width of
+the segment</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
