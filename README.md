@@ -26,8 +26,8 @@ devtools::install_github("djnavarro/flametree")
 ``` r
 library(flametree)
 
-dat <- flametree_grow(seed = 4, time = 13)
-img <- flametree_plot(tree = dat)
+dat <- flametree_grow(seed = 4, time = 13) # data structure
+img <- flametree_plot(tree = dat)          # ggplot object
 plot(img)
 ```
 

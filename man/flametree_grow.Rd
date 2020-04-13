@@ -5,10 +5,10 @@
 \title{Generate data for a flametree}
 \usage{
 flametree_grow(
-  seed = 1,
-  time = 8,
+  seed = 286,
+  time = 6,
   scale = c(0.8, 0.9),
-  angle = c(-30, -20, 20, 30),
+  angle = c(-10, 10, 20),
   split = 2,
   prune = 0
 )

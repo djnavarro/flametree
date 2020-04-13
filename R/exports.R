@@ -12,10 +12,10 @@
 #'
 #' @return a tibble
 #' @export
-flametree_grow <- function(seed = 1,
-                           time = 8,
+flametree_grow <- function(seed = 286,
+                           time = 6,
                            scale = c(.8, .9),
-                           angle = c(-30, -20, 20, 30),
+                           angle = c(-10, 10, 20),
                            split = 2,
                            prune = 0) {
 
