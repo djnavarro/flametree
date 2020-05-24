@@ -31,4 +31,4 @@ img <- flametree_plot(tree = dat)          # ggplot object
 plot(img)
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-example-1.png" width="80%" />
