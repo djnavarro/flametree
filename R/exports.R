@@ -99,7 +99,7 @@ flametree_plot <- function(tree,
 
 #' Save a flametree image
 #'
-#' @param plot The ggplot objevt to save
+#' @param plot The ggplot object to save
 #' @param filename The path to file to be saved
 #' @param pixels The height and width of the image in pixels
 #' @param ... Other arguments passed to ggsave
