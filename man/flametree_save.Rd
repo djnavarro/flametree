@@ -7,7 +7,7 @@
 flametree_save(plot, filename, pixels = 5000, ...)
 }
 \arguments{
-\item{plot}{The ggplot objevt to save}
+\item{plot}{The ggplot object to save}
 
 \item{filename}{The path to file to be saved}
 

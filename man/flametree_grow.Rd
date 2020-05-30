@@ -28,7 +28,7 @@ flametree_grow(
 }
 \value{
 A tibble with the following columns: coord_x, coord_y, seg_deg,
-seg_len, seg_col, seg_wid, id_time, id_path, id_step.
+seg_len, seg_col, seg_wid, id_time, id_path, id_step, id_leaf
 
 The two "coord" columns
 specify the locations of a point. The "id" columns uniquely identify each
