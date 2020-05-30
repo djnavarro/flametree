@@ -11,7 +11,7 @@
 #' @param prune Probability with which a generated shoot is pruned
 #'
 #' @return A tibble with the following columns: coord_x, coord_y, seg_deg,
-#' seg_len, seg_col, seg_wid, id_time, id_path, id_step.
+#' seg_len, seg_col, seg_wid, id_time, id_path, id_step, id_leaf
 #'
 #' The two "coord" columns
 #' specify the locations of a point. The "id" columns uniquely identify each
@@ -49,6 +49,9 @@ flametree_grow <- function(seed = 286,
   tree <- grow_sapling() %>%  # sapling is the first segment
     grow_tree(param) %>%      # grow the tree with
     shape_tree()
+
+  # add the leaf indicator
+  tree$id_leaf <- tree$id_time == max(tree$id_time)
 
   return(tree)
 }
