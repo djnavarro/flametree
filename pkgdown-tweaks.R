@@ -18,7 +18,7 @@ html_files <- list.files(
 # function to insert lines
 insert_lines <- function(file, new_lines) {
   lines <- brio::read_lines(file)
-  ind <- which(lines == "</head>")
+  ind <- stringr::str_which(lines, "</head>")
   if(is.null(ind)) rlang::warn(paste0("no </head> line found in: ", file))
   if(length(ind) > 1) rlang::warn(paste0("multiple </head> lines found in: ", file))
 
@@ -32,4 +32,4 @@ insert_lines <- function(file, new_lines) {
 }
 
 # insert for all files
-purrr::walk(html_files, insert_lines)
+purrr::walk(html_files, insert_lines, new_lines = new_lines)
