@@ -20,6 +20,9 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/djnavarro/flametree/workflows/R-CMD-check/badge.svg)](https://github.com/djnavarro/flametree/actions)
+[![Codecov test coverage](https://codecov.io/gh/djnavarro/flametree/branch/master/graph/badge.svg)](https://codecov.io/gh/djnavarro/flametree?branch=master)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/flametree)](https://CRAN.R-project.org/package=flametree)
 <!-- badges: end -->
 
 The goal of flametree is to make pretty pictures.
