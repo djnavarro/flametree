@@ -28,15 +28,10 @@ tweak_site <- function(write = FALSE) {
     full.names = TRUE
   )
 
-  print(html_files)
-
   # function to insert lines
   insert_lines <- function(file, new_lines) {
     lines <- readLines(file)
     ind <- which(grepl(x = lines, pattern = "</head>"))
-    print(ind)
-    #if(is.null(ind)) rlang::warn(paste0("no </head> line found in: ", file))
-    #if(length(ind) > 1) rlang::warn(paste0("multiple </head> lines found in: ", file))
 
     # assume file doesn't begin or end with </head>
     lines <- c(
@@ -44,18 +39,21 @@ tweak_site <- function(write = FALSE) {
       new_lines,
       lines[ind[1]:length(lines)]
     )
-    if(write) writeLines(lines, file)
+    if(write) {
+      writeLines(lines, file)
+      cat("updating header: ", file, "\n")
+    }
   }
 
   # insert for all files
-  for(file in html_files) {
-    insert_lines(file, new_lines)
+  for(f in html_files) {
+    insert_lines(f, new_lines)
   }
 
 
-  #system("git add .")
-  #system("git commit -m 'tweaks header'")
-  #system("git checkout master")
+  system("git add .")
+  system("git commit -m 'tweaks header'")
+  system("git checkout master")
 
 }
 
