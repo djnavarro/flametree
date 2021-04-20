@@ -34,6 +34,7 @@ tweak_site <- function(write = FALSE) {
   insert_lines <- function(file, new_lines) {
     lines <- readLines(file)
     ind <- which(grepl(x = lines, pattern = "</head>"))
+    print(ind)
     #if(is.null(ind)) rlang::warn(paste0("no </head> line found in: ", file))
     #if(length(ind) > 1) rlang::warn(paste0("multiple </head> lines found in: ", file))
 
