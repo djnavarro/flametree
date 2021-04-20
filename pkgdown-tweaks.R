@@ -3,6 +3,16 @@ tweak_site <- function() {
 
   system("git checkout gh-pages")
 
+  gitignore <- c(
+    ".Rproj.user",
+    ".Rhistory",
+    ".Rdata",
+    ".DS_Store",
+    ".httr-oauth"
+  )
+  writeLines(gitignore, ".gitignore")
+
+
   # lines to be inserted into header
   new_lines <- c(
     ' ',
@@ -20,7 +30,7 @@ tweak_site <- function() {
 
   # function to insert lines
   insert_lines <- function(file, new_lines) {
-    lines <- read.lines(file)
+    lines <- readLines(file)
     ind <- which(grepl(x = lines, pattern = "</head>"))
     #if(is.null(ind)) rlang::warn(paste0("no </head> line found in: ", file))
     #if(length(ind) > 1) rlang::warn(paste0("multiple </head> lines found in: ", file))
@@ -31,7 +41,7 @@ tweak_site <- function() {
       new_lines,
       lines[ind[1]:length(lines)]
     )
-    write.lines(lines, file)
+    writeLines(lines, file)
   }
 
   # insert for all files
