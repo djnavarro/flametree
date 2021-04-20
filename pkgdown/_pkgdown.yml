@@ -1,6 +1,4 @@
 url: https://flametree.djnavarro.net
 
 template:
-  path: pkgdown/templates
-  assets: pkgdown/assets
-  default_assets: false
+  package: pkgdowngirl
