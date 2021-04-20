@@ -14,7 +14,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/flametree)](https://CRAN.R-project.org/package=flametree)
 <!-- badges: end -->
 
-The goal of flametree is to make pretty pictures.
+The goal of flametree is to make pretty pictures
 
 ## Installation
 
