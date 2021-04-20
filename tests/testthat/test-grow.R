@@ -1,7 +1,3 @@
-with_attributes <- function(x, value = list(blah = "blah")) {
-  attributes(x) <- value
-  return(x)
-}
 
 test_that("invalid seeds are forbidden", {
 
@@ -23,7 +19,4 @@ test_that("invalid seeds are forbidden", {
   # edge cases that should pass without messages or warnings
   expect_silent(flametree_grow(seed = 0)) # zero ok
   expect_silent(flametree_grow(seed = -1)) # negative numbers okay
-  expect_silent(flametree_grow(seed = c("name" = 3))) # named integers ok
-  expect_silent(flametree_grow(seed = with_attributes(3))) # integers with attributes ok
-
 })

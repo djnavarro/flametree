@@ -1,12 +1,13 @@
 # collection of reusable minimal tests
 
-check_null <- function(x, name) {
+check_not_null <- function(x, name) {
   if(is.null(x)) {
     stop("`", name, "` must not be null", call. = FALSE)
   }
 }
 
-check_na <- function(x, name) {
+# NOTE: don't forget that is.na(NaN) returns TRUE
+check_not_na <- function(x, name) {
   if(any(is.na(x))) {
     stop("`", name, "` must not contain missing values", call. = FALSE)
   }
@@ -18,9 +19,14 @@ check_numeric <- function(x, name) {
   }
 }
 
-check_integer <- function(x, name) {
+# NOTE: is.integer(1) returns FALSE, check_soft_integer lets this through
+check_soft_integer <- function(x, name) {
   check_numeric(x, name)
-  if(any(x != as.integer(x))) {
+  weird <- is.na(x) | is.infinite(x)
+  if(any(weird) & !is.integer(x[weird])) {
+    stop("`", name, "` must be integer valued", call. = FALSE)
+  }
+  if(any(x[!weird] != as.integer(x[!weird]))) {
     stop("`", name, "` must be integer valued", call. = FALSE)
   }
 }

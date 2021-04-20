@@ -174,39 +174,39 @@ shape_tree <- function(tree) {
 check_grow_input <- function(x) {
 
   # seed must be a single integer value
-  check_null(x$seed, "seed")
-  check_na(x$seed, "seed")
-  check_integer(x$seed, "seed")
+  check_not_null(x$seed, "seed")
+  check_not_na(x$seed, "seed")
+  check_soft_integer(x$seed, "seed")
   check_length_exact(x$seed, "seed", 1)
 
   # time must be a single positive integer
-  check_null(x$time, "time")
-  check_na(x$time, "time")
-  check_integer(x$time, "time")
+  check_not_null(x$time, "time")
+  check_not_na(x$time, "time")
+  check_soft_integer(x$time, "time")
   check_length_exact(x$time, "time", 1)
   check_value_minimum(x$time, "time", 1)
 
   # scale values must be non-negative numbers
-  check_null(x$scale, "scale")
-  check_na(x$scale, "scale")
+  check_not_null(x$scale, "scale")
+  check_not_na(x$scale, "scale")
   check_length_minimum(x$scale, "scale", 1)
   check_value_minimum(x$scale, "scale", 0) # also checks numeric
 
   # angle values must be numeric (note: range of angles is not restricted)
-  check_null(x$angle, "angle")
-  check_na(x$angle, "angle")
+  check_not_null(x$angle, "angle")
+  check_not_na(x$angle, "angle")
   check_length_minimum(x$angle, "angle", 1)
 
   # split must be a single positive integer
-  check_null(x$split, "split")
-  check_na(x$split, "split")
-  check_integer(x$split, "split")
+  check_not_null(x$split, "split")
+  check_not_na(x$split, "split")
+  check_soft_integer(x$split, "split")
   check_length_exact(x$split, "split", 1)
   check_value_minimum(x$split, "split", 1)
 
   # prune must be numeric between 0 and 1
-  check_null(x$prune, "prune")
-  check_na(x$prune, "prune")
+  check_not_null(x$prune, "prune")
+  check_not_na(x$prune, "prune")
   check_length_exact(x$prune, "prune", 1)
   check_value_minimum(x$prune, "prune", 0)
   check_value_maximum(x$prune, "prune", 1)
