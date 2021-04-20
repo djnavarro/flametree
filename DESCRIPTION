@@ -5,7 +5,8 @@ Authors@R:
     person(given = "Danielle",
            family = "Navarro",
            role = c("aut", "cre"),
-           email = "d.navarro@unsw.edu.au")
+           email = "d.navarro@unsw.edu.au",
+           comment = c(ORCID = "0000-0001-7648-6578"))
 Description: A generative art system for producing tree-like
     images using an L-system to create the structures and 
     ggplot2 to draw them.
