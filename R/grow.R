@@ -1,3 +1,67 @@
+# the three user-facing functions of the package
+
+
+#' Generate the data specifying a flametree
+#'
+#' @param seed Integer-valued seed for the random number generator
+#' @param time Number of generations to run the iterative process
+#' @param scale Vector of possible values for the "size rescaling" at each iteration
+#' @param angle Vector of possible angle changes (in degrees) at each iteration
+#' @param split Maximum number of shoots to generate from each tip at each iteration
+#' @param prune Probability with which a generated shoot is pruned
+#'
+#' @return A tibble with the following columns: coord_x, coord_y, seg_deg,
+#' seg_len, seg_col, seg_wid, id_time, id_path, id_step, id_leaf
+#'
+#' The two "coord" columns
+#' specify the locations of a point. The "id" columns uniquely identify each
+#' point: id_time specifies the generation, id_path identifies each segment, and
+#' id_step contains the three values (0, 1 or 2) for the points that define each
+#' segment. The segments consist of two end points (0 and 2) and one "control"
+#' point (1) that is used to define a Bezier curve.
+#'
+#' The three "seg" columns provide summary information about each segment:
+#' seg_len is the length of the segment, seg_col is a value used to colour
+#' the segment, and seg_wid is a size parameter used to define the width of
+#' the segment
+#'
+#' @examples
+#' flametree_grow()
+#' flametree_grow(time = 5)
+#'
+#' @export
+flametree_grow <- function(seed = 286,
+                           time = 6,
+                           scale = c(.8, .9),
+                           angle = c(-10, 10, 20),
+                           split = 2,
+                           prune = 0) {
+
+  # parameters defining the tree
+  param <- list(
+    seed = seed,    # seed for the RNG
+    time = time,    # time (iterations) to grow the tree
+    scale = scale,  # possible values for rescaling at each time
+    angle = angle,  # possible values for redirect at each time
+    split = split,  # number of new shoots from each old shoot at each time
+    prune = prune   # probability of immediately pruning a new shoot
+  )
+
+  # set the seed for the random number generator
+  set.seed(param$seed)
+
+  # growing the tree is a 3-step process
+  tree <- grow_sapling() %>%  # sapling is the first segment
+    grow_tree(param) %>%      # grow the tree with
+    shape_tree()
+
+  # add the leaf indicator
+  tree$id_leaf <- tree$id_time == max(tree$id_time)
+
+  return(tree)
+}
+
+
 # functions that do the bulk of the work
 
 
@@ -101,9 +165,4 @@ shape_tree <- function(tree) {
 
   return(tree)
 }
-
-
-
-
-
 
