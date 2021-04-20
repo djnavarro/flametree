@@ -45,3 +45,8 @@ the segment
 \description{
 Generate the data specifying a flametree
 }
+\examples{
+flametree_grow()
+flametree_grow(time = 5)
+
+}

@@ -17,6 +17,12 @@
 #' the palette, the "palette" argument must take the form of a palette
 #' specification understood by paletteer.
 #' @export
+#'
+#' @examples
+#' dat <- flametree_grow(time = 5)
+#' flametree_plot(dat)
+#' flametree_plot(dat, background = "black")
+#'
 flametree_plot <- function(tree,
                            background = "antiquewhite4",
                            palette = "viridis::inferno") {
@@ -50,6 +56,14 @@ flametree_plot <- function(tree,
 #'
 #' @details This function is just a wrapper to ggsave. It's not strictly
 #' necessary but I find it convenient to override the default image size.
+#'
+#' @examples
+#' \dontrun{
+#' dat <- flametree_grow(time = 5)
+#' pic <- flametree_plot(dat)
+#' flametree_save(pic, filename = "path/to/file")
+#' flametree_save(pic, filename = "path/to/file", pixels = 2000)
+#' }
 #'
 #' @export
 flametree_save <- function(plot, filename, pixels = 5000, ...) {

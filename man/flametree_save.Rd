@@ -22,3 +22,12 @@ Save a flametree image
 This function is just a wrapper to ggsave. It's not strictly
 necessary but I find it convenient to override the default image size.
 }
+\examples{
+\dontrun{
+dat <- flametree_grow(time = 5)
+pic <- flametree_plot(dat)
+flametree_save(pic, filename = "path/to/file")
+flametree_save(pic, filename = "path/to/file", pixels = 2000)
+}
+
+}

@@ -24,6 +24,11 @@
 #' seg_len is the length of the segment, seg_col is a value used to colour
 #' the segment, and seg_wid is a size parameter used to define the width of
 #' the segment
+#'
+#' @examples
+#' flametree_grow()
+#' flametree_grow(time = 5)
+#'
 #' @export
 flametree_grow <- function(seed = 286,
                            time = 6,

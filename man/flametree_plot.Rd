@@ -33,3 +33,9 @@ specification understood by paletteer.
 \description{
 Create a plot from a flametree data frame
 }
+\examples{
+dat <- flametree_grow(time = 5)
+flametree_plot(dat)
+flametree_plot(dat, background = "black")
+
+}
