@@ -1,5 +1,5 @@
 
-tweak_site <- function() {
+tweak_site <- function(write = FALSE) {
 
   system("git checkout gh-pages")
 
@@ -10,7 +10,7 @@ tweak_site <- function() {
     ".DS_Store",
     ".httr-oauth"
   )
-  writeLines(gitignore, ".gitignore")
+  if(write) writeLines(gitignore, ".gitignore")
 
 
   # lines to be inserted into header
@@ -28,6 +28,8 @@ tweak_site <- function() {
     full.names = TRUE
   )
 
+  print(html_files)
+
   # function to insert lines
   insert_lines <- function(file, new_lines) {
     lines <- readLines(file)
@@ -41,7 +43,7 @@ tweak_site <- function() {
       new_lines,
       lines[ind[1]:length(lines)]
     )
-    writeLines(lines, file)
+    if(write) writeLines(lines, file)
   }
 
   # insert for all files
@@ -49,10 +51,11 @@ tweak_site <- function() {
     insert_lines(file, new_lines)
   }
 
-  system("git add .")
-  system("git commit -m 'tweaks header'")
-  system("git checkout master")
+
+  #system("git add .")
+  #system("git commit -m 'tweaks header'")
+  #system("git checkout master")
 
 }
 
-tweak_site()
+tweak_site(write = FALSE)
