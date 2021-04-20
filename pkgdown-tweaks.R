@@ -57,4 +57,5 @@ tweak_site <- function(write = FALSE) {
 
 }
 
-tweak_site(write = FALSE)
+pkgdown::deploy_to_branch(new_process = FALSE)
+tweak_site(write = TRUE)
