@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/flametree)](https://CRAN.R-project.org/package=flametree)
 <!-- badges: end -->
 
-The goal of flametree is to make pretty pictures
+The goal of flametree is to make pretty pictures.
 
 ## Installation
 
