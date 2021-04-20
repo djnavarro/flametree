@@ -1,8 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1.9001
-pkgdown_sha: 58807eede312d522d04834d8efebe784a8b7229a
+pkgdown: 1.6.1
+pkgdown_sha: ~
 articles: {}
-last_built: 2021-04-20T16:47Z
+last_built: 2021-04-20T17:14Z
 urls:
   reference: https://flametree.djnavarro.net/reference
   article: https://flametree.djnavarro.net/articles
