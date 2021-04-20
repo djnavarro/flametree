@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 # flametree
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/djnavarro/flametree.svg?branch=master)](https://travis-ci.org/djnavarro/flametree)
+[![R-CMD-check](https://github.com/djnavarro/flametree/workflows/R-CMD-check/badge.svg)](https://github.com/djnavarro/flametree/actions)
 <!-- badges: end -->
 
 The goal of flametree is to make pretty pictures.
