@@ -195,6 +195,7 @@ check_grow_input <- function(x) {
   # angle values must be numeric (note: range of angles is not restricted)
   check_not_null(x$angle, "angle")
   check_not_na(x$angle, "angle")
+  check_numeric(x$angle, "angle")
   check_length_minimum(x$angle, "angle", 1)
 
   # split must be a single positive integer
