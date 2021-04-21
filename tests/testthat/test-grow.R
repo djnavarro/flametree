@@ -118,5 +118,42 @@ test_that("invalid prunes are forbidden", {
 
 })
 
+test_that("flametree data has correct columns", {
+
+  dat <- flametree_grow()
+
+  expect_s3_class(dat, "tbl")
+  expect_named(dat, c("coord_x", "coord_y", "seg_deg", "seg_len", "seg_col",
+                      "seg_wid", "id_time", "id_path", "id_step", "id_leaf"))
+
+  expect_type(dat$coord_x, "double")
+  expect_type(dat$coord_y, "double")
+  expect_type(dat$seg_deg, "double")
+  expect_type(dat$seg_len, "double")
+  expect_type(dat$seg_col, "double")
+  expect_type(dat$seg_wid, "double")
+  expect_type(dat$id_time, "integer")
+  expect_type(dat$id_path, "integer")
+  expect_type(dat$id_step, "integer")
+  expect_type(dat$id_leaf, "logical")
+
+})
+
+test_that("flametree edges are well defined", {
+
+  dat <- flametree_grow()
+
+  # three rows per edge
+  expect_equal(nrow(dat) %% 3, 0)
+  expect_equal(nrow(dat), length(unique(dat$id_path)) * 3)
+
+  # same number of rows at each step
+  expect_equal(sum(dat$id_step == 0), sum(dat$id_step == 1))
+  expect_equal(sum(dat$id_step == 0), sum(dat$id_step == 2))
+
+  # id_path and id_step uniquely define the row
+  expect_true(all(table(paste(dat$id_path, dat$id_step)) == 1))
+
+})
 
 
