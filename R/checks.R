@@ -1,4 +1,8 @@
-# collection of reusable minimal tests
+# collection of reusable minimal error-throwing functions
+
+
+
+# checks that have direct tests -------------------------------------------
 
 check_not_null <- function(x, name) {
   if(is.null(x)) {
@@ -30,6 +34,10 @@ check_soft_integer <- function(x, name) {
     stop("`", name, "` must be integer valued", call. = FALSE)
   }
 }
+
+
+
+# checks that are tested only indirectly ----------------------------------
 
 check_length_exact <- function(x, name, len) {
   if(length(x) != len) {
