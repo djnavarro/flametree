@@ -4,7 +4,7 @@
 \alias{voronoitree_plot}
 \title{Create a voronoitree plot from a flametree data frame}
 \usage{
-voronoitree_plot(tree)
+voronoitree_plot(tree, background = "black", palette = "scico::lajolla")
 }
 \arguments{
 \item{tree}{The data frame specifying the flametree}
