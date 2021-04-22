@@ -40,7 +40,13 @@ flametree_plot <- function(tree,
   picture <- ggplot2::ggplot(data = tree, mapping = mapping) +
     ggforce::geom_bezier2(show.legend = FALSE, lineend = "round") +
     paletteer::scale_color_paletteer_c(palette = palette) +
-    theme_mono(color = background)
+    ggplot2::theme_void() +
+    ggplot2::theme(
+      panel.background = ggplot2::element_rect(
+        fill = background,
+        colour = background
+      )
+    )
 
   return(picture)
 }
