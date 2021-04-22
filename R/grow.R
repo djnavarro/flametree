@@ -170,6 +170,22 @@ shape_tree <- function(tree) {
 }
 
 
+# convert an angle from degrees to radians
+radians <- function(degree) {
+  2 * pi * degree / 360
+}
+
+# horizontal distance
+extend_x <- function(distance, angle) {
+  distance * cos(radians(angle))
+}
+
+# vertical distance
+extend_y <- function(distance, angle) {
+  distance * sin(radians(angle))
+}
+
+
 # checks user input and throws error message if
 check_grow_input <- function(x) {
 
@@ -195,6 +211,7 @@ check_grow_input <- function(x) {
   # angle values must be numeric (note: range of angles is not restricted)
   check_not_null(x$angle, "angle")
   check_not_na(x$angle, "angle")
+  check_numeric(x$angle, "angle")
   check_length_minimum(x$angle, "angle", 1)
 
   # split must be a single positive integer

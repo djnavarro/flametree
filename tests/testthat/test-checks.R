@@ -115,4 +115,3 @@ test_that("check_soft_integer works", {
 
 })
 
-

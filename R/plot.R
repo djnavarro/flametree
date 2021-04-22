@@ -40,40 +40,14 @@ flametree_plot <- function(tree,
   picture <- ggplot2::ggplot(data = tree, mapping = mapping) +
     ggforce::geom_bezier2(show.legend = FALSE, lineend = "round") +
     paletteer::scale_color_paletteer_c(palette = palette) +
-    theme_mono(color = background)
+    ggplot2::theme_void() +
+    ggplot2::theme(
+      panel.background = ggplot2::element_rect(
+        fill = background,
+        colour = background
+      )
+    )
 
   return(picture)
 }
 
-
-
-#' Save a flametree image
-#'
-#' @param plot The ggplot object to save
-#' @param filename The path to file to be saved
-#' @param pixels The height and width of the image in pixels
-#' @param ... Other arguments passed to ggsave
-#'
-#' @details This function is just a wrapper to ggsave. It's not strictly
-#' necessary but I find it convenient to override the default image size.
-#'
-#' @examples
-#' \dontrun{
-#' dat <- flametree_grow(time = 5)
-#' pic <- flametree_plot(dat)
-#' flametree_save(pic, filename = "path/to/file")
-#' flametree_save(pic, filename = "path/to/file", pixels = 2000)
-#' }
-#'
-#' @export
-flametree_save <- function(plot, filename, pixels = 5000, ...) {
-
-  ggplot2::ggsave(
-    filename = filename,
-    plot = plot,
-    width = pixels/300,
-    height = pixels/300,
-    dpi = 300,
-    ...
-  )
-}

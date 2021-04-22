@@ -20,3 +20,140 @@ test_that("invalid seeds are forbidden", {
   expect_silent(flametree_grow(seed = 0)) # zero ok
   expect_silent(flametree_grow(seed = -1)) # negative numbers okay
 })
+
+
+test_that("invalid times are forbidden", {
+
+  expect_error(flametree_grow(time = 0))
+  expect_error(flametree_grow(time = -1))
+  expect_error(flametree_grow(time = .3))
+  expect_error(flametree_grow(time = 1:4))
+  expect_error(flametree_grow(time = NA_integer_))
+  expect_error(flametree_grow(time = NaN))
+  expect_error(flametree_grow(time = Inf))
+  expect_error(flametree_grow(time = "abc"))
+  expect_error(flametree_grow(time = NULL))
+  expect_error(flametree_grow(time = TRUE))
+  expect_error(flametree_grow(time = list(2)))
+
+  expect_silent(flametree_grow(time = 3))
+
+})
+
+
+test_that("invalid scales are forbidden",{
+
+  expect_error(flametree_grow(scale = "abc"))
+  expect_error(flametree_grow(scale = TRUE))
+  expect_error(flametree_grow(scale = list()))
+  expect_error(flametree_grow(scale = NULL))
+  expect_error(flametree_grow(scale = NA))
+  expect_error(flametree_grow(scale = -.123))
+  expect_error(flametree_grow(scale = numeric(0)))
+  expect_error(flametree_grow(scale = character(0)))
+  expect_error(flametree_grow(scale = c(.8, -.123)))
+  expect_error(flametree_grow(scale = c(.8, NA)))
+
+  expect_silent(flametree_grow(scale = 0))
+  expect_silent(flametree_grow(scale = .8))
+  expect_silent(flametree_grow(scale = c(.8, .9, 1.1)))
+
+})
+
+test_that("invalid angles are forbidden",{
+
+  expect_error(flametree_grow(angle = "abc"))
+  expect_error(flametree_grow(angle = TRUE))
+  expect_error(flametree_grow(angle = list()))
+  expect_error(flametree_grow(angle = NULL))
+  expect_error(flametree_grow(angle = NA))
+  expect_error(flametree_grow(angle = numeric(0)))
+  expect_error(flametree_grow(angle = character(0)))
+  expect_error(flametree_grow(angle = c(.8, NA)))
+
+  expect_silent(flametree_grow(angle = -12.3))
+  expect_silent(flametree_grow(angle = c(0, -12.3)))
+  expect_silent(flametree_grow(angle = 0))
+  expect_silent(flametree_grow(angle = c(-700, 1000)))
+
+})
+
+
+test_that("invalid splits are forbidden", {
+
+  expect_error(flametree_grow(split = 0))
+  expect_error(flametree_grow(split = -1))
+  expect_error(flametree_grow(split = .3))
+  expect_error(flametree_grow(split = 1:4))
+  expect_error(flametree_grow(split = NA_integer_))
+  expect_error(flametree_grow(split = NaN))
+  expect_error(flametree_grow(split = Inf))
+  expect_error(flametree_grow(split = "abc"))
+  expect_error(flametree_grow(split = NULL))
+  expect_error(flametree_grow(split = TRUE))
+  expect_error(flametree_grow(split = list(2)))
+
+  expect_silent(flametree_grow(split = 3))
+
+})
+
+
+test_that("invalid prunes are forbidden", {
+
+  expect_error(flametree_grow(prune = -1))
+  expect_error(flametree_grow(prune = 3))
+  expect_error(flametree_grow(prune = NA_real_))
+  expect_error(flametree_grow(prune = NaN))
+  expect_error(flametree_grow(prune = Inf))
+  expect_error(flametree_grow(prune = "abc"))
+  expect_error(flametree_grow(prune = NULL))
+  expect_error(flametree_grow(prune = TRUE))
+  expect_error(flametree_grow(prune = list(2)))
+  expect_error(flametree_grow(prune = c(.1, .2)))
+
+
+  expect_silent(flametree_grow(prune = .3))
+  expect_silent(flametree_grow(prune = 0))
+  expect_silent(flametree_grow(prune = 1))
+
+})
+
+test_that("flametree data has correct columns", {
+
+  dat <- flametree_grow()
+
+  expect_s3_class(dat, "tbl")
+  expect_named(dat, c("coord_x", "coord_y", "seg_deg", "seg_len", "seg_col",
+                      "seg_wid", "id_time", "id_path", "id_step", "id_leaf"))
+
+  expect_type(dat$coord_x, "double")
+  expect_type(dat$coord_y, "double")
+  expect_type(dat$seg_deg, "double")
+  expect_type(dat$seg_len, "double")
+  expect_type(dat$seg_col, "double")
+  expect_type(dat$seg_wid, "double")
+  expect_type(dat$id_time, "integer")
+  expect_type(dat$id_path, "integer")
+  expect_type(dat$id_step, "integer")
+  expect_type(dat$id_leaf, "logical")
+
+})
+
+test_that("flametree edges are well defined", {
+
+  dat <- flametree_grow()
+
+  # three rows per edge
+  expect_equal(nrow(dat) %% 3, 0)
+  expect_equal(nrow(dat), length(unique(dat$id_path)) * 3)
+
+  # same number of rows at each step
+  expect_equal(sum(dat$id_step == 0), sum(dat$id_step == 1))
+  expect_equal(sum(dat$id_step == 0), sum(dat$id_step == 2))
+
+  # id_path and id_step uniquely define the row
+  expect_true(all(table(paste(dat$id_path, dat$id_step)) == 1))
+
+})
+
+
