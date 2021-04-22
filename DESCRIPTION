@@ -22,7 +22,8 @@ Imports:
     tidyr,
     ggplot2,
     ggforce,
-    paletteer
+    paletteer,
+    magrittr
 RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 3.0.0)

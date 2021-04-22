@@ -244,7 +244,7 @@ check_grow_input <- function(x) {
 #' function in the ggforce package. The color aesthetic is mapped to seg_col,
 #' and the size aesthetic is mapped to seg_wid.
 #'
-#' The background colour can be set using the "backgroud" argument, and the
+#' The background colour can be set using the "background" argument, and the
 #' palette used to colour the segments is generated using the
 #' scale_color_paletteer_c() function from the paletteer package. To select
 #' the palette, the "palette" argument must take the form of a palette
