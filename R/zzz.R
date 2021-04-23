@@ -1,6 +1,3 @@
-#' @importFrom dplyr %>%
-NULL
-
 utils::globalVariables(c(
   "coord_x",
   "coord_y",

@@ -3,5 +3,4 @@
 export("%>%")
 export(flametree_grow)
 export(flametree_plot)
-importFrom(dplyr,"%>%")
 importFrom(magrittr,"%>%")
