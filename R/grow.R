@@ -33,7 +33,7 @@
 flametree_grow <- function(
   seed = 286,
   time = 6,
-  scale = c(.8, .9),
+  scale = c(.6, .8, .9),
   angle = c(-10, 10, 20),
   split = 2,
   prune = 0,
@@ -53,7 +53,12 @@ flametree_grow <- function(
   ft__check_opts(options)
 
   set.seed(options$seed)
-  trees <- purrr::map_dfr(1:options$trees, ~ ft__grow_tree(options, .x))
+  seeds <- sample(100000, size = options$trees)
+  trees <- purrr::map2_dfr(
+    .x = 1:options$trees,
+    .y = seeds,
+    .f = ~ ft__grow_tree(options, .x, .y)
+  )
   attr(trees, "options") <- options
   return(trees)
 }
@@ -63,7 +68,9 @@ flametree_grow <- function(
 # to grow the whole tree we need to "accumulate" the growth: starting with
 # the sapling (a single shoot) we grow the second layer; the set of shoots
 # that make the second layer are then used to grow the third later; and so on
-ft__grow_tree <- function(param, id) {
+ft__grow_tree <- function(param, id, local_seed) {
+
+  set.seed(local_seed)
 
   tree <- purrr::accumulate(
     .x = 1:param$time,
@@ -149,6 +156,13 @@ ft__grow_sapling <- function() {
 # be reshaped into a convenient form
 ft__shape_tree <- function(tree) {
 
+  seg_col <- function(x, y, angle) {
+    sqrt(x ^ 2 + y ^ 2) + (angle - 90) / 10
+  }
+  seg_wid <- function(time) {
+    .05 + exp(-time^2 / 10)
+  }
+
   tree <- tree %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(id_path = as.integer(1:dplyr::n())) %>%
@@ -161,8 +175,8 @@ ft__shape_tree <- function(tree) {
     tidyr::pivot_wider(names_from = axis, values_from = coord) %>%
     dplyr::mutate(
       id_step = as.integer(id_step),
-      seg_col = sqrt(x ^ 2 + y ^ 2) + (seg_deg - 90) / 10,
-      seg_wid = exp(-id_time^2 / 10)
+      seg_col = seg_col(x, y, seg_deg),
+      seg_wid = seg_wid(id_time)
     ) %>%
     dplyr::rename(coord_x = x, coord_y = y) %>%
     dplyr::select(

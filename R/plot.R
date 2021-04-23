@@ -3,7 +3,7 @@
 #'
 #' @param data The data frame specifying the flametree
 #' @param background The background colour of the image
-#' @param palette A palette specification used by the paletteer package
+#' @param palette A vector of colours
 #' @param style Style of tree to draw
 #'
 #' @return The output is ggplot2 object plots the coord_x and coord_y values
@@ -27,6 +27,7 @@ flametree_plot <- function(
   data,
   background = "black",
   palette = c("#c06014", "#eddbc0", "#000000", "#cdcdcd"),
+  aspect = 1,
   style = "plain"
 ) {
 
@@ -41,19 +42,28 @@ flametree_plot <- function(
 
 ft__plot_plain <- function(data, background, palette) {
 
-  # specify the mapping
-  mapping <- ggplot2::aes(
-    x = coord_x,      # x-coordinate
-    y = coord_y,      # y-coordinate
-    group = id_path,  # each segment/path is a single bezier curve
-    size = seg_wid,   # the seg_wid variable is used to set line width
-    color = seg_col   # the seg_col variable is used to set line colour
-  )
+  # unique identifier for paths within trees and shift trees horizontally
+  data <- data %>%
+    dplyr::mutate(id_pathtree = paste(id_tree, id_path, sep = "_")) %>%
+    dplyr::group_by(id_tree) %>%
+    dplyr::mutate(coord_x = coord_x + stats::runif(1, min = -3, max = 3)) %>%
+    dplyr::ungroup()
+
 
   # build the ggplot
-  picture <- ggplot2::ggplot(data = data, mapping = mapping) +
+  picture <- ggplot2::ggplot(
+    data = data,
+    mapping = ggplot2::aes(
+      x = coord_x,          # x-coordinate
+      y = coord_y,          # y-coordinate
+      group = id_pathtree,  # each segment/path is a single bezier curve
+      size = seg_wid,       # the seg_wid variable is used to set line width
+      color = seg_col       # the seg_col variable is used to set line colour
+    )
+  ) +
     ggforce::geom_bezier2(show.legend = FALSE, lineend = "round") +
     ggplot2::scale_color_gradientn(colours = palette) +
+    ggplot2::scale_size_identity() +
     ggplot2::theme_void() +
     ggplot2::theme(
       panel.background = ggplot2::element_rect(
@@ -66,22 +76,34 @@ ft__plot_plain <- function(data, background, palette) {
 
 }
 
-ft__plot_voronoi <- function(tree, background, palette) {
+ft__plot_voronoi <- function(data, background, palette) {
+
+  # unique identifier for paths within trees and shift trees horizontally
+  data <- data %>%
+    dplyr::mutate(id_pathtree = paste(id_tree, id_path, sep = "_")) %>%
+    dplyr::group_by(id_tree) %>%
+    dplyr::mutate(coord_x = coord_x + stats::runif(1, min = -3, max = 3)) %>%
+    dplyr::ungroup()
 
   # "leaf" coordinates are at terminal locations (id_step = 2)
   # on the terminal branches (id_leaf == TRUE) in the tree
-  leaf <- tree %>% dplyr::filter(id_leaf == TRUE, id_step == 2)
+  leaf <- data %>%
+    dplyr::filter(id_leaf == TRUE, id_step == 2) %>%
+    dplyr::select(coord_x, coord_y, id_path)
+
+  # remove duplicated rows
+  leaf <- leaf[!duplicated(leaf[, c("coord_x", "coord_y")]),, drop = FALSE]
 
   # create the plot...
   picture <- ggplot2::ggplot() +
 
     # tree trunk is drawn using geom_bezier
     ggforce::geom_bezier(
-      data = tree,
+      data = data,
       mapping = ggplot2::aes(
         x = coord_x,
         y = coord_y,
-        group = id_path,
+        group = id_pathtree,
         size = seg_wid
       ),
       color = "white",
@@ -89,31 +111,24 @@ ft__plot_voronoi <- function(tree, background, palette) {
       show.legend = FALSE
     ) +
 
-    # add points drawn at the leaves
-    ggplot2::geom_point(
-      data = leaf,
-      mapping = ggplot2::aes(
-        x = coord_x,
-        y = coord_y
-      ),
-      size = 8
-    ) +
-
     # add voronoi tiles with no perturbation
     ggforce::geom_voronoi_tile(
       data = leaf,
       mapping = ggplot2::aes(
         x = coord_x,
-        y = coord_y
+        y = coord_y,
+        fill = id_path,
+        colour = id_path
       ),
+      inherit.aes = FALSE,
+      show.legend = FALSE,
       max.radius = .2,
-      fill = "#ffffffcc",
-      colour = "white",
-      size = 2
+      size = .1
     ) +
 
-    ggforce::geom_bezier2(show.legend = FALSE, lineend = "round") +
-    paletteer::scale_color_paletteer_c(palette = palette) +
+    ggplot2::scale_fill_gradientn(colours = palette) +
+    ggplot2::scale_colour_gradientn(colours = palette) +
+    ggplot2::scale_size_identity() +
     ggplot2::coord_equal() +
     ggplot2::theme_void() +
     ggplot2::theme(
@@ -127,23 +142,24 @@ ft__plot_voronoi <- function(tree, background, palette) {
 }
 
 
+
 ft__plot_wisp <- function(data, background, palette) {
 
-  tree_shade <- "white"
-  leaf_shade <- "white"
-  background <- "black"
+  tree_shade <- palette[1]
+  leaf_shade <- palette[2]
+  background <- background
 
   # "leaf" coordinates are at terminal locations (id_step = 2)
   # on the terminal branches (id_leaf == TRUE) in the tree
-  leaf <- tree %>% dplyr::filter(id_leaf == TRUE, id_step == 2)
+  leaf <- data %>% dplyr::filter(id_leaf == TRUE, id_step == 2)
 
   picture <- ggplot2::ggplot() +
     ggforce::geom_bezier(
-      data = tree,
+      data = data,
       mapping = ggplot2::aes(
         x = coord_x,
         y = coord_y,
-        size = seg_wid * 8,
+        size = seg_wid,
         group = id_path
       ),
       colour = tree_shade,
@@ -174,9 +190,12 @@ ft__plot_wisp <- function(data, background, palette) {
   return(picture)
 }
 
-ft__plot_nativeflora <- function(tree, background, palette) {
 
-  tree <- tree %>%
+
+ft__plot_nativeflora <- function(data, background, palette) {
+
+  data <- data %>%
+    dplyr::mutate(id_pathtree = paste(id_tree, id_path, sep = "_")) %>%
     dplyr::group_by(id_tree) %>%
     dplyr::mutate(
       x = coord_x + runif(1, min = -.3, max = .3),
@@ -186,45 +205,32 @@ ft__plot_nativeflora <- function(tree, background, palette) {
       id_path %in% sample(max(id_path), 0.5 * max(id_path)),
       id_time > 2
     ) %>%
-    dplyr::mutate(
-      id_branch = id_path + (id * max(id_path))
-    ) %>%
     dplyr::ungroup() %>%
     dplyr::arrange(id_tree)
 
+  leaf <- data %>%
+    dplyr::filter(id_time == max(id_time), id_step == 2)
 
-  blend_shades <- function(x, y, p = .5) {
-    x <- col2rgb(x)
-    y <- col2rgb(y)
-    z <- round(p*x + (1-p)*y)
-    z <- rgb(red = z[1, ]/255, green = z[2, ]/255, blue = z[3, ]/255)
-    return(z)
-  }
-
-  shades <- sample(colours(distinct = TRUE), 6)
-
-  leaf <- tree %>%
-    filter(id_time == max(id_time), id_step == 2)
-
-  picture <- tree %>%
-    ggplot(aes(
+  picture <- data %>%
+    ggplot2::ggplot(ggplot2::aes(
       x = x,
       y = y,
-      group = id_branch,
-      colour = id_branch
+      group = id_pathtree,
+      colour = id_tree
     )) +
-    geom_bezier(
+    ggforce::geom_bezier(
       alpha = 1,
       size = 0.3,
       show.legend = FALSE, lineend = "round") +
-    geom_point(data = leaf, show.legend = FALSE, size = 1.3, stroke = 0) +
-    theme_void() +
-    scale_size_identity() +
-    scale_x_continuous(expand = c(0, 0)) +
-    scale_y_continuous(expand = c(0, 0)) +
-    coord_fixed(xlim = c(-2.2, 1.8), ylim = c(1.8, 5.8)) +
-    scale_color_gradientn(colours = shades) +
-    theme(plot.background = element_rect(fill = blend_shades(shades[1], "black", .25)))
+    ggplot2::geom_point(data = leaf, show.legend = FALSE, size = 1.3, stroke = 0) +
+    ggplot2::scale_size_identity() +
+    ggplot2::scale_color_gradientn(colours = palette) +
+    ggplot2::theme_void() +
+    ggplot2::coord_equal() +
+    ggplot2::theme(panel.background = ggplot2::element_rect(
+      fill = background,
+      colour = background
+    ))
 
   return(picture)
 }
