@@ -1,5 +1,3 @@
-# the three user-facing functions of the package
-
 
 #' Generate the data specifying a flametree
 #'
@@ -48,15 +46,15 @@ flametree_grow <- function(seed = 286,
   )
 
   # check that valid parameters have been supplied
-  check_grow_input(param)
+  ft__check_grow_input(param)
 
   # set the seed for the random number generator
   set.seed(param$seed)
 
   # growing the tree is a 3-step process
-  tree <- grow_sapling() %>%  # sapling is the first segment
-    grow_tree(param) %>%      # grow the tree with
-    shape_tree()
+  tree <- ft__grow_sapling() %>%  # sapling is the first segment
+    ft__grow_tree(param) %>%      # grow the tree with
+    ft__shape_tree()
 
   # add the leaf indicator
   tree$id_leaf <- tree$id_time == max(tree$id_time)
@@ -65,11 +63,9 @@ flametree_grow <- function(seed = 286,
 }
 
 
-# functions that do the bulk of the work
-
 
 # the very first shoot is the "sapling"
-grow_sapling <- function() {
+ft__grow_sapling <- function() {
 
   sapling <- tibble::tibble(
     x_0 = 0, y_0 = 0,  # first shoot starts at origin
@@ -85,7 +81,7 @@ grow_sapling <- function() {
 
 # for each existing shoot on the tree, grow an additional shoot that
 # extends it; then prune some of them away
-grow_shoots <- function(time, shoots, param) {
+ft__grow_shoots <- function(time, shoots, param) {
 
   n_shoots <- nrow(shoots)
   n_pruned <- stats::rbinom(n = 1, size = n_shoots - 1, prob = param$prune)
@@ -98,12 +94,12 @@ grow_shoots <- function(time, shoots, param) {
       x_0 = x_2,
       y_0 = y_2,
       seg_len = seg_len * ch_seg_len,
-      x_1 = x_0 + extend_x(seg_len/2, seg_deg),
-      y_1 = y_0 + extend_y(seg_len/2, seg_deg),
+      x_1 = x_0 + ft__extend_x(seg_len/2, seg_deg),
+      y_1 = y_0 + ft__extend_y(seg_len/2, seg_deg),
       seg_deg = seg_deg + ch_seg_deg,
       id_time = id_time + 1L,
-      x_2 = x_0 + extend_x(seg_len, seg_deg) ,
-      y_2 = y_0 + extend_y(seg_len, seg_deg),
+      x_2 = x_0 + ft__extend_x(seg_len, seg_deg) ,
+      y_2 = y_0 + ft__extend_y(seg_len, seg_deg),
     ) %>%
     dplyr::sample_n(size = n_shoots - n_pruned)
 
@@ -113,11 +109,11 @@ grow_shoots <- function(time, shoots, param) {
 
 # to grow a "layer" of the shrub, we extend (and possibly prune) each
 # existing shoot multiple times
-grow_layer <- function(shoots, time, param) {
+ft__grow_layer <- function(shoots, time, param) {
 
   new_shoots <- purrr::map_dfr(
     .x = 1:param$split,
-    .f = grow_shoots,
+    .f = ft__grow_shoots,
     shoots = shoots,
     param = param
   )
@@ -128,11 +124,11 @@ grow_layer <- function(shoots, time, param) {
 # to grow the whole tree we need to "accumulate" the growth: starting with
 # the sapling (a single shoot) we grow the second layer; the set of shoots
 # that make the second layer are then used to grow the third later; and so on
-grow_tree <- function(sapling, param) {
+ft__grow_tree <- function(sapling, param) {
 
   tree <- purrr::accumulate(
     .x = 1:param$time,
-    .f = grow_layer,
+    .f = ft__grow_layer,
     .init = sapling,
     param = param
   )
@@ -143,7 +139,7 @@ grow_tree <- function(sapling, param) {
 # the data structure that we used to grow the tree is designed to allow
 # efficient computation, but is not optimal for ggplot2 so it needs to
 # be reshaped into a convenient form
-shape_tree <- function(tree) {
+ft__shape_tree <- function(tree) {
 
   tree <- tree %>%
     dplyr::bind_rows() %>%
@@ -171,62 +167,62 @@ shape_tree <- function(tree) {
 
 
 # convert an angle from degrees to radians
-radians <- function(degree) {
+ft__radians <- function(degree) {
   2 * pi * degree / 360
 }
 
 # horizontal distance
-extend_x <- function(distance, angle) {
-  distance * cos(radians(angle))
+ft__extend_x <- function(distance, angle) {
+  distance * cos(ft__radians(angle))
 }
 
 # vertical distance
-extend_y <- function(distance, angle) {
-  distance * sin(radians(angle))
+ft__extend_y <- function(distance, angle) {
+  distance * sin(ft__radians(angle))
 }
 
 
 # checks user input and throws error message if
-check_grow_input <- function(x) {
+ft__check_grow_input <- function(x) {
 
   # seed must be a single integer value
-  check_not_null(x$seed, "seed")
-  check_not_na(x$seed, "seed")
-  check_soft_integer(x$seed, "seed")
-  check_length_exact(x$seed, "seed", 1)
+  ft__check_not_null(x$seed, "seed")
+  ft__check_not_na(x$seed, "seed")
+  ft__check_soft_integer(x$seed, "seed")
+  ft__check_length_exact(x$seed, "seed", 1)
 
   # time must be a single positive integer
-  check_not_null(x$time, "time")
-  check_not_na(x$time, "time")
-  check_soft_integer(x$time, "time")
-  check_length_exact(x$time, "time", 1)
-  check_value_minimum(x$time, "time", 1)
+  ft__check_not_null(x$time, "time")
+  ft__check_not_na(x$time, "time")
+  ft__check_soft_integer(x$time, "time")
+  ft__check_length_exact(x$time, "time", 1)
+  ft__check_value_minimum(x$time, "time", 1)
 
   # scale values must be non-negative numbers
-  check_not_null(x$scale, "scale")
-  check_not_na(x$scale, "scale")
-  check_length_minimum(x$scale, "scale", 1)
-  check_value_minimum(x$scale, "scale", 0) # also checks numeric
+  ft__check_not_null(x$scale, "scale")
+  ft__check_not_na(x$scale, "scale")
+  ft__check_length_minimum(x$scale, "scale", 1)
+  ft__check_value_minimum(x$scale, "scale", 0) # also checks numeric
 
   # angle values must be numeric (note: range of angles is not restricted)
-  check_not_null(x$angle, "angle")
-  check_not_na(x$angle, "angle")
-  check_numeric(x$angle, "angle")
-  check_length_minimum(x$angle, "angle", 1)
+  ft__check_not_null(x$angle, "angle")
+  ft__check_not_na(x$angle, "angle")
+  ft__check_numeric(x$angle, "angle")
+  ft__check_length_minimum(x$angle, "angle", 1)
 
   # split must be a single positive integer
-  check_not_null(x$split, "split")
-  check_not_na(x$split, "split")
-  check_soft_integer(x$split, "split")
-  check_length_exact(x$split, "split", 1)
-  check_value_minimum(x$split, "split", 1)
+  ft__check_not_null(x$split, "split")
+  ft__check_not_na(x$split, "split")
+  ft__check_soft_integer(x$split, "split")
+  ft__check_length_exact(x$split, "split", 1)
+  ft__check_value_minimum(x$split, "split", 1)
 
   # prune must be numeric between 0 and 1
-  check_not_null(x$prune, "prune")
-  check_not_na(x$prune, "prune")
-  check_length_exact(x$prune, "prune", 1)
-  check_value_minimum(x$prune, "prune", 0)
-  check_value_maximum(x$prune, "prune", 1)
+  ft__check_not_null(x$prune, "prune")
+  ft__check_not_na(x$prune, "prune")
+  ft__check_length_exact(x$prune, "prune", 1)
+  ft__check_value_minimum(x$prune, "prune", 0)
+  ft__check_value_maximum(x$prune, "prune", 1)
 
 }
 
