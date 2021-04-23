@@ -124,7 +124,8 @@ test_that("flametree data has correct columns", {
 
   expect_s3_class(dat, "tbl")
   expect_named(dat, c("coord_x", "coord_y", "seg_deg", "seg_len", "seg_col",
-                      "seg_wid", "id_time", "id_path", "id_step", "id_leaf"))
+                      "seg_wid", "id_time", "id_path", "id_step", "id_leaf",
+                      "id_tree"))
 
   expect_type(dat$coord_x, "double")
   expect_type(dat$coord_y, "double")
@@ -136,6 +137,7 @@ test_that("flametree data has correct columns", {
   expect_type(dat$id_path, "integer")
   expect_type(dat$id_step, "integer")
   expect_type(dat$id_leaf, "logical")
+  expect_type(dat$id_tree, "integer")
 
 })
 
@@ -155,16 +157,5 @@ test_that("flametree edges are well defined", {
   expect_true(all(table(paste(dat$id_path, dat$id_step)) == 1))
 
 })
-
-
-
-test_that("plot returns a ggplot object", {
-
-  dat <- flametree_grow(time = 5)
-  pic <- flametree_plot(dat)
-
-  expect_s3_class(pic, "gg")
-})
-
 
 
