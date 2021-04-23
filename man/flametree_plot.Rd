@@ -8,7 +8,6 @@ flametree_plot(
   data,
   background = "black",
   palette = c("#c06014", "#eddbc0", "#000000", "#cdcdcd"),
-  aspect = 1,
   style = "plain"
 )
 }

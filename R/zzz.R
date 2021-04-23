@@ -15,5 +15,8 @@ utils::globalVariables(c(
   "axis",
   "coord",
   "x",
-  "y"
+  "y",
+  "id_leaf",
+  "id_pathtree",
+  "id_tree"
 ))

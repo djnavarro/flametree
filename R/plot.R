@@ -27,7 +27,6 @@ flametree_plot <- function(
   data,
   background = "black",
   palette = c("#c06014", "#eddbc0", "#000000", "#cdcdcd"),
-  aspect = 1,
   style = "plain"
 ) {
 
@@ -198,8 +197,8 @@ ft__plot_nativeflora <- function(data, background, palette) {
     dplyr::mutate(id_pathtree = paste(id_tree, id_path, sep = "_")) %>%
     dplyr::group_by(id_tree) %>%
     dplyr::mutate(
-      x = coord_x + runif(1, min = -.3, max = .3),
-      y = coord_y + runif(1, min = -.02, max = .02)
+      x = coord_x + stats::runif(1, min = -.3, max = .3),
+      y = coord_y + stats::runif(1, min = -.02, max = .02)
     ) %>%
     dplyr::filter(
       id_path %in% sample(max(id_path), 0.5 * max(id_path)),
