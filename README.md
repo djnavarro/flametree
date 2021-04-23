@@ -31,9 +31,22 @@ devtools::install_github("djnavarro/flametree")
 ``` r
 library(flametree)
 
-dat <- flametree_grow(seed = 4, time = 13) # data structure
-img <- flametree_plot(tree = dat)          # ggplot object
-plot(img)
+flametree_grow(seed = 4, time = 12)  %>% 
+  flametree_plot()         
 ```
 
-<img src="man/figures/README-example-1.png" width="80%" />
+<img src="man/figures/README-example-1-1.png" width="80%" />
+
+``` r
+flametree_grow(seed = 1, trees = 5)  %>% 
+  flametree_plot(style = "voronoi")
+```
+
+<img src="man/figures/README-example-2-1.png" width="80%" />
+
+``` r
+flametree_grow(trees = 16)  %>% 
+  flametree_plot(style = "nativeflora")
+```
+
+<img src="man/figures/README-example-3-1.png" width="80%" />

@@ -37,11 +37,23 @@ devtools::install_github("djnavarro/flametree")
 ```
 ## Example
 
-```{r example, cache=TRUE}
+```{r example-1}
 library(flametree)
 
-dat <- flametree_grow(seed = 4, time = 13) # data structure
-img <- flametree_plot(tree = dat)          # ggplot object
-plot(img)
+flametree_grow(seed = 4, time = 12)  %>% 
+  flametree_plot()         
 ```
+
+
+```{r example-2}
+flametree_grow(seed = 1, trees = 5)  %>% 
+  flametree_plot(style = "voronoi")
+```
+
+```{r example-3}
+flametree_grow(trees = 16)  %>% 
+  flametree_plot(style = "nativeflora")
+```
+
+
 
