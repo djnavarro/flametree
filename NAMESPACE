@@ -3,7 +3,5 @@
 export("%>%")
 export(flametree_grow)
 export(flametree_plot)
-export(voronoitree_plot)
-export(wisptree_plot)
 importFrom(dplyr,"%>%")
 importFrom(magrittr,"%>%")

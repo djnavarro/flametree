@@ -7,16 +7,18 @@
 #' @param angle Vector of possible angle changes (in degrees) at each iteration
 #' @param split Maximum number of shoots to generate from each tip at each iteration
 #' @param prune Probability with which a generated shoot is pruned
+#' @param trees Number of trees to generate
 #'
 #' @return A tibble with the following columns: coord_x, coord_y, seg_deg,
-#' seg_len, seg_col, seg_wid, id_time, id_path, id_step, id_leaf
+#' seg_len, seg_col, seg_wid, id_time, id_path, id_step, id_leaf, id_tree
 #'
 #' The two "coord" columns
 #' specify the locations of a point. The "id" columns uniquely identify each
 #' point: id_time specifies the generation, id_path identifies each segment, and
 #' id_step contains the three values (0, 1 or 2) for the points that define each
 #' segment. The segments consist of two end points (0 and 2) and one "control"
-#' point (1) that is used to define a Bezier curve.
+#' point (1) that is used to define a Bezier curve. Finally, id_tree is a
+#' numeric identifier indicating which tree the row belongs.
 #'
 #' The three "seg" columns provide summary information about each segment:
 #' seg_len is the length of the segment, seg_col is a value used to colour
@@ -25,58 +27,76 @@
 #'
 #' @examples
 #' flametree_grow()
-#' flametree_grow(time = 5)
+#' flametree_grow(time = 10)
 #'
 #' @export
-flametree_grow <- function(seed = 286,
-                           time = 6,
-                           scale = c(.8, .9),
-                           angle = c(-10, 10, 20),
-                           split = 2,
-                           prune = 0) {
+flametree_grow <- function(
+  seed = 286,
+  time = 6,
+  scale = c(.8, .9),
+  angle = c(-10, 10, 20),
+  split = 2,
+  prune = 0,
+  trees = 1
+) {
 
-  # parameters defining the tree
-  param <- list(
+  # collect parameters into a list
+  options <- list(
     seed = seed,    # seed for the RNG
     time = time,    # time (iterations) to grow the tree
     scale = scale,  # possible values for rescaling at each time
     angle = angle,  # possible values for redirect at each time
     split = split,  # number of new shoots from each old shoot at each time
-    prune = prune   # probability of immediately pruning a new shoot
+    prune = prune,  # probability of immediately pruning a new shoot
+    trees = trees  # number of trees to include
+  )
+  ft__check_opts(options)
+
+  set.seed(options$seed)
+  trees <- purrr::map_dfr(1:options$trees, ~ ft__grow_tree(options, .x))
+  attr(trees, "options") <- options
+  return(trees)
+}
+
+
+
+# to grow the whole tree we need to "accumulate" the growth: starting with
+# the sapling (a single shoot) we grow the second layer; the set of shoots
+# that make the second layer are then used to grow the third later; and so on
+ft__grow_tree <- function(param, id) {
+
+  tree <- purrr::accumulate(
+    .x = 1:param$time,
+    .f = ft__grow_layer,
+    .init = ft__grow_sapling(),
+    param = param
   )
 
-  # check that valid parameters have been supplied
-  ft__check_grow_input(param)
-
-  # set the seed for the random number generator
-  set.seed(param$seed)
-
-  # growing the tree is a 3-step process
-  tree <- ft__grow_sapling() %>%  # sapling is the first segment
-    ft__grow_tree(param) %>%      # grow the tree with
-    ft__shape_tree()
-
-  # add the leaf indicator
-  tree$id_leaf <- tree$id_time == max(tree$id_time)
+  tree <- tree %>%
+    ft__shape_tree() %>%                  # reshape
+    dplyr::mutate(
+      id_leaf = id_time == max(id_time),  # adds leaf node indicator
+      id_tree = id                        # adds tree identifier
+    )
 
   return(tree)
 }
 
 
 
-# the very first shoot is the "sapling"
-ft__grow_sapling <- function() {
+# to grow a "layer" of the shrub, we extend (and possibly prune) each
+# existing shoot multiple times
+ft__grow_layer <- function(shoots, time, param) {
 
-  sapling <- tibble::tibble(
-    x_0 = 0, y_0 = 0,  # first shoot starts at origin
-    x_1 = 0, y_1 = .5, # first shoot guide is its midpoint
-    x_2 = 0, y_2 = 1,  # first shoot grow to y = 1
-    seg_deg = 90,      # segment orientation is vertical
-    seg_len = 1,       # segment length is 1
-    id_time = 1L       # the acorn grows at "time 1"
+  new_shoots <- purrr::map_dfr(
+    .x = 1:param$split,
+    .f = ft__grow_shoots,
+    shoots = shoots,
+    param = param
   )
-  return(sapling)
+  return(new_shoots)
 }
+
 
 
 # for each existing shoot on the tree, grow an additional shoot that
@@ -107,33 +127,21 @@ ft__grow_shoots <- function(time, shoots, param) {
 }
 
 
-# to grow a "layer" of the shrub, we extend (and possibly prune) each
-# existing shoot multiple times
-ft__grow_layer <- function(shoots, time, param) {
 
-  new_shoots <- purrr::map_dfr(
-    .x = 1:param$split,
-    .f = ft__grow_shoots,
-    shoots = shoots,
-    param = param
+# the very first shoot is the "sapling"
+ft__grow_sapling <- function() {
+
+  sapling <- tibble::tibble(
+    x_0 = 0, y_0 = 0,  # first shoot starts at origin
+    x_1 = 0, y_1 = .5, # first shoot guide is its midpoint
+    x_2 = 0, y_2 = 1,  # first shoot grow to y = 1
+    seg_deg = 90,      # segment orientation is vertical
+    seg_len = 1,       # segment length is 1
+    id_time = 1L       # the acorn grows at "time 1"
   )
-  return(new_shoots)
+  return(sapling)
 }
 
-
-# to grow the whole tree we need to "accumulate" the growth: starting with
-# the sapling (a single shoot) we grow the second layer; the set of shoots
-# that make the second layer are then used to grow the third later; and so on
-ft__grow_tree <- function(sapling, param) {
-
-  tree <- purrr::accumulate(
-    .x = 1:param$time,
-    .f = ft__grow_layer,
-    .init = sapling,
-    param = param
-  )
-  return(tree)
-}
 
 
 # the data structure that we used to grow the tree is designed to allow
@@ -182,8 +190,9 @@ ft__extend_y <- function(distance, angle) {
 }
 
 
+
 # checks user input and throws error message if
-ft__check_grow_input <- function(x) {
+ft__check_opts <- function(x) {
 
   # seed must be a single integer value
   ft__check_not_null(x$seed, "seed")
@@ -227,55 +236,3 @@ ft__check_grow_input <- function(x) {
 }
 
 
-
-#' Create a plot from a flametree data frame
-#'
-#' @param tree The data frame specifying the flametree
-#' @param background The background colour of the image
-#' @param palette A palette specification used by the paletteer package
-#'
-#' @return The output is ggplot2 object plots the coord_x and coord_y values
-#' that define each segment as a bezier curve. To map each segment to its own
-#' curve, the group aesthetic is id_path, and the geom is the geom_bezier2()
-#' function in the ggforce package. The color aesthetic is mapped to seg_col,
-#' and the size aesthetic is mapped to seg_wid.
-#'
-#' The background colour can be set using the "background" argument, and the
-#' palette used to colour the segments is generated using the
-#' scale_color_paletteer_c() function from the paletteer package. To select
-#' the palette, the "palette" argument must take the form of a palette
-#' specification understood by paletteer.
-#' @export
-#'
-#' @examples
-#' dat <- flametree_grow(time = 5)
-#' flametree_plot(dat)
-#' flametree_plot(dat, background = "black")
-#'
-flametree_plot <- function(tree,
-                           background = "antiquewhite4",
-                           palette = "viridis::inferno") {
-
-  # specify the mapping
-  mapping <- ggplot2::aes(
-    x = coord_x,      # x-coordinate
-    y = coord_y,      # y-coordinate
-    group = id_path,  # each segment/path is a single bezier curve
-    size = seg_wid,   # the seg_wid variable is used to set line width
-    color = seg_col   # the seg_col variable is used to set line colour
-  )
-
-  # build the ggplot
-  picture <- ggplot2::ggplot(data = tree, mapping = mapping) +
-    ggforce::geom_bezier2(show.legend = FALSE, lineend = "round") +
-    paletteer::scale_color_paletteer_c(palette = palette) +
-    ggplot2::theme_void() +
-    ggplot2::theme(
-      panel.background = ggplot2::element_rect(
-        fill = background,
-        colour = background
-      )
-    )
-
-  return(picture)
-}
