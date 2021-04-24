@@ -31,7 +31,7 @@ devtools::install_github("djnavarro/flametree")
 ``` r
 library(flametree)
 
-flametree_grow(seed = 4, time = 12)  %>% 
+flametree_grow(time = 12) %>% 
   flametree_plot()         
 ```
 
@@ -45,7 +45,7 @@ flametree_grow(seed = 1, trees = 5)  %>%
 <img src="man/figures/README-example-2-1.png" width="80%" />
 
 ``` r
-flametree_grow(trees = 16)  %>% 
+flametree_grow(trees = 16, shift_x = spark_nothing())  %>% 
   flametree_plot(style = "nativeflora")
 ```
 
