@@ -41,13 +41,6 @@ flametree_plot <- function(
 
 ft__plot_plain <- function(data, background, palette) {
 
-  # unique identifier for paths within trees and shift trees horizontally
-  data <- data %>%
-    dplyr::group_by(id_tree) %>%
-    dplyr::mutate(coord_x = coord_x + stats::runif(1, min = -3, max = 3)) %>%
-    dplyr::ungroup()
-
-
   # build the ggplot
   picture <- ggplot2::ggplot(
     data = data,
@@ -75,12 +68,6 @@ ft__plot_plain <- function(data, background, palette) {
 }
 
 ft__plot_voronoi <- function(data, background, palette) {
-
-  # unique identifier for paths within trees and shift trees horizontally
-  data <- data %>%
-    dplyr::group_by(id_tree) %>%
-    dplyr::mutate(coord_x = coord_x + stats::runif(1, min = -3, max = 3)) %>%
-    dplyr::ungroup()
 
   # "leaf" coordinates are at terminal locations (id_step = 2)
   # on the terminal branches (id_leaf == TRUE) in the tree
@@ -193,24 +180,19 @@ ft__plot_nativeflora <- function(data, background, palette) {
 
   data <- data %>%
     dplyr::group_by(id_tree) %>%
-    dplyr::mutate(
-      x = coord_x + stats::runif(1, min = -.3, max = .3),
-      y = coord_y + stats::runif(1, min = -.02, max = .02)
-    ) %>%
     dplyr::filter(
       id_path %in% sample(max(id_path), 0.5 * max(id_path)),
       id_time > 2
     ) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(id_tree)
+    dplyr::ungroup()
 
   leaf <- data %>%
     dplyr::filter(id_time == max(id_time), id_step == 2)
 
   picture <- data %>%
     ggplot2::ggplot(ggplot2::aes(
-      x = x,
-      y = y,
+      x = coord_x,
+      y = coord_y,
       group = id_pathtree,
       colour = id_tree
     )) +

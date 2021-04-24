@@ -84,6 +84,8 @@ ft__grow_tree <- function(param, id, local_seed) {
   tree <- tree %>%
     ft__shape_tree() %>%                  # reshape
     dplyr::mutate(
+      coord_x = coord_x + shift_x(),
+      coord_y = coord_y + shift_y(),
       id_leaf = id_time == max(id_time),  # adds leaf node indicator
       id_tree = id,                       # adds tree identifier
       id_pathtree = paste(id_tree, id_path, sep = "_")
@@ -158,13 +160,6 @@ ft__grow_sapling <- function() {
 # efficient computation, but is not optimal for ggplot2 so it needs to
 # be reshaped into a convenient form
 ft__shape_tree <- function(tree) {
-
-  seg_col <- function(x, y, angle) {
-    sqrt(x ^ 2 + y ^ 2) + (angle - 90) / 10
-  }
-  seg_wid <- function(time) {
-    .05 + exp(-time^2 / 10)
-  }
 
   tree <- tree %>%
     dplyr::bind_rows() %>%
