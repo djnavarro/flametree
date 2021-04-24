@@ -48,13 +48,6 @@ flametree_grow <- function(
   n_shoot = NULL
 ) {
 
-  # apply defaults if no user-supplied functions are given
-  if(is.null(seg_col)) ft__seg_col <- ft__seg_col_default
-  if(is.null(seg_wid)) ft__seg_wid <- ft__seg_wid_default
-  if(is.null(shift_x)) ft__shift_x <- ft__shift_x_default
-  if(is.null(shift_x)) ft__shift_y <- ft__shift_y_default
-  if(is.null(n_shoot)) ft__n_shoot <- ft__n_shoot_default
-
   # collect parameters into a list
   options <- list(
     seed = seed,    # seed for the RNG
@@ -62,11 +55,11 @@ flametree_grow <- function(
     scale = scale,  # possible values for rescaling at each time
     angle = angle,  # possible values for redirect at each time
     trees = trees,  # number of trees to include
-    shift_x = ft__shift_x,
-    shift_y = ft__shift_y,
-    seg_col = ft__seg_col,
-    seg_wid = ft__seg_wid,
-    n_shoot = ft__n_shoot
+    shift_x = shift_x %||% ft__shift_x, # function to control horizontal jitter
+    shift_y = shift_y %||% ft__shift_y, # function to control vertical jitter
+    seg_col = seg_col %||% ft__seg_col, # function to control segment colour
+    seg_wid = seg_wid %||% ft__seg_wid, # function to control segment width
+    n_shoot = n_shoot %||% ft__n_shoot  # function to control branching
   )
   ft__check_opts(options)
 
