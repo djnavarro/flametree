@@ -12,8 +12,11 @@ knitr::opts_chunk$set(
   out.width = "80%",
   fig.width = 50/3, 
   fig.height = 50/3,  
-  dpi = 300
+  dpi = 300,
+  dev.args = list(bg = "#00000000")
 )
+
+
 ```
 
 # flametree
@@ -37,7 +40,7 @@ devtools::install_github("djnavarro/flametree")
 ```
 ## Example
 
-```{r example-1}
+```{r example-1, dev.args=list(bg = "black")}
 library(flametree)
 
 flametree_grow(seed = 4, time = 12)  %>% 
@@ -45,12 +48,12 @@ flametree_grow(seed = 4, time = 12)  %>%
 ```
 
 
-```{r example-2}
+```{r example-2, dev.args=list(bg = "black")}
 flametree_grow(seed = 1, trees = 5)  %>% 
   flametree_plot(style = "voronoi")
 ```
 
-```{r example-3}
+```{r example-3, dev.args=list(bg = "black")}
 flametree_grow(trees = 16)  %>% 
   flametree_plot(style = "nativeflora")
 ```
