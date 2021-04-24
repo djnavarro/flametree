@@ -78,54 +78,58 @@ test_that("invalid angles are forbidden",{
 
 })
 
-
-test_that("invalid splits are forbidden", {
-
-  expect_error(flametree_grow(split = 0))
-  expect_error(flametree_grow(split = -1))
-  expect_error(flametree_grow(split = .3))
-  expect_error(flametree_grow(split = 1:4))
-  expect_error(flametree_grow(split = NA_integer_))
-  expect_error(flametree_grow(split = NaN))
-  expect_error(flametree_grow(split = Inf))
-  expect_error(flametree_grow(split = "abc"))
-  expect_error(flametree_grow(split = NULL))
-  expect_error(flametree_grow(split = TRUE))
-  expect_error(flametree_grow(split = list(2)))
-
-  expect_silent(flametree_grow(split = 3))
-
-})
-
-
-test_that("invalid prunes are forbidden", {
-
-  expect_error(flametree_grow(prune = -1))
-  expect_error(flametree_grow(prune = 3))
-  expect_error(flametree_grow(prune = NA_real_))
-  expect_error(flametree_grow(prune = NaN))
-  expect_error(flametree_grow(prune = Inf))
-  expect_error(flametree_grow(prune = "abc"))
-  expect_error(flametree_grow(prune = NULL))
-  expect_error(flametree_grow(prune = TRUE))
-  expect_error(flametree_grow(prune = list(2)))
-  expect_error(flametree_grow(prune = c(.1, .2)))
-
-
-  expect_silent(flametree_grow(prune = .3))
-  expect_silent(flametree_grow(prune = 0))
-  expect_silent(flametree_grow(prune = 1))
-
-})
+#
+# test_that("invalid splits are forbidden", {
+#
+#   expect_error(flametree_grow(split = 0))
+#   expect_error(flametree_grow(split = -1))
+#   expect_error(flametree_grow(split = .3))
+#   expect_error(flametree_grow(split = 1:4))
+#   expect_error(flametree_grow(split = NA_integer_))
+#   expect_error(flametree_grow(split = NaN))
+#   expect_error(flametree_grow(split = Inf))
+#   expect_error(flametree_grow(split = "abc"))
+#   expect_error(flametree_grow(split = NULL))
+#   expect_error(flametree_grow(split = TRUE))
+#   expect_error(flametree_grow(split = list(2)))
+#
+#   expect_silent(flametree_grow(split = 3))
+#
+# })
+#
+#
+# test_that("invalid prunes are forbidden", {
+#
+#   expect_error(flametree_grow(prune = -1))
+#   expect_error(flametree_grow(prune = 3))
+#   expect_error(flametree_grow(prune = NA_real_))
+#   expect_error(flametree_grow(prune = NaN))
+#   expect_error(flametree_grow(prune = Inf))
+#   expect_error(flametree_grow(prune = "abc"))
+#   expect_error(flametree_grow(prune = NULL))
+#   expect_error(flametree_grow(prune = TRUE))
+#   expect_error(flametree_grow(prune = list(2)))
+#   expect_error(flametree_grow(prune = c(.1, .2)))
+#
+#
+#   expect_silent(flametree_grow(prune = .3))
+#   expect_silent(flametree_grow(prune = 0))
+#   expect_silent(flametree_grow(prune = 1))
+#
+# })
 
 test_that("flametree data has correct columns", {
 
   dat <- flametree_grow()
 
   expect_s3_class(dat, "tbl")
-  expect_named(dat, c("coord_x", "coord_y", "seg_deg", "seg_len", "seg_col",
-                      "seg_wid", "id_time", "id_path", "id_step", "id_leaf",
-                      "id_tree", "id_pathtree"))
+  expect_named(
+    object = dat,
+    expected = c(
+      "coord_x", "coord_y", "id_tree", "id_time", "id_path", "id_leaf",
+      "id_pathtree", "id_step", "seg_deg", "seg_len", "seg_col", "seg_wid"
+    )
+  )
 
   expect_type(dat$coord_x, "double")
   expect_type(dat$coord_y, "double")
