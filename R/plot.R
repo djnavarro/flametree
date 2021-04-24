@@ -31,11 +31,12 @@ flametree_plot <- function(
 ) {
 
   if(style == "plain") return(ft__plot_plain(data, background, palette))
+  if(style == "minimal") return(ft__plot_minimal(data, background, palette))
   if(style == "voronoi") return(ft__plot_voronoi(data, background, palette))
   if(style == "wisp") return(ft__plot_wisp(data, background, palette))
   if(style == "nativeflora") return(ft__plot_nativeflora(data, background, palette))
 
-  stop('`style` argument must be "plain", "voronoi", "wisp", or "nativeflora', call. = FALSE)
+  stop('`style` argument must be "plain", "minimal", "voronoi", "wisp", or "nativeflora', call. = FALSE)
 }
 
 
@@ -66,6 +67,39 @@ ft__plot_plain <- function(data, background, palette) {
   return(picture)
 
 }
+
+
+
+ft__plot_minimal <- function(data, background, palette) {
+
+  # build the ggplot
+  picture <- ggplot2::ggplot(
+    data = data,
+    mapping = ggplot2::aes(
+      x = coord_x,          # x-coordinate
+      y = coord_y,          # y-coordinate
+      group = id_pathtree,  # each segment/path defines its own path
+      size = seg_wid,       # the seg_wid variable is used to set line width
+      color = seg_col       # the seg_col variable is used to set line colour
+    )
+  ) +
+    ggplot2::geom_path(show.legend = FALSE) +
+    ggplot2::scale_color_gradientn(colours = palette) +
+    ggplot2::scale_size_identity() +
+    ggplot2::theme_void() +
+    ggplot2::theme(
+      panel.background = ggplot2::element_rect(
+        fill = background,
+        colour = background
+      )
+    )
+
+  return(picture)
+
+}
+
+
+
 
 ft__plot_voronoi <- function(data, background, palette) {
 
