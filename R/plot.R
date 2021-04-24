@@ -43,7 +43,6 @@ ft__plot_plain <- function(data, background, palette) {
 
   # unique identifier for paths within trees and shift trees horizontally
   data <- data %>%
-    dplyr::mutate(id_pathtree = paste(id_tree, id_path, sep = "_")) %>%
     dplyr::group_by(id_tree) %>%
     dplyr::mutate(coord_x = coord_x + stats::runif(1, min = -3, max = 3)) %>%
     dplyr::ungroup()
@@ -79,7 +78,6 @@ ft__plot_voronoi <- function(data, background, palette) {
 
   # unique identifier for paths within trees and shift trees horizontally
   data <- data %>%
-    dplyr::mutate(id_pathtree = paste(id_tree, id_path, sep = "_")) %>%
     dplyr::group_by(id_tree) %>%
     dplyr::mutate(coord_x = coord_x + stats::runif(1, min = -3, max = 3)) %>%
     dplyr::ungroup()
@@ -194,7 +192,6 @@ ft__plot_wisp <- function(data, background, palette) {
 ft__plot_nativeflora <- function(data, background, palette) {
 
   data <- data %>%
-    dplyr::mutate(id_pathtree = paste(id_tree, id_path, sep = "_")) %>%
     dplyr::group_by(id_tree) %>%
     dplyr::mutate(
       x = coord_x + stats::runif(1, min = -.3, max = .3),

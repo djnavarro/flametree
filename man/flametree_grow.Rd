@@ -39,7 +39,9 @@ point: id_time specifies the generation, id_path identifies each segment, and
 id_step contains the three values (0, 1 or 2) for the points that define each
 segment. The segments consist of two end points (0 and 2) and one "control"
 point (1) that is used to define a Bezier curve. Finally, id_tree is a
-numeric identifier indicating which tree the row belongs.
+numeric identifier indicating which tree the row belongs, and id_pathtree
+is a character variable that pastes the id_path and id_tree identifiers to
+create an identifier that is unique for each path in each tree.
 
 The three "seg" columns provide summary information about each segment:
 seg_len is the length of the segment, seg_col is a value used to colour

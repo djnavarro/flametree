@@ -125,7 +125,7 @@ test_that("flametree data has correct columns", {
   expect_s3_class(dat, "tbl")
   expect_named(dat, c("coord_x", "coord_y", "seg_deg", "seg_len", "seg_col",
                       "seg_wid", "id_time", "id_path", "id_step", "id_leaf",
-                      "id_tree"))
+                      "id_tree", "id_pathtree"))
 
   expect_type(dat$coord_x, "double")
   expect_type(dat$coord_y, "double")
@@ -138,6 +138,7 @@ test_that("flametree data has correct columns", {
   expect_type(dat$id_step, "integer")
   expect_type(dat$id_leaf, "logical")
   expect_type(dat$id_tree, "integer")
+  expect_type(dat$id_pathtree, "character")
 
 })
 
