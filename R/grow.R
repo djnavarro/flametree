@@ -5,8 +5,6 @@
 #' @param time Number of generations to run the iterative process
 #' @param scale Vector of possible values for the "size rescaling" at each iteration
 #' @param angle Vector of possible angle changes (in degrees) at each iteration
-#' @param split Maximum number of shoots to generate from each tip at each iteration
-#' @param prune Probability with which a generated shoot is pruned
 #' @param trees Number of trees to generate
 #'
 #' @return A tibble with the following columns: coord_x, coord_y, seg_deg,
@@ -37,8 +35,6 @@ flametree_grow <- function(
   time = 6,
   scale = c(.6, .8, .9),
   angle = c(-10, 10, 20),
-  split = 2,
-  prune = 0,
   trees = 1
 ) {
 
@@ -48,8 +44,6 @@ flametree_grow <- function(
     time = time,    # time (iterations) to grow the tree
     scale = scale,  # possible values for rescaling at each time
     angle = angle,  # possible values for redirect at each time
-    split = split,  # number of new shoots from each old shoot at each time
-    prune = prune,  # probability of immediately pruning a new shoot
     trees = trees  # number of trees to include
   )
   ft__check_opts(options)
@@ -78,14 +72,15 @@ ft__grow_tree <- function(param, id, local_seed) {
     .x = 1:param$time,
     .f = ft__grow_layer,
     .init = ft__grow_sapling(),
-    param = param
+    param = param,
+    id = id
   )
 
   tree <- tree %>%
-    ft__shape_tree() %>%                  # reshape
+    ft__shape_tree(id) %>%                  # reshape
     dplyr::mutate(
-      coord_x = coord_x + shift_x(),
-      coord_y = coord_y + shift_y(),
+      coord_x = coord_x + ft__shift_x(coord_x, coord_y, id, id_time, seg_deg, seg_len),
+      coord_y = coord_y + ft__shift_y(coord_x, coord_y, id, id_time, seg_deg, seg_len),
       id_leaf = id_time == max(id_time),  # adds leaf node indicator
       id_tree = id,                       # adds tree identifier
       id_pathtree = paste(id_tree, id_path, sep = "_")
@@ -98,10 +93,10 @@ ft__grow_tree <- function(param, id, local_seed) {
 
 # to grow a "layer" of the shrub, we extend (and possibly prune) each
 # existing shoot multiple times
-ft__grow_layer <- function(shoots, time, param) {
+ft__grow_layer <- function(shoots, time, param, id) {
 
   new_shoots <- purrr::map_dfr(
-    .x = 1:param$split,
+    .x = 1:ft__n_shoot(id, time),
     .f = ft__grow_shoots,
     shoots = shoots,
     param = param
@@ -116,7 +111,6 @@ ft__grow_layer <- function(shoots, time, param) {
 ft__grow_shoots <- function(time, shoots, param) {
 
   n_shoots <- nrow(shoots)
-  n_pruned <- stats::rbinom(n = 1, size = n_shoots - 1, prob = param$prune)
 
   ch_seg_len <- sample(x = param$scale, size = n_shoots, replace = TRUE)
   ch_seg_deg <- sample(x = param$angle, size = n_shoots, replace = TRUE)
@@ -132,8 +126,7 @@ ft__grow_shoots <- function(time, shoots, param) {
       id_time = id_time + 1L,
       x_2 = x_0 + ft__extend_x(seg_len, seg_deg) ,
       y_2 = y_0 + ft__extend_y(seg_len, seg_deg),
-    ) %>%
-    dplyr::sample_n(size = n_shoots - n_pruned)
+    )
 
   return(shoots)
 }
@@ -159,7 +152,7 @@ ft__grow_sapling <- function() {
 # the data structure that we used to grow the tree is designed to allow
 # efficient computation, but is not optimal for ggplot2 so it needs to
 # be reshaped into a convenient form
-ft__shape_tree <- function(tree) {
+ft__shape_tree <- function(tree, id) {
 
   tree <- tree %>%
     dplyr::bind_rows() %>%
@@ -173,8 +166,8 @@ ft__shape_tree <- function(tree) {
     tidyr::pivot_wider(names_from = axis, values_from = coord) %>%
     dplyr::mutate(
       id_step = as.integer(id_step),
-      seg_col = seg_col(x, y, seg_deg),
-      seg_wid = seg_wid(id_time)
+      seg_col = ft__seg_col(x, y, id, id_time, seg_deg, seg_len),
+      seg_wid = ft__seg_wid(x, y, id, id_time, seg_deg, seg_len)
     ) %>%
     dplyr::rename(coord_x = x, coord_y = y) %>%
     dplyr::select(
@@ -231,19 +224,19 @@ ft__check_opts <- function(x) {
   ft__check_numeric(x$angle, "angle")
   ft__check_length_minimum(x$angle, "angle", 1)
 
-  # split must be a single positive integer
-  ft__check_not_null(x$split, "split")
-  ft__check_not_na(x$split, "split")
-  ft__check_soft_integer(x$split, "split")
-  ft__check_length_exact(x$split, "split", 1)
-  ft__check_value_minimum(x$split, "split", 1)
-
-  # prune must be numeric between 0 and 1
-  ft__check_not_null(x$prune, "prune")
-  ft__check_not_na(x$prune, "prune")
-  ft__check_length_exact(x$prune, "prune", 1)
-  ft__check_value_minimum(x$prune, "prune", 0)
-  ft__check_value_maximum(x$prune, "prune", 1)
+  # # split must be a single positive integer
+  # ft__check_not_null(x$split, "split")
+  # ft__check_not_na(x$split, "split")
+  # ft__check_soft_integer(x$split, "split")
+  # ft__check_length_exact(x$split, "split", 1)
+  # ft__check_value_minimum(x$split, "split", 1)
+  #
+  # # prune must be numeric between 0 and 1
+  # ft__check_not_null(x$prune, "prune")
+  # ft__check_not_na(x$prune, "prune")
+  # ft__check_length_exact(x$prune, "prune", 1)
+  # ft__check_value_minimum(x$prune, "prune", 0)
+  # ft__check_value_maximum(x$prune, "prune", 1)
 
 }
 

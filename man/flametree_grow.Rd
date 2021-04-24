@@ -9,8 +9,6 @@ flametree_grow(
   time = 6,
   scale = c(0.6, 0.8, 0.9),
   angle = c(-10, 10, 20),
-  split = 2,
-  prune = 0,
   trees = 1
 )
 }
@@ -22,10 +20,6 @@ flametree_grow(
 \item{scale}{Vector of possible values for the "size rescaling" at each iteration}
 
 \item{angle}{Vector of possible angle changes (in degrees) at each iteration}
-
-\item{split}{Maximum number of shoots to generate from each tip at each iteration}
-
-\item{prune}{Probability with which a generated shoot is pruned}
 
 \item{trees}{Number of trees to generate}
 }
