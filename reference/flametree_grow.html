@@ -131,12 +131,12 @@
   time <span class='op'>=</span> <span class='fl'>6</span>,
   scale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.6</span>, <span class='fl'>0.8</span>, <span class='fl'>0.9</span><span class='op'>)</span>,
   angle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>, <span class='fl'>20</span><span class='op'>)</span>,
+  split <span class='op'>=</span> <span class='fl'>2</span>,
   trees <span class='op'>=</span> <span class='fl'>1</span>,
-  seg_col <span class='op'>=</span> <span class='cn'>NULL</span>,
-  seg_wid <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shift_x <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shift_y <span class='op'>=</span> <span class='cn'>NULL</span>,
-  n_shoot <span class='op'>=</span> <span class='cn'>NULL</span>
+  seg_col <span class='op'>=</span> <span class='fu'><a href='sparks.html'>spark_linear</a></span><span class='op'>(</span>tree <span class='op'>=</span> <span class='fl'>2</span>, time <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
+  seg_wid <span class='op'>=</span> <span class='fu'><a href='sparks.html'>spark_decay</a></span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>0.3</span>, multiplier <span class='op'>=</span> <span class='fl'>5</span>, constant <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>,
+  shift_x <span class='op'>=</span> <span class='fu'><a href='sparks.html'>spark_random</a></span><span class='op'>(</span>multiplier <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>,
+  shift_y <span class='op'>=</span> <span class='fu'><a href='sparks.html'>spark_nothing</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -159,28 +159,28 @@
       <td><p>Vector of possible angle changes (in degrees) at each iteration</p></td>
     </tr>
     <tr>
+      <th>split</th>
+      <td><p>Number of splits at each time point</p></td>
+    </tr>
+    <tr>
       <th>trees</th>
       <td><p>Number of trees to generate</p></td>
     </tr>
     <tr>
       <th>seg_col</th>
-      <td><p>Function to control the segment colour</p></td>
+      <td><p>Spark function to control the segment colour</p></td>
     </tr>
     <tr>
       <th>seg_wid</th>
-      <td><p>Function to control the segment width</p></td>
+      <td><p>Spark function to control the segment width</p></td>
     </tr>
     <tr>
       <th>shift_x</th>
-      <td><p>Function to control horizontal jitter</p></td>
+      <td><p>Spark function to control horizontal jitter</p></td>
     </tr>
     <tr>
       <th>shift_y</th>
-      <td><p>Function to control vertical jitter</p></td>
-    </tr>
-    <tr>
-      <th>n_shoot</th>
-      <td><p>Function to control tree branching</p></td>
+      <td><p>Spark function to control vertical jitter</p></td>
     </tr>
     </table>
 
