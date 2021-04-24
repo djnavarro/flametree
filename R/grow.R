@@ -6,6 +6,11 @@
 #' @param scale Vector of possible values for the "size rescaling" at each iteration
 #' @param angle Vector of possible angle changes (in degrees) at each iteration
 #' @param trees Number of trees to generate
+#' @param seg_col Function to control the segment colour
+#' @param seg_wid Function to control the segment width
+#' @param shift_x Function to control horizontal jitter
+#' @param shift_y Function to control vertical jitter
+#' @param n_shoot Function to control tree branching
 #'
 #' @return A tibble with the following columns: coord_x, coord_y, seg_deg,
 #' seg_len, seg_col, seg_wid, id_time, id_path, id_step, id_leaf, id_tree
@@ -35,8 +40,20 @@ flametree_grow <- function(
   time = 6,
   scale = c(.6, .8, .9),
   angle = c(-10, 10, 20),
-  trees = 1
+  trees = 1,
+  seg_col = NULL,
+  seg_wid = NULL,
+  shift_x = NULL,
+  shift_y = NULL,
+  n_shoot = NULL
 ) {
+
+  # apply defaults if no user-supplied functions are given
+  if(is.null(seg_col)) ft__seg_col <- ft__seg_col_default
+  if(is.null(seg_wid)) ft__seg_wid <- ft__seg_wid_default
+  if(is.null(shift_x)) ft__shift_x <- ft__shift_x_default
+  if(is.null(shift_x)) ft__shift_y <- ft__shift_y_default
+  if(is.null(n_shoot)) ft__n_shoot <- ft__n_shoot_default
 
   # collect parameters into a list
   options <- list(
@@ -44,7 +61,12 @@ flametree_grow <- function(
     time = time,    # time (iterations) to grow the tree
     scale = scale,  # possible values for rescaling at each time
     angle = angle,  # possible values for redirect at each time
-    trees = trees  # number of trees to include
+    trees = trees,  # number of trees to include
+    shift_x = ft__shift_x,
+    shift_y = ft__shift_y,
+    seg_col = ft__seg_col,
+    seg_wid = ft__seg_wid,
+    n_shoot = ft__n_shoot
   )
   ft__check_opts(options)
 
@@ -79,11 +101,10 @@ ft__grow_tree <- function(param, id, local_seed) {
   tree <- tree %>%
     ft__shape_tree(id) %>%                  # reshape
     dplyr::mutate(
-      coord_x = coord_x + ft__shift_x(coord_x, coord_y, id, id_time, seg_deg, seg_len),
-      coord_y = coord_y + ft__shift_y(coord_x, coord_y, id, id_time, seg_deg, seg_len),
-      id_leaf = id_time == max(id_time),  # adds leaf node indicator
-      id_tree = id,                       # adds tree identifier
-      id_pathtree = paste(id_tree, id_path, sep = "_")
+      coord_x = coord_x + param$shift_x(coord_x, coord_y, id, id_time, seg_deg, seg_len),
+      coord_y = coord_y + param$shift_y(coord_x, coord_y, id, id_time, seg_deg, seg_len),
+      seg_col = param$seg_col(coord_x, coord_y, id, id_time, seg_deg, seg_len),
+      seg_wid = param$seg_wid(coord_x, coord_y, id, id_time, seg_deg, seg_len)
     )
 
   return(tree)
@@ -96,7 +117,7 @@ ft__grow_tree <- function(param, id, local_seed) {
 ft__grow_layer <- function(shoots, time, param, id) {
 
   new_shoots <- purrr::map_dfr(
-    .x = 1:ft__n_shoot(id, time),
+    .x = 1:param$n_shoot(id, time),
     .f = ft__grow_shoots,
     shoots = shoots,
     param = param
@@ -166,14 +187,13 @@ ft__shape_tree <- function(tree, id) {
     tidyr::pivot_wider(names_from = axis, values_from = coord) %>%
     dplyr::mutate(
       id_step = as.integer(id_step),
-      seg_col = ft__seg_col(x, y, id, id_time, seg_deg, seg_len),
-      seg_wid = ft__seg_wid(x, y, id, id_time, seg_deg, seg_len)
+      id_leaf = id_time == max(id_time),  # adds leaf node indicator
+      id_tree = id,                       # adds tree identifier
+      id_pathtree = paste(id_tree, id_path, sep = "_")
     ) %>%
     dplyr::rename(coord_x = x, coord_y = y) %>%
-    dplyr::select(
-      coord_x, coord_y, seg_deg, seg_len, seg_col, seg_wid,
-      id_time, id_path, id_step
-    )
+    dplyr::select(coord_x, coord_y, id_tree, id_time, id_path, id_leaf,
+                  id_pathtree, id_step, seg_deg, seg_len)
 
   return(tree)
 }

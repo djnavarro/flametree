@@ -9,7 +9,12 @@ flametree_grow(
   time = 6,
   scale = c(0.6, 0.8, 0.9),
   angle = c(-10, 10, 20),
-  trees = 1
+  trees = 1,
+  seg_col = NULL,
+  seg_wid = NULL,
+  shift_x = NULL,
+  shift_y = NULL,
+  n_shoot = NULL
 )
 }
 \arguments{
@@ -22,6 +27,16 @@ flametree_grow(
 \item{angle}{Vector of possible angle changes (in degrees) at each iteration}
 
 \item{trees}{Number of trees to generate}
+
+\item{seg_col}{Function to control the segment colour}
+
+\item{seg_wid}{Function to control the segment width}
+
+\item{shift_x}{Function to control horizontal jitter}
+
+\item{shift_y}{Function to control vertical jitter}
+
+\item{n_shoot}{Function to control tree branching}
 }
 \value{
 A tibble with the following columns: coord_x, coord_y, seg_deg,
