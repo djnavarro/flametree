@@ -179,7 +179,9 @@ point: id_time specifies the generation, id_path identifies each segment, and
 id_step contains the three values (0, 1 or 2) for the points that define each
 segment. The segments consist of two end points (0 and 2) and one "control"
 point (1) that is used to define a Bezier curve. Finally, id_tree is a
-numeric identifier indicating which tree the row belongs.</p>
+numeric identifier indicating which tree the row belongs, and id_pathtree
+is a character variable that pastes the id_path and id_tree identifiers to
+create an identifier that is unique for each path in each tree.</p>
 <p>The three "seg" columns provide summary information about each segment:
 seg_len is the length of the segment, seg_col is a value used to colour
 the segment, and seg_wid is a size parameter used to define the width of
@@ -187,7 +189,7 @@ the segment</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>flametree_grow</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 381 x 11</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 381 x 12</span><span>
 #&gt;      coord_x coord_y seg_deg seg_len seg_col seg_wid id_time id_path id_step
 #&gt;        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  0   </span><span style='color: #949494;'> </span><span>       0         90    1      0       0.955       1       1       0
@@ -200,8 +202,9 @@ the segment</p>
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span>  2.45</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-17</span><span>    1.4      110    0.8    3.4     0.720       2       3       1
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span> -</span><span style='color: #BB0000;'>2.74</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>    1.75     110    0.8    3.77    0.720       2       3       2
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span>  1.04</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>    1.59      70    0.48  -</span><span style='color: #BB0000;'>0.406</span><span>   0.457       3       4       0
-#&gt; </span><span style='color: #949494;'># … with 371 more rows, and 2 more variables: id_leaf &lt;lgl&gt;, id_tree &lt;int&gt;</span><span></div><div class='input'><span class='fu'>flametree_grow</span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6,141 x 11</span><span>
+#&gt; </span><span style='color: #949494;'># … with 371 more rows, and 3 more variables: id_leaf &lt;lgl&gt;, id_tree &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   id_pathtree &lt;chr&gt;</span><span></div><div class='input'><span class='fu'>flametree_grow</span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6,141 x 12</span><span>
 #&gt;      coord_x coord_y seg_deg seg_len seg_col seg_wid id_time id_path id_step
 #&gt;        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  0   </span><span style='color: #949494;'> </span><span>       0         90    1      0       0.955       1       1       0
@@ -214,7 +217,8 @@ the segment</p>
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span>  2.45</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-17</span><span>    1.4      110    0.8    3.4     0.720       2       3       1
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span> -</span><span style='color: #BB0000;'>2.74</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>    1.75     110    0.8    3.77    0.720       2       3       2
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span>  1.04</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>    1.59      70    0.48  -</span><span style='color: #BB0000;'>0.406</span><span>   0.457       3       4       0
-#&gt; </span><span style='color: #949494;'># … with 6,131 more rows, and 2 more variables: id_leaf &lt;lgl&gt;, id_tree &lt;int&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #949494;'># … with 6,131 more rows, and 3 more variables: id_leaf &lt;lgl&gt;, id_tree &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   id_pathtree &lt;chr&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
