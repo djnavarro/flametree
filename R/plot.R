@@ -302,7 +302,7 @@ ft__plot_wisp <- function(data, background, palette) {
         x = coord_x,
         y = coord_y,
         size = seg_wid,
-        group = id_path
+        group = id_pathtree
       ),
       colour = tree_shade,
       show.legend = FALSE,
