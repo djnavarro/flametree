@@ -1,0 +1,16 @@
+---
+title: "Using spark functions"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(flametree)
+```
+
+should probably write something here

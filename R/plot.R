@@ -46,9 +46,11 @@
 flametree_plot <- function(
   data,
   background = "black",
-  palette = c("#c06014", "#eddbc0", "#000000", "#cdcdcd"),
+  palette = c("#1E2640", "#F3EAC0", "#DC9750", "#922C40"),
   style = "plain"
 ) {
+
+  # palette: https://www.canva.com/colors/color-palettes/middle-eastern-empire/
 
   ft__check_plot_input(
     data = data,
@@ -152,6 +154,7 @@ ft__plot_plain <- function(data, background, palette) {
     ggforce::geom_bezier2(show.legend = FALSE, lineend = "round") +
     ggplot2::scale_color_gradientn(colours = palette) +
     ggplot2::scale_size_identity() +
+    ggplot2::coord_equal() +
     ggplot2::theme_void() +
     ggplot2::theme(
       panel.background = ggplot2::element_rect(
@@ -181,6 +184,7 @@ ft__plot_minimal <- function(data, background, palette) {
     ggplot2::geom_path(show.legend = FALSE) +
     ggplot2::scale_color_gradientn(colours = palette) +
     ggplot2::scale_size_identity() +
+    ggplot2::coord_equal() +
     ggplot2::theme_void() +
     ggplot2::theme(
       panel.background = ggplot2::element_rect(
@@ -208,6 +212,7 @@ ft__plot_themegray <- function(data, background, palette) {
   ) +
     ggplot2::geom_path(show.legend = FALSE) +
     ggplot2::scale_size_identity() +
+    ggplot2::coord_equal() +
     ggplot2::theme_gray()
 
   return(picture)
