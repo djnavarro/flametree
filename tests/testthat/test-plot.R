@@ -64,6 +64,10 @@ test_that("non-flametree data frames throw plot error", {
   new_dat$coord_x <- as.character(new_dat$coord_x)
   expect_error(flametree_plot(new_dat), "must be numeric")
 
+  new_dat <- dat
+  new_dat$id_leaf <- as.character(new_dat$id_leaf)
+  expect_error(flametree_plot(new_dat), "must be logical")
+
 })
 
 
