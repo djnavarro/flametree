@@ -1,6 +1,6 @@
 Package: flametree
 Title: Generate Random Tree-Like Images
-Version: 0.0.1
+Version: 0.1
 Authors@R: 
     person(given = "Danielle",
            family = "Navarro",
