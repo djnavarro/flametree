@@ -2,6 +2,8 @@ url: https://flametree.djnavarro.net
 
 template:
   package: pkgdowngirl
+  params:
+    bootswatch: flatly
 
 navbar:
   structure:
@@ -20,10 +22,11 @@ navbar:
       icon: fab fa-github fa-lg
       href: https://github.com/djnavarro/flametree/
     articles:
+      text: Articles
       menu:
       - text: Getting started
-        href: articles/getting-started
+        href: articles/articles/getting-started.html
       - text: Exploring styles
-        href: articles/exploring-styles
+        href: articles/articles/exploring-styles.html
       - text: Using spark functions
-        href: articles/spark-functions
+        href: articles/articles/spark-functions.html
