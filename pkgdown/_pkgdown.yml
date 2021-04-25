@@ -2,3 +2,32 @@ url: https://flametree.djnavarro.net
 
 template:
   package: pkgdowngirl
+
+navbar:
+  structure:
+    left:
+    - intro
+    - reference
+    - articles
+    - tutorials
+    - news
+    right: github
+  components:
+    reference:
+      text: Reference
+      href: reference/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/djnavarro/flametree/
+    articles:
+      text: Articles
+      href: articles/index.html
+
+articles:
+- title: Articles
+  desc: ~
+  contents:
+  - '`articles/getting-started`'
+  - '`articles/exploring-styles`'
+  - '`articles/spark-functions`'
+  - '`articles/teaching-examples`'
