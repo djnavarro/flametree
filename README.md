@@ -35,18 +35,18 @@ flametree_grow(time = 12) %>%
   flametree_plot()         
 ```
 
-<img src="man/figures/README-example-1-1.png" width="80%" />
+<img src="README_cache/example-1-1.png" width="80%" />
 
 ``` r
 flametree_grow(seed = 1, trees = 5)  %>% 
   flametree_plot(style = "voronoi")
 ```
 
-<img src="man/figures/README-example-2-1.png" width="80%" />
+<img src="README_cache/example-2-1.png" width="80%" />
 
 ``` r
 flametree_grow(trees = 16, shift_x = spark_nothing())  %>% 
   flametree_plot(style = "nativeflora")
 ```
 
-<img src="man/figures/README-example-3-1.png" width="80%" />
+<img src="README_cache/example-3-1.png" width="80%" />
