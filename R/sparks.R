@@ -60,5 +60,6 @@ spark_nothing <- function() {
 
 
 ft__check_spark_input <- function(arg_list) {
+  purrr::walk2(arg_list, names(arg_list), ~ ft__check_length_exact(.x, .y, 1))
   purrr::walk2(arg_list, names(arg_list), ft__check_numeric)
 }

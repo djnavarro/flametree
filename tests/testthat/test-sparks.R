@@ -63,3 +63,30 @@ test_that("spark factories verify numeric input", {
 })
 
 
+test_that("spark factories verify length 1 input", {
+
+  error_pattern <- function(name) {
+    paste0("`", name, "` must have length 1")
+  }
+
+  expect_error(spark_decay(x = 1:3), error_pattern("x"))
+  expect_error(spark_decay(y = 1:3), error_pattern("y"))
+  expect_error(spark_decay(tree = 1:3), error_pattern("tree"))
+  expect_error(spark_decay(time = 1:3), error_pattern("time"))
+  expect_error(spark_decay(multiplier = 1:3), error_pattern("multiplier"))
+  expect_error(spark_decay(constant = 1:3), error_pattern("constant"))
+
+  expect_error(spark_linear(x = 1:3), error_pattern("x"))
+  expect_error(spark_linear(y = 1:3), error_pattern("y"))
+  expect_error(spark_linear(tree = 1:3), error_pattern("tree"))
+  expect_error(spark_linear(time = 1:3), error_pattern("time"))
+  expect_error(spark_linear(constant = 1:3), error_pattern("constant"))
+
+  expect_error(spark_random(multiplier = 1:3), error_pattern("multiplier"))
+  expect_error(spark_random(constant = 1:3), error_pattern("constant"))
+
+})
+
+
+
+
