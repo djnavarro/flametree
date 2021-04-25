@@ -223,6 +223,10 @@ ft__plot_themegray <- function(data, background, palette) {
 
 ft__plot_voronoi <- function(data, background, palette) {
 
+  # ggforce stat_voronoi_tile requires deldir, but ggforce only lists
+  # deldir as a suggest. TODO: add check here?
+  requireNamespace("deldir", quietly = TRUE)
+
   # "leaf" coordinates are at terminal locations (id_step = 2)
   # on the terminal branches (id_leaf == TRUE) in the tree
   leaf <- data %>%
