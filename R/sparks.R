@@ -21,6 +21,8 @@ NULL
 #' @rdname sparks
 #' @export
 spark_linear <- function(x = 0, y = 0, tree = 0, time = 0, constant = 0) {
+  ft__check_spark_input(list(x = x, y = y, tree = tree, time = time,
+                             constant = constant))
   function(coord_x, coord_y, id_tree, id_time) {
     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * id_time) + constant
   }
@@ -29,6 +31,8 @@ spark_linear <- function(x = 0, y = 0, tree = 0, time = 0, constant = 0) {
 #' @rdname sparks
 #' @export
 spark_decay <- function(x = 0, y = 0, tree = 0, time = 0, multiplier = 2, constant = 0) {
+  ft__check_spark_input(list(x = x, y = y, tree = tree, time = time,
+                         multiplier = multiplier, constant = constant))
   function(coord_x, coord_y, id_tree, id_time) {
     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * id_time))^2) + constant
   }
@@ -37,6 +41,7 @@ spark_decay <- function(x = 0, y = 0, tree = 0, time = 0, multiplier = 2, consta
 #' @rdname sparks
 #' @export
 spark_random <- function(multiplier = 3, constant = 0) {
+  ft__check_spark_input(list(multiplier = multiplier, constant = constant))
   function(coord_x, coord_y, id_tree, id_time) {
     n <- length(coord_x)
     u <- stats::runif(1, min = -multiplier/2, max = multiplier/2) + constant
@@ -53,3 +58,7 @@ spark_nothing <- function() {
   }
 }
 
+
+ft__check_spark_input <- function(arg_list) {
+  purrr::walk2(arg_list, names(arg_list), ft__check_numeric)
+}

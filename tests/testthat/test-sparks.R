@@ -38,4 +38,28 @@ test_that("spark functions handle vector input", {
 })
 
 
+test_that("spark factories verify numeric input", {
+
+  error_pattern <- function(name) {
+    paste0("`", name, "` must be numeric")
+  }
+
+  expect_error(spark_decay(x = "abc"), error_pattern("x"))
+  expect_error(spark_decay(y = "abc"), error_pattern("y"))
+  expect_error(spark_decay(tree = "abc"), error_pattern("tree"))
+  expect_error(spark_decay(time = "abc"), error_pattern("time"))
+  expect_error(spark_decay(multiplier = "abc"), error_pattern("multiplier"))
+  expect_error(spark_decay(constant = "abc"), error_pattern("constant"))
+
+  expect_error(spark_linear(x = "abc"), error_pattern("x"))
+  expect_error(spark_linear(y = "abc"), error_pattern("y"))
+  expect_error(spark_linear(tree = "abc"), error_pattern("tree"))
+  expect_error(spark_linear(time = "abc"), error_pattern("time"))
+  expect_error(spark_linear(constant = "abc"), error_pattern("constant"))
+
+  expect_error(spark_random(multiplier = "abc"), error_pattern("multiplier"))
+  expect_error(spark_random(constant = "abc"), error_pattern("constant"))
+
+})
+
 
