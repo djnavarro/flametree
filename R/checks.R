@@ -35,6 +35,12 @@ ft__check_character <- function(x, name) {
   }
 }
 
+ft__check_logical <- function(x, name) {
+  if(!is.logical(x)) {
+    stop("`", name, "` must be logical", call. = FALSE)
+  }
+}
+
 ft__check_atomic <- function(x, name) {
   if(!is.atomic(x)) {
     stop("`", name, "` must be atomic", call. = FALSE)
@@ -66,6 +72,12 @@ ft__check_length_exact <- function(x, name, len) {
 ft__check_length_minimum <- function(x, name, len) {
   if(!(length(x) >= len)) {
     stop("`", name, "` must be at least length ", len, call. = FALSE)
+  }
+}
+
+ft__check_dataframe <- function(x, name) {
+  if(!inherits(x, "data.frame")) {
+    stop("`", name, "` must be a data frame", call. = FALSE)
   }
 }
 

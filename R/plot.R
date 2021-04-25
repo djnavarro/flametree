@@ -47,6 +47,74 @@ flametree_plot <- function(
   stop('`style` argument must be "plain", "minimal", "themegray", "voronoi", "wisp", or "nativeflora"', call. = FALSE)
 }
 
+ft__check_plot_input <- function(data, background, palette, style) {
+
+  ft__check_flametree(data)
+
+  # check length of non data arguments
+  ft__check_length_exact(background, "background", 1)
+  ft__check_length_exact(style, "style", 1)
+  ft__check_length_minimum(palette, "palette", 1)
+
+  # check inputs are not functions
+  ft__check_not_closure(background, "background")
+  ft__check_not_closure(style, "style")
+  ft__check_not_closure(palette, "palette")
+
+  # check arguments are atomic
+  ft__check_atomic(background, "background")
+  ft__check_atomic(style, "style")
+  ft__check_atomic(palette, "palette")
+
+  # check non-missingness for all arguments
+  ft__check_not_na(background, "background")
+  ft__check_not_na(style, "style")
+  ft__check_not_na(palette, "palette")
+
+  # check style is character
+  ft__check_character(style, "style")
+
+  # check palette and background define colours
+  ft__check_colour(background, "background")
+  ft__check_colour(palette, "palette")
+
+}
+
+# might need to be a little more precise here
+ft__check_colour <- function(x, name) {
+  ft__check_character(x, name)
+}
+
+ft__check_flametree <- function(data) {
+
+  ft__check_dataframe(data, "data")
+  ft__check_length_exact(data, "data", 12)
+
+  # throw error if column types don't match
+  col_names <- names(data)
+  flm_names <- c("coord_x", "coord_y", "id_tree", "id_time", "id_path", "id_leaf",
+                 "id_pathtree", "id_step", "seg_deg", "seg_len", "seg_col", "seg_wid")
+  if(any(col_names != flm_names)) {
+    error("unexpected column names in `data` input", call. = FALSE)
+  }
+
+  # throw error if column types don't match
+  ft__check_numeric(data$coord_x, "coord_x")
+  ft__check_numeric(data$coord_y, "coord_y")
+  ft__check_numeric(data$seg_deg, "seg_deg")
+  ft__check_numeric(data$seg_len, "seg_len")
+  ft__check_numeric(data$seg_col, "seg_col")
+  ft__check_numeric(data$seg_wid, "seg_wid")
+  ft__check_soft_integer(data$id_time, "id_time")
+  ft__check_soft_integer(data$id_path, "id_path")
+  ft__check_soft_integer(data$id_step, "id_step")
+  ft__check_soft_integer(data$id_tree, "id_tree")
+  ft__check_logical(data$id_leaf, "id_leaf")
+  ft__check_character(data$id_pathtree, "id_pathtree")
+
+}
+
+
 
 ft__plot_plain <- function(data, background, palette) {
 
@@ -77,42 +145,6 @@ ft__plot_plain <- function(data, background, palette) {
 }
 
 
-ft__check_plot_input <- function(data, background, palette, style) {
-
-  # check length of non data arguments
-  ft__check_length_exact(background, "background", 1)
-  ft__check_length_exact(style, "style", 1)
-  ft__check_length_minimum(palette, "palette", 1)
-
-  # check inputs are not functions
-  ft__check_not_closure(background, "background")
-  ft__check_not_closure(style, "style")
-  ft__check_not_closure(palette, "palette")
-
-  # check arguments are atomic
-  ft__check_atomic(background, "background")
-  ft__check_atomic(style, "style")
-  ft__check_atomic(palette, "palette")
-
-  # check non-missingness for all arguments
-  ft__check_not_na(background, "background")
-  ft__check_not_na(style, "style")
-  ft__check_not_na(palette, "palette")
-
-  # check style is character
-  ft__check_character(style, "style")
-
-  # check palette defines colours
-  ft__check_colour(palette, "palette")
-
-}
-
-# might need to be a little more precise here
-ft__check_colour <- function(x, name) {
-  ft__check_character(x, name)
-}
-
-
 ft__plot_minimal <- function(data, background, palette) {
 
   # build the ggplot
@@ -140,7 +172,6 @@ ft__plot_minimal <- function(data, background, palette) {
   return(picture)
 
 }
-
 
 
 ft__plot_themegray <- function(data, background, palette) {

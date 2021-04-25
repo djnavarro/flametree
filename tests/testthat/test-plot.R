@@ -12,7 +12,7 @@ test_that("plot returns a ggplot object", {
 
 })
 
-test_that("invalid non-data plot inputs throw errors", {
+test_that("invalid plot inputs throw errors", {
 
   dat <- flametree_grow(time = 5)
 
@@ -31,6 +31,21 @@ test_that("invalid non-data plot inputs throw errors", {
   expect_error(flametree_plot(dat, palette = function(x){x}))
   expect_error(flametree_plot(dat, palette = NA))
 
+  expect_error(flametree_plot(dat, background = 124))
+  expect_error(flametree_plot(dat, background = TRUE))
+  expect_error(flametree_plot(dat, background = list("plain")))
+  expect_error(flametree_plot(dat, background = NULL))
+  expect_error(flametree_plot(dat, background = function(x){x}))
+  expect_error(flametree_plot(dat, background = NA))
+  expect_error(flametree_plot(dat, background = c("plain", "minimal")))
+
+  expect_error(flametree_plot(dat, data = 124))
+  expect_error(flametree_plot(dat, data = TRUE))
+  expect_error(flametree_plot(dat, data = list("plain")))
+  expect_error(flametree_plot(dat, data = NULL))
+  expect_error(flametree_plot(dat, data = function(x){x}))
+  expect_error(flametree_plot(dat, data = NA))
+  expect_error(flametree_plot(dat, data = c("plain", "minimal")))
 
 })
 
