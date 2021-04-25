@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# flametree
+# Flametree
 
 <!-- badges: start -->
 
@@ -14,11 +14,14 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/flametree)](https://CRAN.R-project.org/package=flametree)
 <!-- badges: end -->
 
-The goal of flametree is to make pretty pictures.
-
-## Installation
-
-You can install the development version of flametree from
+Flametree provides a system for making generative art in R, written with
+two goals in mind. First, and perhaps foremost, art is inherently
+enjoyable and generative artists working in R need packages no less than
+any other R users. Second, the system is designed to be useful in the
+classroom: getting students to make artwork in class is an enjoyable
+exercise and flametree can be used as a method to introduce some key R
+concepts in a fun way. The package is not (yet) on CRAN but you can
+install the development version of flametree from
 [GitHub](https://github.com/) with:
 
 ``` r
