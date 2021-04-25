@@ -97,7 +97,62 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/djnavarro/flametree">flametree</a></span><span class="op">)</span></code></pre></div>
-<p>should probably write something here</p>
+<p>The growth of the flametree is partially governed by controller functions called “sparks”. A spark function takes four arguments (<code>coord_x</code>, <code>coord_y</code>, <code>id_tree</code>, and <code>id_time</code>) and outputs a numeric value. These functions can be specified manually and used as inputs to <code><a href="../../reference/flametree_grow.html">flametree_grow()</a></code>, or can be generated using one of the built in generator functions. For instance, you can use the <code><a href="../../reference/sparks.html">spark_linear()</a></code> function to create a function that specifies any linear combination of the four inputs:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/sparks.html">spark_linear</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; function (coord_x, coord_y, id_tree, id_time) </span>
+<span class="co">#&gt; {</span>
+<span class="co">#&gt;     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * </span>
+<span class="co">#&gt;         id_time) + constant</span>
+<span class="co">#&gt; }</span>
+<span class="co">#&gt; &lt;bytecode: 0x7f9f0c052270&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x7f9f0c051828&gt;</span></code></pre></div>
+<p>We could use this function to control how the colours in the tree change:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>
+  time <span class="op">=</span> <span class="fl">12</span>,
+  seg_col <span class="op">=</span> <span class="fu"><a href="../../reference/sparks.html">spark_linear</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="spark-functions_files/figure-html/spark-linear-tree-1-1.png" width="700"></p>
+<p>Different parameter settings will produce different linear gradients. For example, we could have the colours change linearly across tree number and time, and have the horizontal spacing of the trees vary linearly with tree number:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>
+  trees <span class="op">=</span> <span class="fl">5</span>,
+  time <span class="op">=</span> <span class="fl">10</span>,
+  seg_col <span class="op">=</span> <span class="fu"><a href="../../reference/sparks.html">spark_linear</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">1</span>, tree <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
+  shift_x <span class="op">=</span> <span class="fu"><a href="../../reference/sparks.html">spark_linear</a></span><span class="op">(</span>tree <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="spark-functions_files/figure-html/spark-linear-tree-2-1.png" width="700"></p>
+<p>The previous examples all use <code><a href="../../reference/sparks.html">spark_linear()</a></code>, but flametree provides three other spark function generators. The <code><a href="../../reference/sparks.html">spark_nothing()</a></code> generator produces spark function that always returns zero, which is occasionally useful, wheras the <code><a href="../../reference/sparks.html">spark_random()</a></code> function injects uniform random noise. This can be useful with the “native flora” plot style:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>
+  trees <span class="op">=</span> <span class="fl">10</span>,
+  time <span class="op">=</span> <span class="fl">7</span>,
+  shift_x <span class="op">=</span> <span class="fu"><a href="../../reference/sparks.html">spark_random</a></span><span class="op">(</span>multiplier <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+  shift_y <span class="op">=</span> <span class="fu"><a href="../../reference/sparks.html">spark_random</a></span><span class="op">(</span>multiplier <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"nativeflora"</span><span class="op">)</span></code></pre></div>
+<p><img src="spark-functions_files/figure-html/spark-random-1-1.png" width="700"></p>
+<p>Defining your own spark function can be fun…</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">jittr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">coord_x</span>, <span class="va">coord_y</span>, <span class="va">id_tree</span>, <span class="va">id_time</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">coord_x</span><span class="op">)</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">.2</span>, max <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>
+  time <span class="op">=</span> <span class="fl">12</span>,
+  seg_wid <span class="op">=</span> <span class="fu"><a href="../../reference/sparks.html">spark_linear</a></span><span class="op">(</span>constant <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span>,
+  shift_x <span class="op">=</span> <span class="va">jittr</span>,
+  shift_y <span class="op">=</span> <span class="va">jittr</span>
+<span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hotpink4"</span>, <span class="st">"ghostwhite"</span><span class="op">)</span>,
+    style <span class="op">=</span> <span class="st">"wisp"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="spark-functions_files/figure-html/custom-spark-1.png" width="700"></p>
+<p>…though the results can be peculiar!</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
