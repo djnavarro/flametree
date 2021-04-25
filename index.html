@@ -82,24 +82,6 @@
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"djnavarro/flametree"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/djnavarro/flametree">flametree</a></span><span class="op">)</span>
-
-<span class="fu"><a href="reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span>         </code></pre></div>
-<p><img src="README_cache/example-1-1.png" width="80%"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">1</span>, trees <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>  <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"voronoi"</span><span class="op">)</span></code></pre></div>
-<p><img src="README_cache/example-2-1.png" width="80%"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>trees <span class="op">=</span> <span class="fl">16</span>, shift_x <span class="op">=</span> <span class="fu"><a href="reference/sparks.html">spark_nothing</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"nativeflora"</span><span class="op">)</span></code></pre></div>
-<p><img src="README_cache/example-3-1.png" width="80%"></p>
-</div>
 </div>
   </div>
 
