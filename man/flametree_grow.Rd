@@ -18,7 +18,7 @@ flametree_grow(
 )
 }
 \arguments{
-\item{seed}{Integer-valued seed for the random number generator}
+\item{seed}{Integer seed for the random number generator}
 
 \item{time}{Number of generations to run the iterative process}
 
@@ -74,6 +74,44 @@ generated.
 }
 \description{
 Generate the data specifying a flametree
+}
+\details{
+Generative art created with flametree is a visualisation of a data
+structure created by calling \code{flametree_grow()}. The underlying
+algorithm is an iterative branching process: each tree starts out as a single
+vertical segment, to which multiple new segments are added at the end of the
+first iteration. Over multiple iterations this creates a tree-like structure.
+
+The user can control how this iterative process unfolds. By setting the seed
+argument the random number generator is reset using \code{set.seed()}. The
+trees argument specifies the number of trees to create using this process,
+the time argument specifies how many iterations of the branching process
+will be run, and the split argument specifies how many new segments will be
+created each time a branching occurs.
+
+When a new segment is created, its size and orientation are controlled by the
+scale and angle arguments. The scale argument takes a vector of positive
+numbers. One of these numbers is selected at random whenever a new segment
+is created, and the length of the new segment is equal to the length of the
+"parent" segment from which it was created, multiplied by this scaling factor.
+The orientation of the new segment is controlled by the angle argument in an
+analogous way. Every time a new segment is generated, one of these angles
+(interpreted in degrees, not radians) is selected at random. The orientation
+of the new segment is equal to the orientation of the parent segment plus
+the sampled angle.
+
+The remaining arguments (seg_col, seg_wid, shift_x, and shift_y) all take
+functions as their input, and are used to control how the colours (seg_col)
+and width (seg_wid) of the segments are created, as well as the horizontal
+(shift_x) and vertical (shift_y) displacement of the trees are generated.
+The flametree package contains four tools to help create these functions:
+\code{spark_linear()}, \code{spark_decay()}, \code{spark_random()} and
+\code{spark_nothing()}. As an example, the default behaviour of
+\code{flametree_grow()} adds a random horizontal displacement to each tree
+to give the impression of multiple trees growing side by side. To suppress
+this horizontal displacement, set \code{shift_x = spark_nothing()}. For more
+information about how to use these "spark" functions to control the flametree
+generator, please see the documentation to the spark functions.
 }
 \examples{
 flametree_grow()
