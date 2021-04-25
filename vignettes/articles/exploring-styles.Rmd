@@ -1,0 +1,57 @@
+---
+title: "Exploring plot styles"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(flametree)
+```
+
+## Plain 
+
+```{r plain-style, cache=TRUE}
+flametree_grow(time = 14) %>% 
+  flametree_plot(style = "plain")
+```
+
+## Voronoi 
+
+```{r voronoi-style, cache=TRUE}
+flametree_grow(time = 6, trees = 5) %>% 
+  flametree_plot(style = "voronoi")
+```
+
+## Wisp
+
+```{r wisp-style, cache=TRUE}
+flametree_grow(time = 14) %>% 
+  flametree_plot(style = "wisp")
+```
+
+## Native Flora
+
+```{r nativeflora-style, cache=TRUE}
+flametree_grow(time = 10, trees = 12, shift_x = spark_nothing()) %>% 
+  flametree_plot(style = "nativeflora")
+```
+
+## Minimal
+
+```{r minimal-style, cache=TRUE}
+flametree_grow(time = 10, trees = 5) %>% 
+  flametree_plot(style = "minimal")
+```
+
+## Theme Gray
+
+```{r themegray-style, cache=TRUE}
+flametree_grow(time = 10, trees = 5) %>% 
+  flametree_plot(style = "themegray")
+```
+
