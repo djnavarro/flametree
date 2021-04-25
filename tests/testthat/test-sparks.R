@@ -12,3 +12,12 @@ test_that("spark functions have correct arguments", {
   expect_equal(methods::formalArgs(spark_random()), spark_args)
   expect_equal(methods::formalArgs(spark_nothing()), spark_args)
 })
+
+test_that("spark functions return numeric", {
+
+  expect_type((spark_decay())(1, 1, 1, 1), "double")
+  expect_type((spark_linear())(1, 1, 1, 1), "double")
+  expect_type((spark_random())(1, 1, 1, 1), "double")
+  expect_type((spark_nothing())(1, 1, 1, 1), "double")
+
+})
