@@ -88,9 +88,11 @@ ft__check_value_minimum <- function(x, name, val) {
   }
 }
 
-ft__check_value_maximum <- function(x, name, val) {
-  ft__check_numeric(x, name)
-  if(any(x > val)) {
-    stop("`", name, "` cannot be greater than ", val, call. = FALSE)
-  }
-}
+# no longer used now that prune is gone
+#
+# ft__check_value_maximum <- function(x, name, val) {
+#   ft__check_numeric(x, name)
+#   if(any(x > val)) {
+#     stop("`", name, "` cannot be greater than ", val, call. = FALSE)
+#   }
+# }
