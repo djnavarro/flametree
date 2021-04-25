@@ -20,14 +20,10 @@ navbar:
       icon: fab fa-github fa-lg
       href: https://github.com/djnavarro/flametree/
     articles:
-      text: Articles
-      href: articles/index.html
-
-articles:
-- title: Articles
-  desc: ~
-  contents:
-  - '`articles/getting-started`'
-  - '`articles/exploring-styles`'
-  - '`articles/spark-functions`'
-  - '`articles/teaching-examples`'
+      menu:
+      - text: Getting started
+        href: articles/getting-started
+      - text: Exploring styles
+        href: articles/exploring-styles
+      - text: Using spark functions
+        href: articles/spark-functions
