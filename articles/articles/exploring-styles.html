@@ -97,53 +97,84 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/djnavarro/flametree">flametree</a></span><span class="op">)</span></code></pre></div>
+<p>The <a href="/articles/articles/getting-started.html">getting started</a> article showed how to modify the appearance of the output by specifying the <code>background</code> and <code>palette</code> arguments. Changing these arguments will change the colours to the plot, but only the colours. It does not affect the way the plot function interprets the underlying data structure. However, given that the plots are created using ggplot2, there is a lot more flexibility in the the kind of images that can be created. The <code><a href="../../reference/flametree_plot.html">flametree_plot()</a></code> function contains a <code>style</code> argument that alters the ggplot2 code used to create the image, and can have a much larger effect on the resulting image. I’ll walk through the different styles in this article, using the following palette:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">shades</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#A06AB4"</span>, <span class="st">"#FFD743"</span>, <span class="st">"#07BB9C"</span>, <span class="st">"#D773A2"</span><span class="op">)</span></code></pre></div>
 <div id="plain" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plain" class="anchor"></a>Plain</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>Setting  (the default) creates an output that resembles the original “flametree” images: colours vary along the body of the trees, and no “leaves” are drawn.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span></code></pre></div>
-<p><img src="exploring-styles_files/figure-html/plain-style-1.png" width="700"></p>
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="va">shades</span>, 
+    style <span class="op">=</span> <span class="st">"plain"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="exploring-styles_files/figure-html/plain-style-1.png" width="576"></p>
 </div>
 <div id="voronoi" class="section level2">
 <h2 class="hasAnchor">
 <a href="#voronoi" class="anchor"></a>Voronoi</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">6</span>, trees <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"voronoi"</span><span class="op">)</span></code></pre></div>
-<p><img src="exploring-styles_files/figure-html/voronoi-style-1.png" width="700"></p>
-</div>
-<div id="wisp" class="section level2">
-<h2 class="hasAnchor">
-<a href="#wisp" class="anchor"></a>Wisp</h2>
+<p>Setting  creates a plot where the tree bodies are uniform in colour, and coloured “leaves” are drawn at the top of the trees using a Voronoi tesselation of the locations of the terminal nodes. Note that computing the tesselation is computationally expensive, and this will likely produce errors if there are too many nodes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"wisp"</span><span class="op">)</span></code></pre></div>
-<p><img src="exploring-styles_files/figure-html/wisp-style-1.png" width="700"></p>
+<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">6</span>, trees <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="va">shades</span>, 
+    style <span class="op">=</span> <span class="st">"voronoi"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="exploring-styles_files/figure-html/voronoi-style-1.png" width="576"></p>
 </div>
 <div id="native-flora" class="section level2">
 <h2 class="hasAnchor">
 <a href="#native-flora" class="anchor"></a>Native Flora</h2>
+<p>The  style creates a plot in which tree bodies are rendered as thin segments, with a proportion of those segments removed, and small points are drawn at the end of each terminal segment.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span>, trees <span class="op">=</span> <span class="fl">12</span>, shift_x <span class="op">=</span> <span class="fu"><a href="../../reference/sparks.html">spark_nothing</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"nativeflora"</span><span class="op">)</span></code></pre></div>
-<p><img src="exploring-styles_files/figure-html/nativeflora-style-1.png" width="700"></p>
+<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>
+  time <span class="op">=</span> <span class="fl">10</span>, 
+  trees <span class="op">=</span> <span class="fl">12</span>, 
+  shift_x <span class="op">=</span> <span class="fu"><a href="../../reference/sparks.html">spark_nothing</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="va">shades</span>, 
+    style <span class="op">=</span> <span class="st">"nativeflora"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="exploring-styles_files/figure-html/nativeflora-style-1.png" width="576"></p>
+</div>
+<div id="wisp" class="section level2">
+<h2 class="hasAnchor">
+<a href="#wisp" class="anchor"></a>Wisp</h2>
+<p>Setting  is similar to the “nativeflora” style, but no segments are removed, and the tree body is wider at the base.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="va">shades</span>,
+    style <span class="op">=</span> <span class="st">"wisp"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="exploring-styles_files/figure-html/wisp-style-1.png" width="576"></p>
 </div>
 <div id="minimal" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minimal" class="anchor"></a>Minimal</h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>Setting  produces a variant that does not use curved segments.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span>, trees <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"minimal"</span><span class="op">)</span></code></pre></div>
-<p><img src="exploring-styles_files/figure-html/minimal-style-1.png" width="700"></p>
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="va">shades</span>, 
+    style <span class="op">=</span> <span class="st">"minimal"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="exploring-styles_files/figure-html/minimal-style-1.png" width="576"></p>
 </div>
 <div id="theme-gray" class="section level2">
 <h2 class="hasAnchor">
 <a href="#theme-gray" class="anchor"></a>Theme Gray</h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Finally, if the user sets  the result will be a plot that uses the traditional gray theme used in ggplot2.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span>, trees <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"themegray"</span><span class="op">)</span></code></pre></div>
-<p><img src="exploring-styles_files/figure-html/themegray-style-1.png" width="700"></p>
+  <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="va">shades</span>, 
+    style <span class="op">=</span> <span class="st">"themegray"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="exploring-styles_files/figure-html/themegray-style-1.png" width="576"></p>
 </div>
   </div>
 
