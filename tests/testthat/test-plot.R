@@ -49,6 +49,23 @@ test_that("invalid plot inputs throw errors", {
 
 })
 
+test_that("non-flametree data frames throw plot error", {
+
+  dat <- flametree_grow(time = 5)
+
+  new_dat <- dat[,1:4]
+  expect_error(flametree_plot(new_dat), "must have length 12")
+
+  new_dat <- dat
+  names(new_dat)[1] <- "blah"
+  expect_error(flametree_plot(new_dat), "unexpected column names")
+
+  new_dat <- dat
+  new_dat$coord_x <- as.character(new_dat$coord_x)
+  expect_error(flametree_plot(new_dat), "must be numeric")
+
+})
+
 
 test_that("invalid plot style names throw error", {
 

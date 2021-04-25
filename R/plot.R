@@ -95,7 +95,7 @@ ft__check_flametree <- function(data) {
   flm_names <- c("coord_x", "coord_y", "id_tree", "id_time", "id_path", "id_leaf",
                  "id_pathtree", "id_step", "seg_deg", "seg_len", "seg_col", "seg_wid")
   if(any(col_names != flm_names)) {
-    error("unexpected column names in `data` input", call. = FALSE)
+    stop("unexpected column names in `data` input", call. = FALSE)
   }
 
   # throw error if column types don't match
