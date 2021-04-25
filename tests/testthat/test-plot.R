@@ -12,21 +12,66 @@ test_that("plot returns a ggplot object", {
 
 })
 
+test_that("invalid plot inputs throw errors", {
 
-test_that("invalid plot styles throw error", {
+  dat <- flametree_grow(time = 5)
+
+  expect_error(flametree_plot(dat, style = 124))
+  expect_error(flametree_plot(dat, style = TRUE))
+  expect_error(flametree_plot(dat, style = list("plain")))
+  expect_error(flametree_plot(dat, style = NULL))
+  expect_error(flametree_plot(dat, style = function(x){x}))
+  expect_error(flametree_plot(dat, style = NA))
+  expect_error(flametree_plot(dat, style = c("plain", "minimal")))
+
+  expect_error(flametree_plot(dat, palette = 124))
+  expect_error(flametree_plot(dat, palette = TRUE))
+  expect_error(flametree_plot(dat, palette = list("plain")))
+  expect_error(flametree_plot(dat, palette = NULL))
+  expect_error(flametree_plot(dat, palette = function(x){x}))
+  expect_error(flametree_plot(dat, palette = NA))
+
+  expect_error(flametree_plot(dat, background = 124))
+  expect_error(flametree_plot(dat, background = TRUE))
+  expect_error(flametree_plot(dat, background = list("plain")))
+  expect_error(flametree_plot(dat, background = NULL))
+  expect_error(flametree_plot(dat, background = function(x){x}))
+  expect_error(flametree_plot(dat, background = NA))
+  expect_error(flametree_plot(dat, background = c("plain", "minimal")))
+
+  expect_error(flametree_plot(dat, data = 124))
+  expect_error(flametree_plot(dat, data = TRUE))
+  expect_error(flametree_plot(dat, data = list("plain")))
+  expect_error(flametree_plot(dat, data = NULL))
+  expect_error(flametree_plot(dat, data = function(x){x}))
+  expect_error(flametree_plot(dat, data = NA))
+  expect_error(flametree_plot(dat, data = c("plain", "minimal")))
+
+})
+
+test_that("non-flametree data frames throw plot error", {
+
+  dat <- flametree_grow(time = 5)
+
+  new_dat <- dat[,1:4]
+  expect_error(flametree_plot(new_dat), "must have length 12")
+
+  new_dat <- dat
+  names(new_dat)[1] <- "blah"
+  expect_error(flametree_plot(new_dat), "unexpected column names")
+
+  new_dat <- dat
+  new_dat$coord_x <- as.character(new_dat$coord_x)
+  expect_error(flametree_plot(new_dat), "must be numeric")
+
+})
+
+
+test_that("invalid plot style names throw error", {
 
   dat <- flametree_grow(time = 5)
   style_error_msg <- 'must be "plain", "minimal", "themegray", "voronoi", "wisp", or "nativeflora"'
 
   expect_error(flametree_plot(dat, style = "abc"), style_error_msg)
-  expect_error(flametree_plot(dat, style = 124), style_error_msg)
-  expect_error(flametree_plot(dat, style = TRUE), style_error_msg)
-  expect_error(flametree_plot(dat, style = list("plain")), style_error_msg)
-  expect_error(flametree_plot(dat, style = NULL), style_error_msg)
-  expect_error(flametree_plot(dat, style = function(x){x}), style_error_msg)
-
-  # cases to catch!!!
-  #expect_error(flametree_plot(dat, style = NA), style_error_msg)
-  #expect_error(flametree_plot(dat, style = c("plain", "minimal")), style_error_msg)
 
 })
