@@ -38,7 +38,9 @@ spark_decay <- function(x = 0, y = 0, tree = 0, time = 0, multiplier = 2, consta
 #' @export
 spark_random <- function(multiplier = 3, constant = 0) {
   function(coord_x, coord_y, id_tree, id_time) {
-    stats::runif(1, min = -multiplier/2, max = multiplier/2) + constant
+    n <- length(coord_x)
+    u <- stats::runif(1, min = -multiplier/2, max = multiplier/2) + constant
+    return(rep(u, n))
   }
 }
 
@@ -46,7 +48,8 @@ spark_random <- function(multiplier = 3, constant = 0) {
 #' @export
 spark_nothing <- function() {
   function(coord_x, coord_y, id_tree, id_time) {
-    0
+    n <- length(coord_x)
+    return(rep(0, n))
   }
 }
 
