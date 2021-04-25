@@ -21,20 +21,41 @@ flametree_plot(
 \item{style}{Style of tree to draw}
 }
 \value{
-The output is ggplot2 object plots the coord_x and coord_y values
-that define each segment as a bezier curve. To map each segment to its own
-curve, the group aesthetic is id_path, and the geom is the geom_bezier2()
-function in the ggforce package. The color aesthetic is mapped to seg_col,
-and the size aesthetic is mapped to seg_wid.
-
-The background colour can be set using the "background" argument, and the
-palette used to colour the segments is generated using the
-scale_color_paletteer_c() function from the paletteer package. To select
-the palette, the "palette" argument must take the form of a palette
-specification understood by paletteer.
+A ggplot object.
 }
 \description{
 Create a plot from a flametree data frame
+}
+\details{
+The \code{flametree_plot()} function provides several ways to
+visualise the data created by the generative system implemented by
+\code{flametree_grow()}. The background argument should be either be a
+string specifying an RGB hex colour (e.g., "#000000") or else the name
+of a colour recognised by R (see the \code{colours()} function for details).
+Analogously, the palette argument should be a vector of colours. The palette
+and background colours are interpreted slightly differently depending on
+which style of plot is created. In most cases, the background argument is
+used to set the plot background, and the palette is used to generate a
+continuous colour palette using \code{scale_colour_gradientn()} from the
+ggplot2 package or \code{colorRamp()} in grDevices.
+
+The style argument should be a single string specifying one of the following
+styles. Setting \code{style = "plain"} (the default) creates an output that
+resembles the original "flametree" images: colours vary along the body of
+the trees, and no "leaves" are drawn. Setting \code{style = "voronoi"}
+creates a plot where the tree bodies are uniform in colour, and coloured
+"leaves" are drawn at the top of the trees using a Voronoi tesselation of
+the locations of the terminal nodes. Note that computing the tesselation is
+computationally expensive, and this will likely produce errors if there are
+too many nodes. The \code{style = "nativeflora"} style creates a plot in
+which tree bodies are rendered as thin segments, with a proportion of those
+segments removed, and small points are drawn at the end of each terminal
+segment. Setting \code{style = "wisp"} is similar to the "nativeflora" style,
+but no segments are removed, and the tree body is wider at the base. Finally,
+if the user sets \code{style = "themegray"} the result will be a plot that
+uses the traditional gray theme used in ggplot2, and
+\code{style = "minimal"} produces a variant that does not use curved
+segments.
 }
 \examples{
 dat <- flametree_grow()
