@@ -90,3 +90,31 @@ test_that("spark factories verify length 1 input", {
 
 
 
+test_that("spark factories verify non-missing input", {
+
+  error_pattern <- function(name) {
+    paste0("`", name, "` must not contain missing values")
+  }
+
+  expect_error(spark_decay(x = NA_real_), error_pattern("x"))
+  expect_error(spark_decay(y = NA_real_), error_pattern("y"))
+  expect_error(spark_decay(tree = NA_real_), error_pattern("tree"))
+  expect_error(spark_decay(time = NA_real_), error_pattern("time"))
+  expect_error(spark_decay(multiplier = NA_real_), error_pattern("multiplier"))
+  expect_error(spark_decay(constant = NA_real_), error_pattern("constant"))
+
+  expect_error(spark_linear(x = NA_real_), error_pattern("x"))
+  expect_error(spark_linear(y = NA_real_), error_pattern("y"))
+  expect_error(spark_linear(tree = NA_real_), error_pattern("tree"))
+  expect_error(spark_linear(time = NA_real_), error_pattern("time"))
+  expect_error(spark_linear(constant = NA_real_), error_pattern("constant"))
+
+  expect_error(spark_random(multiplier = NA_real_), error_pattern("multiplier"))
+  expect_error(spark_random(constant = NA_real_), error_pattern("constant"))
+
+})
+
+
+
+
+
