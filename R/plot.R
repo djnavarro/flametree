@@ -37,7 +37,7 @@ flametree_plot <- function(
   if(style == "wisp") return(ft__plot_wisp(data, background, palette))
   if(style == "nativeflora") return(ft__plot_nativeflora(data, background, palette))
 
-  stop('`style` argument must be "plain", "minimal", "themegray", "voronoi", "wisp", or "nativeflora', call. = FALSE)
+  stop('`style` argument must be "plain", "minimal", "themegray", "voronoi", "wisp", or "nativeflora"', call. = FALSE)
 }
 
 
