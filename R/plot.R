@@ -30,6 +30,13 @@ flametree_plot <- function(
   style = "plain"
 ) {
 
+  ft__check_plot_input(
+    data = data,
+    background = background,
+    palette = palette,
+    style = style
+  )
+
   if(style == "plain") return(ft__plot_plain(data, background, palette))
   if(style == "minimal") return(ft__plot_minimal(data, background, palette))
   if(style == "themegray" | style == "themegrey") return(ft__plot_themegray(data, background, palette)) # secretly support correct spelling
@@ -69,6 +76,41 @@ ft__plot_plain <- function(data, background, palette) {
 
 }
 
+
+ft__check_plot_input <- function(data, background, palette, style) {
+
+  # check length of non data arguments
+  ft__check_length_exact(background, "background", 1)
+  ft__check_length_exact(style, "style", 1)
+  ft__check_length_minimum(palette, "palette", 1)
+
+  # check inputs are not functions
+  ft__check_not_closure(background, "background")
+  ft__check_not_closure(style, "style")
+  ft__check_not_closure(palette, "palette")
+
+  # check arguments are atomic
+  ft__check_atomic(background, "background")
+  ft__check_atomic(style, "style")
+  ft__check_atomic(palette, "palette")
+
+  # check non-missingness for all arguments
+  ft__check_not_na(background, "background")
+  ft__check_not_na(style, "style")
+  ft__check_not_na(palette, "palette")
+
+  # check style is character
+  ft__check_character(style, "style")
+
+  # check palette defines colours
+  ft__check_colour(palette, "palette")
+
+}
+
+# might need to be a little more precise here
+ft__check_colour <- function(x, name) {
+  ft__check_character(x, name)
+}
 
 
 ft__plot_minimal <- function(data, background, palette) {

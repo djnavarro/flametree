@@ -12,21 +12,34 @@ test_that("plot returns a ggplot object", {
 
 })
 
+test_that("invalid non-data plot inputs throw errors", {
 
-test_that("invalid plot styles throw error", {
+  dat <- flametree_grow(time = 5)
+
+  expect_error(flametree_plot(dat, style = 124))
+  expect_error(flametree_plot(dat, style = TRUE))
+  expect_error(flametree_plot(dat, style = list("plain")))
+  expect_error(flametree_plot(dat, style = NULL))
+  expect_error(flametree_plot(dat, style = function(x){x}))
+  expect_error(flametree_plot(dat, style = NA))
+  expect_error(flametree_plot(dat, style = c("plain", "minimal")))
+
+  expect_error(flametree_plot(dat, palette = 124))
+  expect_error(flametree_plot(dat, palette = TRUE))
+  expect_error(flametree_plot(dat, palette = list("plain")))
+  expect_error(flametree_plot(dat, palette = NULL))
+  expect_error(flametree_plot(dat, palette = function(x){x}))
+  expect_error(flametree_plot(dat, palette = NA))
+
+
+})
+
+
+test_that("invalid plot style names throw error", {
 
   dat <- flametree_grow(time = 5)
   style_error_msg <- 'must be "plain", "minimal", "themegray", "voronoi", "wisp", or "nativeflora"'
 
   expect_error(flametree_plot(dat, style = "abc"), style_error_msg)
-  expect_error(flametree_plot(dat, style = 124), style_error_msg)
-  expect_error(flametree_plot(dat, style = TRUE), style_error_msg)
-  expect_error(flametree_plot(dat, style = list("plain")), style_error_msg)
-  expect_error(flametree_plot(dat, style = NULL), style_error_msg)
-  expect_error(flametree_plot(dat, style = function(x){x}), style_error_msg)
-
-  # cases to catch!!!
-  #expect_error(flametree_plot(dat, style = NA), style_error_msg)
-  #expect_error(flametree_plot(dat, style = c("plain", "minimal")), style_error_msg)
 
 })

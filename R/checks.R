@@ -17,9 +17,27 @@ ft__check_not_na <- function(x, name) {
   }
 }
 
+ft__check_not_closure <- function(x, name) {
+  if(typeof(x) == "closure" | class(x) == "function") {
+    stop("`", name, "` must not be a function or closure", call. = FALSE)
+  }
+}
+
 ft__check_numeric <- function(x, name) {
   if(!is.numeric(x)) {
     stop("`", name, "` must be numeric", call. = FALSE)
+  }
+}
+
+ft__check_character <- function(x, name) {
+  if(!is.character(x)) {
+    stop("`", name, "` must be character", call. = FALSE)
+  }
+}
+
+ft__check_atomic <- function(x, name) {
+  if(!is.atomic(x)) {
+    stop("`", name, "` must be atomic", call. = FALSE)
   }
 }
 
