@@ -21,8 +21,7 @@ any other R users. Second, the system is designed to be useful in the
 classroom: getting students to make artwork in class is an enjoyable
 exercise and flametree can be used as a method to introduce some key R
 concepts in a fun way. The package is not (yet) on CRAN but you can
-install the development version of flametree from
-[GitHub](https://github.com/) with:
+install the development version of flametree with:
 
 ``` r
 # install.packages("devtools")
