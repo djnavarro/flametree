@@ -103,7 +103,7 @@
 <div id="plain" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plain" class="anchor"></a>Plain</h2>
-<p>Setting  (the default) creates an output that resembles the original “flametree” images: colours vary along the body of the trees, and no “leaves” are drawn.</p>
+<p>Setting <code>style = "plain"</code> (the default) creates an output that resembles the original “flametree” images: colours vary along the body of the trees, and no “leaves” are drawn.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
@@ -115,7 +115,7 @@
 <div id="voronoi" class="section level2">
 <h2 class="hasAnchor">
 <a href="#voronoi" class="anchor"></a>Voronoi</h2>
-<p>Setting  creates a plot where the tree bodies are uniform in colour, and coloured “leaves” are drawn at the top of the trees using a Voronoi tesselation of the locations of the terminal nodes. Note that computing the tesselation is computationally expensive, and this will likely produce errors if there are too many nodes.</p>
+<p>Setting <code>style = "voronoi"</code> creates a plot where the tree bodies are uniform in colour, and coloured “leaves” are drawn at the top of the trees using a Voronoi tesselation of the locations of the terminal nodes. Note that computing the tesselation is computationally expensive, and this will likely produce errors if there are too many nodes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">6</span>, trees <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
@@ -127,7 +127,7 @@
 <div id="native-flora" class="section level2">
 <h2 class="hasAnchor">
 <a href="#native-flora" class="anchor"></a>Native Flora</h2>
-<p>The  style creates a plot in which tree bodies are rendered as thin segments, with a proportion of those segments removed, and small points are drawn at the end of each terminal segment.</p>
+<p>The <code>style = "nativeflora"</code> style creates a plot in which tree bodies are rendered as thin segments, with a proportion of those segments removed, and small points are drawn at the end of each terminal segment.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>
   time <span class="op">=</span> <span class="fl">10</span>, 
@@ -143,7 +143,7 @@
 <div id="wisp" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wisp" class="anchor"></a>Wisp</h2>
-<p>Setting  is similar to the “nativeflora” style, but no segments are removed, and the tree body is wider at the base.</p>
+<p>Setting <code>style = "wisp"</code> is similar to the “nativeflora” style, but no segments are removed, and the tree body is wider at the base.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
@@ -155,7 +155,7 @@
 <div id="minimal" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minimal" class="anchor"></a>Minimal</h2>
-<p>Setting  produces a variant that does not use curved segments.</p>
+<p>Setting <code>style = "minimal"</code> produces a variant that does not use curved segments.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span>, trees <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
@@ -167,7 +167,7 @@
 <div id="theme-gray" class="section level2">
 <h2 class="hasAnchor">
 <a href="#theme-gray" class="anchor"></a>Theme Gray</h2>
-<p>Finally, if the user sets  the result will be a plot that uses the traditional gray theme used in ggplot2.</p>
+<p>Finally, if the user sets <code>style = "themegray"</code> the result will be a plot that uses the traditional gray theme used in ggplot2.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span>, trees <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>
