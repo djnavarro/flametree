@@ -145,11 +145,26 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Invisibly returns NULL.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A very thin wrapper around <code>ggsave()</code>. The only thing it does
-differently is extract the background colour from the ggplot object and
-use that to set the bg colour for the output device.</p>
+    <p>The <code>flametree_save()</code> function provides a very thin wrapper
+around the <code>ggsave()</code> function from ggplot2. It reverses the order of
+the first two arguments: the plot argument comes before filename, in order
+to be more pipe-friendly. The second thing it does is inspect the plot
+object to determine the background colour, and ensures that colour is also
+used to specify the background colour for the graphics device (e.g., the
+bg argument to <code><a href='https://rdrr.io/r/grDevices/png.html'>png()</a></code>). The reason for doing this is that plots
+created using <code><a href='flametree_plot.html'>flametree_plot()</a></code> typically force the coordinates to be
+on the same scale using <code>coord_equal()</code>. As a consequence, if the
+aspect ratio of the image differs from the aspect ratio of the ggplot there
+will be sections of the image that show the background colour of the graphics
+device rather than the background colour specified by the ggplot object. By
+overriding the default behaviour of <code>ggsave()</code>, the
+<code>flametree_save()</code> function ensures that the image has the same
+background colour everywhere.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
