@@ -2,10 +2,7 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
-^README_cache$
-^\.travis\.yml$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^pkgdown-tweaks.R$
 ^\.github$

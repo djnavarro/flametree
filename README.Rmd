@@ -8,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README_cache/",
+  fig.path = "man/figures/README-",
   out.width = "80%",
   fig.width = 50/3, 
   fig.height = 50/3,  
@@ -38,25 +38,3 @@ You can install the development version of flametree from [GitHub](https://githu
 # install.packages("devtools")
 devtools::install_github("djnavarro/flametree")
 ```
-## Example
-
-```{r example-1, dev.args=list(bg = "black")}
-library(flametree)
-
-flametree_grow(time = 12) %>% 
-  flametree_plot()         
-```
-
-
-```{r example-2, dev.args=list(bg = "black")}
-flametree_grow(seed = 1, trees = 5)  %>% 
-  flametree_plot(style = "voronoi")
-```
-
-```{r example-3, dev.args=list(bg = "black")}
-flametree_grow(trees = 16, shift_x = spark_nothing())  %>% 
-  flametree_plot(style = "nativeflora")
-```
-
-
-
