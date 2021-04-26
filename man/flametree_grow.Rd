@@ -79,10 +79,60 @@ what style of plot is generated.
 Generate the data specifying a flametree
 }
 \details{
+Generative art created with flametree is a visualisation of a data
+structure created by calling \code{flametree_grow()}. The underlying
+algorithm is an iterative branching process: each tree starts out as a single
+vertical segment, to which multiple new segments are added at the end of the
+first iteration. Over multiple iterations this creates a tree-like structure.
 
+The user can control how this iterative process unfolds. By setting the
+\code{seed} argument the random number generator is reset using
+\code{set.seed()}. The \code{trees} argument specifies the number of trees
+to create using this process, the \code{time} argument specifies how many
+iterations of the branching process will be run, and the \code{split}
+argument specifies how many new segments will be created each time a
+branching occurs.
+
+When a new segment is created, its size and orientation are controlled by the
+\code{scale} and \code{angle} arguments. The \code{scale} argument takes a
+vector of positive numbers. One of these numbers is selected at random
+whenever a new segment is created, and the length of the new segment is equal
+to the length of the "parent" segment from which it was created, multiplied
+by this scaling factor. The orientation of the new segment is controlled by
+the angle argument in an analogous way. Every time a new segment is
+generated, one of these angles (interpreted in degrees, not radians) is
+selected at random. The orientation of the new segment is equal to the
+orientation of the parent segment plus the sampled angle.
+
+The remaining arguments (\code{seg_col}, \code{seg_wid}, \code{shift_x},
+and \code{shift_y}) all take functions as their input, and are used to
+control how the colours (\code{seg_col}) and width (\code{seg_wid}) of the
+segments are created, as well as the horizontal (\code{shift_x}) and
+vertical (\code{shift_y}) displacement of the trees are generated. Functions
+passed to these arguments take four inputs: \code{coord_x}, \code{coord_y},
+\code{id_tree}, and \code{id_time}. Any function that takes
+these variables as input can be used for this purpose. However, as a
+convenience, four "spark" functions are provided that can be used to create
+functions that are suitable for this purpose: \code{spark_linear()},
+\code{spark_decay()}, \code{spark_random()}, and \code{spark_nothing()}.
+
+These functions are documented in their own help files. To give an example,
+the default behaviour of \code{flametree_grow()} adds a random horizontal
+displacement to each tree to give the impression of multiple trees growing
+side by side. To suppress this horizontal displacement, set
+\code{shift_x = spark_nothing()}.
 }
 \examples{
+# flametree data structure with default parameters
 flametree_grow()
+
+# setting time = 10 runs the generative process
+# longer resulting in a table with more rows
 flametree_grow(time = 10)
+
+# default behaviour is to randomly displace trees
+# by random horizontal perturbation: to switch this
+# off use the spark_nothing() function
+flametree_grow(shift_x = spark_nothing())
 
 }

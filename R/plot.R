@@ -8,40 +8,73 @@
 #'
 #' @details The \code{flametree_plot()} function provides several ways to
 #' visualise the data created by the generative system implemented by
-#' \code{flametree_grow()}. The background argument should be either be a
-#' string specifying an RGB hex colour (e.g., "#000000") or else the name
-#' of a colour recognised by R (see the \code{colours()} function for details).
-#' Analogously, the palette argument should be a vector of colours. The palette
-#' and background colours are interpreted slightly differently depending on
-#' which style of plot is created. In most cases, the background argument is
-#' used to set the plot background, and the palette is used to generate a
-#' continuous colour palette using \code{scale_colour_gradientn()} from the
-#' ggplot2 package or \code{colorRamp()} in grDevices.
+#' \code{flametree_grow()}. The \code{background} argument sets the background
+#' colour of the image, and should either be a string specifying an RGB hex
+#' colour (e.g., "#000000") or the of a colour recognised by R (see the
+#' \code{colours()} function for details). Analogously, the \code{palette}
+#' argument should be a vector of colours. However, the \code{palette} argument
+#' is  interpreted slightly differently depending on which style of plot is
+#' created, discussed below. To set the \code{style} of the resulting plot,
+#' pass one of the following style names: "plain" (the default), "voronoi",
+#' "wisp", "nativeflora", "minimal", or "themegray".
 #'
-#' The style argument should be a single string specifying one of the following
-#' styles. Setting \code{style = "plain"} (the default) creates an output that
-#' resembles the original "flametree" images: colours vary along the body of
-#' the trees, and no "leaves" are drawn. Setting \code{style = "voronoi"}
-#' creates a plot where the tree bodies are uniform in colour, and coloured
-#' "leaves" are drawn at the top of the trees using a Voronoi tesselation of
-#' the locations of the terminal nodes. Note that computing the tesselation is
-#' computationally expensive, and this will likely produce errors if there are
-#' too many nodes. The \code{style = "nativeflora"} style creates a plot in
-#' which tree bodies are rendered as thin segments, with a proportion of those
-#' segments removed, and small points are drawn at the end of each terminal
-#' segment. Setting \code{style = "wisp"} is similar to the "nativeflora" style,
-#' but no segments are removed, and the tree body is wider at the base. Finally,
-#' if the user sets \code{style = "themegray"} the result will be a plot that
-#' uses the traditional gray theme used in ggplot2, and
-#' \code{style = "minimal"} produces a variant that does not use curved
-#' segments.
+#' Plots in the "plain" style have the following properties. Branches of
+#' the trees vary in width using the \code{seg_wid} data column. Each branch
+#' is shown as a curved segment created using \code{geom_bezier2()}, and the
+#' colour of the segments is mapped to the \code{seg_col} column in the data.
+#' No leaves are drawn. In this style, the elements of the \code{palette} are
+#' used to create a continuous n-colour gradient using
+#' \code{scale_colour_gradientn()}.
+#'
+#' Plots in the "voronoi" style draw the shape of the tree the same way as
+#' the plain style, except that the segments do not vary in colour and are
+#' rendered using \code{geom_bezier()} instead of \code{geom_bezier2()}. Unlike
+#' the plain style, stylised "leaves" are drawn by constructing a Voronoi
+#' tesselation of the terminal nodes in the tree. Note that computing the
+#' tesselation is computationally expensive and this will likely produce
+#' errors if there are too many nodes (typically when the \code{time} parameter
+#' to \code{flametree_grow()} is large). The interpretation of the
+#' \code{palette} argument is slightly different: the first element of the
+#' palette is used to set the colour of the trees, and the rest of the palette
+#' colours are used to create the gradient palette used to colour the tiles
+#' depicted in the Voronoi tesselation.
+#'
+#' The \code{style = "nativeflora"} style creates a plot in which tree branches
+#' are rendered as thin segments, with a proportion of those segments removed,
+#' and small points are drawn at the end of each terminal segment. The width of
+#' the branches does not vary (i.e., \code{seg_wid} is ignored) and the colour
+#' of the branches is constant within tree, but does vary across trees, ignoring
+#' the continuous valued \code{seg_col} variable and using only the
+#' \code{id_tree} variable to do so. As with the plain style, the
+#' \code{palette} colours are used to define an n-colour gradient.
+#'
+#' The "wisp" style is similar to nativeflora, but no segments are removed, and
+#' the wdith of the branches is mapped to \code{seg_wid}. It only uses the first
+#' two elements of \code{palette}: the first element specifies the colour of the
+#' branches, and the second element specifies the colour of the leaf dots.
+#'
+#' The final two styles are simplifications of other styles. The "minimal"
+#' style is similar to the plain style but does not use curved segments, relying
+#' on \code{geom_path()} to draw the branches. The "themegray" style does this
+#' too, but it ignores the \code{palette} argument entirely, rendering the trees
+#' in black, set against the default gray background specified by the ggplot2
+#' \code{theme_gray()} function.
+#'
 #'
 #' @return A ggplot object.
 #' @export
 #'
 #' @examples
-#' dat <- flametree_grow()
-#' flametree_plot(dat)
+#' # the default tree in the plain style
+#' flametree_grow() %>% flametree_plot()
+#'
+#' # 10 trees drawn in the nativeflora style
+#' flametree_grow(trees = 10, shift_x = spark_nothing()) %>%
+#'   flametree_plot(style = "nativeflora")
+#'
+#' # changing the palette
+#' shades <- c("#A06AB4", "#FFD743", "#07BB9C", "#D773A2")
+#' flametree_grow() %>% flametree_plot(palette = shades)
 #'
 flametree_plot <- function(
   data,
@@ -248,7 +281,7 @@ ft__plot_voronoi <- function(data, background, palette) {
         group = id_pathtree,
         size = seg_wid
       ),
-      color = "white",
+      color = palette[1],
       lineend = "round",
       show.legend = FALSE
     ) +
@@ -268,8 +301,8 @@ ft__plot_voronoi <- function(data, background, palette) {
       size = .1
     ) +
 
-    ggplot2::scale_fill_gradientn(colours = palette) +
-    ggplot2::scale_colour_gradientn(colours = palette) +
+    ggplot2::scale_fill_gradientn(colours = palette[-1]) +
+    ggplot2::scale_colour_gradientn(colours = palette[-1]) +
     ggplot2::scale_size_identity() +
     ggplot2::coord_equal() +
     ggplot2::theme_void() +

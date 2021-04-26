@@ -43,7 +43,7 @@
 #' segments are created, as well as the horizontal (\code{shift_x}) and
 #' vertical (\code{shift_y}) displacement of the trees are generated. Functions
 #' passed to these arguments take four inputs: \code{coord_x}, \code{coord_y},
-#' \code{id_tree, and \code{id_time} as input. Any function that takes
+#' \code{id_tree}, and \code{id_time}. Any function that takes
 #' these variables as input can be used for this purpose. However, as a
 #' convenience, four "spark" functions are provided that can be used to create
 #' functions that are suitable for this purpose: \code{spark_linear()},
@@ -92,8 +92,17 @@
 #' what style of plot is generated.
 #'
 #' @examples
+#' # flametree data structure with default parameters
 #' flametree_grow()
+#'
+#' # setting time = 10 runs the generative process
+#' # longer resulting in a table with more rows
 #' flametree_grow(time = 10)
+#'
+#' # default behaviour is to randomly displace trees
+#' # by random horizontal perturbation: to switch this
+#' # off use the spark_nothing() function
+#' flametree_grow(shift_x = spark_nothing())
 #'
 #' @export
 flametree_grow <- function(

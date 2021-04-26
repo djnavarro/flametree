@@ -16,7 +16,7 @@
 #' segments are created, as well as the horizontal (\code{shift_x}) and
 #' vertical (\code{shift_y}) displacement of the trees are generated. Functions
 #' passed to these arguments take four inputs: \code{coord_x}, \code{coord_y},
-#' \code{id_tree, and \code{id_time} as input. Any function that takes
+#' \code{id_tree}, and \code{id_time} as input. Any function that takes
 #' these variables as input and produces a numeric vector of the same length
 #' as the input can be used for this purpose. However, as a
 #' convenience, four "spark" functions are provided that can be used to create
@@ -35,6 +35,23 @@
 #'
 #' @return A function that takes \code{coord_x}, \code{coord_y}, \code{id_tree},
 #' and \code{id_time} as input, and returns a numeric vector as output.
+#'
+#' @examples
+#' # returns a linear function of x and y
+#' spark_linear(x = 3,  y = 2)
+#'
+#' # returns a function of time that decays
+#' # exponentially to an asymptote
+#' spark_decay(time = .1, constant = .1)
+#'
+#' # returns a numeric vector containing
+#' # copies of the same uniform random number
+#' # constrained to lie between -2.5 and 2.5
+#' spark_random(multiplier = 5)
+#'
+#' # returns a function that always produces
+#' # a vector of zeros
+#' spark_nothing()
 #'
 #' @rdname sparks
 #' @export
