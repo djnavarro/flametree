@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">flametree</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/djnavarro/flametree">flametree</a></span><span class="op">)</span></code></pre></div>
-<p>The growth of the flametree is partially governed by controller functions called “sparks”. A spark function takes four arguments (<code>coord_x</code>, <code>coord_y</code>, <code>id_tree</code>, and <code>id_time</code>) and outputs a numeric value. These functions can be specified manually and used as inputs to <code><a href="../../reference/flametree_grow.html">flametree_grow()</a></code>, or can be generated using one of the built in generator functions. For instance, you can use the <code><a href="../../reference/sparks.html">spark_linear()</a></code> function to create a function that specifies any linear combination of the four inputs:</p>
+<p>Some arguments to <code><a href="../../reference/flametree_grow.html">flametree_grow()</a></code> take numeric input, but <code>seg_col</code>, <code>seg_wid</code>, <code>shift_x</code>, and <code>shift_y</code> all take functions as their input, and are used to control how the colours (<code>seg_col</code>) and width (<code>seg_wid</code>) of the segments are created, as well as the horizontal (<code>shift_x</code>) and vertical (<code>shift_y</code>) displacement of the trees are generated. Functions passed to these arguments take four inputs: <code>coord_x</code>, <code>coord_y</code>, <code>id_tree</code>, and <code>id_time</code> as input. Any function that takes these variables as input and produces a numeric vector of the same length as the input can be used for this purpose. However, as a convenience, four “spark” functions are provided that can be used to create functions that are suitable for this purpose: <code><a href="../../reference/sparks.html">spark_linear()</a></code>, <code><a href="../../reference/sparks.html">spark_decay()</a></code>, <code><a href="../../reference/sparks.html">spark_random()</a></code>, and <code><a href="../../reference/sparks.html">spark_nothing()</a></code>. Arguments passed to one of the spark functions determine the specific function is generated. For example, this returns a function that is linear in <code>coord_x</code> and <code>coord_y</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/sparks.html">spark_linear</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; function (coord_x, coord_y, id_tree, id_time) </span>
@@ -105,8 +105,8 @@
 <span class="co">#&gt;     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * </span>
 <span class="co">#&gt;         id_time) + constant</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x7f9500c76638&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x7f9500c75bf0&gt;</span></code></pre></div>
+<span class="co">#&gt; &lt;bytecode: 0x7ff5f39f4db8&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x7ff5f39f4370&gt;</span></code></pre></div>
 <p>We could use this function to control how the colours in the tree change:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>

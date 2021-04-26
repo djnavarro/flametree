@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flametree</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -179,37 +179,65 @@
 
     <p>The <code>flametree_plot()</code> function provides several ways to
 visualise the data created by the generative system implemented by
-<code><a href='flametree_grow.html'>flametree_grow()</a></code>. The background argument should be either be a
-string specifying an RGB hex colour (e.g., "#000000") or else the name
-of a colour recognised by R (see the <code><a href='https://rdrr.io/r/grDevices/colors.html'>colours()</a></code> function for details).
-Analogously, the palette argument should be a vector of colours. The palette
-and background colours are interpreted slightly differently depending on
-which style of plot is created. In most cases, the background argument is
-used to set the plot background, and the palette is used to generate a
-continuous colour palette using <code>scale_colour_gradientn()</code> from the
-ggplot2 package or <code><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRamp()</a></code> in grDevices.</p>
-<p>The style argument should be a single string specifying one of the following
-styles. Setting <code>style = "plain"</code> (the default) creates an output that
-resembles the original "flametree" images: colours vary along the body of
-the trees, and no "leaves" are drawn. Setting <code>style = "voronoi"</code>
-creates a plot where the tree bodies are uniform in colour, and coloured
-"leaves" are drawn at the top of the trees using a Voronoi tesselation of
-the locations of the terminal nodes. Note that computing the tesselation is
-computationally expensive, and this will likely produce errors if there are
-too many nodes. The <code>style = "nativeflora"</code> style creates a plot in
-which tree bodies are rendered as thin segments, with a proportion of those
-segments removed, and small points are drawn at the end of each terminal
-segment. Setting <code>style = "wisp"</code> is similar to the "nativeflora" style,
-but no segments are removed, and the tree body is wider at the base. Finally,
-if the user sets <code>style = "themegray"</code> the result will be a plot that
-uses the traditional gray theme used in ggplot2, and
-<code>style = "minimal"</code> produces a variant that does not use curved
-segments.</p>
+<code><a href='flametree_grow.html'>flametree_grow()</a></code>. The <code>background</code> argument sets the background
+colour of the image, and should either be a string specifying an RGB hex
+colour (e.g., "#000000") or the of a colour recognised by R (see the
+<code><a href='https://rdrr.io/r/grDevices/colors.html'>colours()</a></code> function for details). Analogously, the <code>palette</code>
+argument should be a vector of colours. However, the <code>palette</code> argument
+is  interpreted slightly differently depending on which style of plot is
+created, discussed below. To set the <code>style</code> of the resulting plot,
+pass one of the following style names: "plain" (the default), "voronoi",
+"wisp", "nativeflora", "minimal", or "themegray".</p>
+<p>Plots in the "plain" style have the following properties. Branches of
+the trees vary in width using the <code>seg_wid</code> data column. Each branch
+is shown as a curved segment created using <code>geom_bezier2()</code>, and the
+colour of the segments is mapped to the <code>seg_col</code> column in the data.
+No leaves are drawn. In this style, the elements of the <code>palette</code> are
+used to create a continuous n-colour gradient using
+<code>scale_colour_gradientn()</code>.</p>
+<p>Plots in the "voronoi" style draw the shape of the tree the same way as
+the plain style, except that the segments do not vary in colour and are
+rendered using <code>geom_bezier()</code> instead of <code>geom_bezier2()</code>. Unlike
+the plain style, stylised "leaves" are drawn by constructing a Voronoi
+tesselation of the terminal nodes in the tree. Note that computing the
+tesselation is computationally expensive and this will likely produce
+errors if there are too many nodes (typically when the <code>time</code> parameter
+to <code><a href='flametree_grow.html'>flametree_grow()</a></code> is large). The interpretation of the
+<code>palette</code> argument is slightly different: the first element of the
+palette is used to set the colour of the trees, and the rest of the palette
+colours are used to create the gradient palette used to colour the tiles
+depicted in the Voronoi tesselation.</p>
+<p>The <code>style = "nativeflora"</code> style creates a plot in which tree branches
+are rendered as thin segments, with a proportion of those segments removed,
+and small points are drawn at the end of each terminal segment. The width of
+the branches does not vary (i.e., <code>seg_wid</code> is ignored) and the colour
+of the branches is constant within tree, but does vary across trees, ignoring
+the continuous valued <code>seg_col</code> variable and using only the
+<code>id_tree</code> variable to do so. As with the plain style, the
+<code>palette</code> colours are used to define an n-colour gradient.</p>
+<p>The "wisp" style is similar to nativeflora, but no segments are removed, and
+the wdith of the branches is mapped to <code>seg_wid</code>. It only uses the first
+two elements of <code>palette</code>: the first element specifies the colour of the
+branches, and the second element specifies the colour of the leaf dots.</p>
+<p>The final two styles are simplifications of other styles. The "minimal"
+style is similar to the plain style but does not use curved segments, relying
+on <code>geom_path()</code> to draw the branches. The "themegray" style does this
+too, but it ignores the <code>palette</code> argument entirely, rendering the trees
+in black, set against the default gray background specified by the ggplot2
+<code>theme_gray()</code> function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='flametree_grow.html'>flametree_grow</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>flametree_plot</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># the default tree in the plain style</span>
+<span class='fu'><a href='flametree_grow.html'>flametree_grow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>flametree_plot</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='flametree_plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># 10 trees drawn in the nativeflora style</span>
+<span class='fu'><a href='flametree_grow.html'>flametree_grow</a></span><span class='op'>(</span>trees <span class='op'>=</span> <span class='fl'>10</span>, shift_x <span class='op'>=</span> <span class='fu'><a href='sparks.html'>spark_nothing</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>flametree_plot</span><span class='op'>(</span>style <span class='op'>=</span> <span class='st'>"nativeflora"</span><span class='op'>)</span>
+</div><div class='img'><img src='flametree_plot-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># changing the palette</span>
+<span class='va'>shades</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#A06AB4"</span>, <span class='st'>"#FFD743"</span>, <span class='st'>"#07BB9C"</span>, <span class='st'>"#D773A2"</span><span class='op'>)</span>
+<span class='fu'><a href='flametree_grow.html'>flametree_grow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>flametree_plot</span><span class='op'>(</span>palette <span class='op'>=</span> <span class='va'>shades</span><span class='op'>)</span>
+</div><div class='img'><img src='flametree_plot-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

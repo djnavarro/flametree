@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flametree</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -183,15 +183,78 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A function with arguments coord_x, coord_y, id_tree, and id_time</p>
+    <p>A function that takes <code>coord_x</code>, <code>coord_y</code>, <code>id_tree</code>,
+and <code>id_time</code> as input, and returns a numeric vector as output.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The growth of the flametree is partially governed by controller
-functions called "sparks". A spark function takes four arguments (coord_x,
-coord_y, id_tree, and id_time) and outputs a numeric value. These functions
-can be specified manually and used as inputs to <code><a href='flametree_grow.html'>flametree_grow()</a></code>,
-or can be generated using one of the built in generator functions</p>
+    <p>Some arguments to <code><a href='flametree_grow.html'>flametree_grow()</a></code> take numeric input, but
+<code>seg_col</code>, <code>seg_wid</code>, <code>shift_x</code>, and <code>shift_y</code> all
+take functions as their input, and are used to
+control how the colours (<code>seg_col</code>) and width (<code>seg_wid</code>) of the
+segments are created, as well as the horizontal (<code>shift_x</code>) and
+vertical (<code>shift_y</code>) displacement of the trees are generated. Functions
+passed to these arguments take four inputs: <code>coord_x</code>, <code>coord_y</code>,
+<code>id_tree</code>, and <code>id_time</code> as input. Any function that takes
+these variables as input and produces a numeric vector of the same length
+as the input can be used for this purpose. However, as a
+convenience, four "spark" functions are provided that can be used to create
+functions that are suitable for this purpose: <code>spark_linear()</code>,
+<code>spark_decay()</code>, <code>spark_random()</code>, and <code>spark_nothing()</code>.
+Arguments passed to one of the spark functions determine the specific
+function is generated. For example, <code>spark_linear()</code> can be used to
+construct any linear combination of the inputs:
+<code>spark_linear(x = 3, y = 2)</code> would return a function that computes
+the sum <code>(3 * coord_x) + (2 * coord_y)</code>. Different values provided as
+input produce different linear functions. Analogously, <code>spark_decay()</code>
+returns functions that are exponentially decaying functions of a linear
+combination of inputs. The <code>spark_random()</code> generator can be used to
+generate functions that return random values, and <code>spark_nothing()</code>
+produces a function that always returns zero regardless of input.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># returns a linear function of x and y</span>
+<span class='fu'>spark_linear</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>3</span>,  y <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; function (coord_x, coord_y, id_tree, id_time) 
+#&gt; {
+#&gt;     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
+#&gt;         id_time) + constant
+#&gt; }
+#&gt; &lt;bytecode: 0x7ffbbb170220&gt;
+#&gt; &lt;environment: 0x7ffbbb0eee38&gt;</div><div class='input'>
+<span class='co'># returns a function of time that decays</span>
+<span class='co'># exponentially to an asymptote</span>
+<span class='fu'>spark_decay</span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>.1</span>, constant <span class='op'>=</span> <span class='fl'>.1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; function (coord_x, coord_y, id_tree, id_time) 
+#&gt; {
+#&gt;     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * 
+#&gt;         id_tree) + (time * id_time))^2) + constant
+#&gt; }
+#&gt; &lt;bytecode: 0x7ffbbb180e00&gt;
+#&gt; &lt;environment: 0x7ffbb9540cd0&gt;</div><div class='input'>
+<span class='co'># returns a numeric vector containing</span>
+<span class='co'># copies of the same uniform random number</span>
+<span class='co'># constrained to lie between -2.5 and 2.5</span>
+<span class='fu'>spark_random</span><span class='op'>(</span>multiplier <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; function (coord_x, coord_y, id_tree, id_time) 
+#&gt; {
+#&gt;     n &lt;- length(coord_x)
+#&gt;     u &lt;- stats::runif(1, min = -multiplier/2, max = multiplier/2) + 
+#&gt;         constant
+#&gt;     return(rep(u, n))
+#&gt; }
+#&gt; &lt;bytecode: 0x7ffbbb15c680&gt;
+#&gt; &lt;environment: 0x7ffbb95007e0&gt;</div><div class='input'>
+<span class='co'># returns a function that always produces</span>
+<span class='co'># a vector of zeros</span>
+<span class='fu'>spark_nothing</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; function (coord_x, coord_y, id_tree, id_time) 
+#&gt; {
+#&gt;     n &lt;- length(coord_x)
+#&gt;     return(rep(0, n))
+#&gt; }
+#&gt; &lt;bytecode: 0x7ffbbb16da08&gt;
+#&gt; &lt;environment: 0x7ffbb8c97f00&gt;</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
