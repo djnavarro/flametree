@@ -30,15 +30,12 @@ spark_nothing()
 \item{multiplier}{Scaling parameter that multiplies the output}
 }
 \value{
-A function with arguments coord_x, coord_y, id_tree, and id_time
+A function that takes \code{coord_x}, \code{coord_y}, \code{id_tree},
+and \code{id_time} as input, and returns a numeric vector as output.
 }
 \description{
 Spark functions to control tree growth
 }
 \details{
-The growth of the flametree is partially governed by controller
-functions called "sparks". A spark function takes four arguments (coord_x,
-coord_y, id_tree, and id_time) and outputs a numeric value. These functions
-can be specified manually and used as inputs to \code{flametree_grow()},
-or can be generated using one of the built in generator functions
+
 }
