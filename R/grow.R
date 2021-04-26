@@ -18,73 +18,92 @@
 #' vertical segment, to which multiple new segments are added at the end of the
 #' first iteration. Over multiple iterations this creates a tree-like structure.
 #'
-#' The user can control how this iterative process unfolds. By setting the seed
-#' argument the random number generator is reset using \code{set.seed()}. The
-#' trees argument specifies the number of trees to create using this process,
-#' the time argument specifies how many iterations of the branching process
-#' will be run, and the split argument specifies how many new segments will be
-#' created each time a branching occurs.
+#' The user can control how this iterative process unfolds. By setting the
+#' \code{seed} argument the random number generator is reset using
+#' \code{set.seed()}. The \code{trees} argument specifies the number of trees
+#' to create using this process, the \code{time} argument specifies how many
+#' iterations of the branching process will be run (at least two), and the
+#' \code{split} argument specifies how many new segments (at least two) will be
+#' created each time abranching occurs.
 #'
 #' When a new segment is created, its size and orientation are controlled by the
-#' scale and angle arguments. The scale argument takes a vector of positive
-#' numbers. One of these numbers is selected at random whenever a new segment
-#' is created, and the length of the new segment is equal to the length of the
-#' "parent" segment from which it was created, multiplied by this scaling factor.
-#' The orientation of the new segment is controlled by the angle argument in an
-#' analogous way. Every time a new segment is generated, one of these angles
-#' (interpreted in degrees, not radians) is selected at random. The orientation
-#' of the new segment is equal to the orientation of the parent segment plus
-#' the sampled angle.
+#' \code{scale} and \code{angle} arguments. The \code{scale} argument takes a
+#' vector of at least two positive numbers. One of these numbers is selected at
+#' random whenever a new segment is created, and the length of the new segment
+#' is equal to the length of the "parent" segment from which it was created,
+#' multiplied by this scaling factor. The orientation of the new segment is
+#' controlled by the angle argument in an analogous way. Every time a new
+#' segment is generated, one of these angles (interpreted in degrees, not
+#' radians) is selected at random. The orientation of the new segment is equal
+#' to the orientation of the parent segment plus the sampled angle. Like the
+#' \code{scale} argument, \code{angle} must contain at least two values.
 #'
-#' The remaining arguments (seg_col, seg_wid, shift_x, and shift_y) all take
-#' functions as their input, and are used to control how the colours (seg_col)
-#' and width (seg_wid) of the segments are created, as well as the horizontal
-#' (shift_x) and vertical (shift_y) displacement of the trees are generated.
-#' The flametree package contains four tools to help create these functions:
-#' \code{spark_linear()}, \code{spark_decay()}, \code{spark_random()} and
-#' \code{spark_nothing()}. As an example, the default behaviour of
-#' \code{flametree_grow()} adds a random horizontal displacement to each tree
-#' to give the impression of multiple trees growing side by side. To suppress
-#' this horizontal displacement, set \code{shift_x = spark_nothing()}. For more
-#' information about how to use these "spark" functions to control the flametree
-#' generator, please see the documentation to the spark functions.
+#' The remaining arguments (\code{seg_col}, \code{seg_wid}, \code{shift_x},
+#' and \code{shift_y}) all take functions as their input, and are used to
+#' control how the colours (\code{seg_col}) and width (\code{seg_wid}) of the
+#' segments are created, as well as the horizontal (\code{shift_x}) and
+#' vertical (\code{shift_y}) displacement of the trees are generated. Functions
+#' passed to these arguments take four inputs: \code{coord_x}, \code{coord_y},
+#' \code{id_tree}, and \code{id_time}. Any function that takes
+#' these variables as input can be used for this purpose. However, as a
+#' convenience, four "spark" functions are provided that can be used to create
+#' functions that are suitable for this purpose: \code{spark_linear()},
+#' \code{spark_decay()}, \code{spark_random()}, and \code{spark_nothing()}.
+#'
+#' These functions are documented in their own help files. To give an example,
+#' the default behaviour of \code{flametree_grow()} adds a random horizontal
+#' displacement to each tree to give the impression of multiple trees growing
+#' side by side. To suppress this horizontal displacement, set
+#' \code{shift_x = spark_nothing()}.
 #'
 #' @return The output of \code{flametree_grow()}` is a tibble with the following
-#' columns: coord_x, coord_y, id_tree, id_time, id_path, id_leaf, id_pathtree,
-#' id_step, seg_deg, seg_len, seg_col, seg_wid. Each row in the tibble specifies
-#' a single point: every curved segment is defined by three such rows.
+#' columns: \code{coord_x}, \code{coord_y}, \code{id_tree}, \code{id_time},
+#' \code{id_path}, \code{id_leaf}, \code{id_pathtree}, \code{id_step},
+#' \code{seg_deg}, \code{seg_len}, \code{seg_col}, and \code{seg_wid}. Each
+#' row in the tibble specifies a single point: every curved segment is defined
+#' by three such rows.
 #'
 #' The two "coord" columns are numeric variables that specify the location of
 #' the point itself. The "id" columns are used as indicators of various kinds.
-#' The id_tree column contains numbers specifying which tree each point belongs
-#' to, and similarly the id_time column is a numeric identifier that specifies
-#' the time point at which the point was generated (i.e., the iteration of
-#' the generative process). The id_step column contains a number (0, 1, or 2)
-#' indicating whether the point is the first point, the midpoint, or the end
-#' point of the relevant curved segment in a tree. In addition, there are two
-#' identifier columns used to denote the segments themselves. The id_path
-#' column is numeric, and assigns value 1 to the "first" segment (i.e.,
-#' the lowest part of the tree trunk) for every tree, with values increasing
-#' numerically for each subsequent segment. Values for id_path will uniquely
-#' identify a segment within a tree, but when multiple trees are generated there
-#' will be multiple segments that have the same id_path value. If a unique
-#' identifier across trees is needed, use the id_pathtree column, which is a
-#' character vector constructed by pasting the id_path and id_tree values into
-#' a string, with an underscore as the separator character.
+#' The \code{id_tree} column contains numbers specifying which tree each point
+#' belongs to, and similarly the \code{id_time} column is a numeric identifier
+#' that specifies the time point at which the point was generated (i.e., the
+#' iteration of the generative process). The \code{id_step} column contains
+#' a number (0, 1, or 2) indicating whether the point is the first point, the
+#' midpoint, or the end point of the relevant curved segment in a tree. In
+#' addition, there are two identifier columns used to denote the segments
+#' themselves. The \code{id_path} column is numeric, and assigns value 1 to
+#' the "first" segment (i.e., the lowest part of the tree trunk) for every
+#' tree, with values increasing numerically for each subsequent segment. Values
+#' for \code{id_path} will uniquely identify a segment within a tree, but when
+#' multiple trees are generated there will be multiple segments that have the
+#' same \code{id_path} value. If a unique identifier across trees is needed,
+#' use the \code{id_pathtree} column, which is a character vector constructed
+#' by pasting the \code{id_path} and \code{id_tree} values into a string, with
+#' an underscore as the separator character.
 #'
 #' In addition to the two coordinate columns and the six identifier columns,
 #' the data generated by \code{flametree_grow()} contains four "seg" columns
 #' that are intended to map onto different visual characteristics of a plot.
-#' The seg_deg column specifies the orientation of the segment, whereas seg_len
-#' denotes the length of the segment, seg_col specifies the colour (as a numeric
-#' value that could be interpreted by a palette), and seg_wid specifies the
-#' width of the segment. Note that this information use used differently by
-#' the \code{flametree_plot()} function, depending on what style of plot is
-#' generated.
+#' The \code{seg_deg} column specifies the orientation of the segment, whereas
+#' \code{seg_len} denotes the length of the segment, \code{seg_col} specifies
+#' the colour (as a numeric value that could be interpreted by a palette), and
+#' \code{seg_wid} specifies the width of the segment. Note that this information
+#' use used differently by the \code{flametree_plot()} function, depending on
+#' what style of plot is generated.
 #'
 #' @examples
+#' # flametree data structure with default parameters
 #' flametree_grow()
+#'
+#' # setting time = 10 runs the generative process
+#' # longer resulting in a table with more rows
 #' flametree_grow(time = 10)
+#'
+#' # default behaviour is to randomly displace trees
+#' # by random horizontal perturbation: to switch this
+#' # off use the spark_nothing() function
+#' flametree_grow(shift_x = spark_nothing())
 #'
 #' @export
 flametree_grow <- function(
@@ -270,31 +289,31 @@ ft__check_opts <- function(x) {
   ft__check_soft_integer(x$seed, "seed")
   ft__check_length_exact(x$seed, "seed", 1)
 
-  # time must be a single positive integer
+  # time must be a integer > 1
   ft__check_not_null(x$time, "time")
   ft__check_not_na(x$time, "time")
   ft__check_soft_integer(x$time, "time")
   ft__check_length_exact(x$time, "time", 1)
-  ft__check_value_minimum(x$time, "time", 1)
+  ft__check_value_minimum(x$time, "time", 2)
 
   # scale values must be non-negative numbers
   ft__check_not_null(x$scale, "scale")
   ft__check_not_na(x$scale, "scale")
-  ft__check_length_minimum(x$scale, "scale", 1)
+  ft__check_length_minimum(x$scale, "scale", 2)
   ft__check_value_minimum(x$scale, "scale", 0) # also checks numeric
 
   # angle values must be numeric (note: range of angles is not restricted)
   ft__check_not_null(x$angle, "angle")
   ft__check_not_na(x$angle, "angle")
   ft__check_numeric(x$angle, "angle")
-  ft__check_length_minimum(x$angle, "angle", 1)
+  ft__check_length_minimum(x$angle, "angle", 2)
 
   # split must be a single positive integer
   ft__check_not_null(x$split, "split")
   ft__check_not_na(x$split, "split")
   ft__check_soft_integer(x$split, "split")
   ft__check_length_exact(x$split, "split", 1)
-  ft__check_value_minimum(x$split, "split", 1)
+  ft__check_value_minimum(x$split, "split", 2)
   #
   # # prune must be numeric between 0 and 1
   # ft__check_not_null(x$prune, "prune")

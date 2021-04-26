@@ -27,3 +27,15 @@ install the development version of flametree with:
 # install.packages("devtools")
 devtools::install_github("djnavarro/flametree")
 ```
+
+Flametree is fairly flexible and produces art in several different
+styles. One example is shown here, other possibilities are described
+throughout the documentation.
+
+``` r
+library(flametree)
+flametree_grow(seed = 2, trees = 3) %>% 
+  flametree_plot(style = "voronoi")
+```
+
+![](man/figures/README-example-1.png)<!-- -->

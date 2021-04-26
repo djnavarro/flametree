@@ -38,9 +38,19 @@ background colour everywhere.
 }
 \examples{
 \dontrun{
+# typical usage
 flametree_grow(trees = 5, time = 8) \%>\%
   flametree_plot(style = "voronoi") \%>\%
   flametree_save(filename = "~/Desktop/myfile.png")
+
+# passing additional arguments to ggsave()
+flametree_grow(trees = 5, time = 8) \%>\%
+  flametree_plot(style = "voronoi") \%>\%
+  flametree_save(
+    filename = "~/Desktop/myfile.png",
+    height = 8,
+    width = 8
+  )
 }
 
 }
