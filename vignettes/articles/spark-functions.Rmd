@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 library(flametree)
 ```
 
-The growth of the flametree is partially governed by controller functions called "sparks". A spark function takes four arguments (`coord_x`, `coord_y`, `id_tree`, and `id_time`) and outputs a numeric value. These functions can be specified manually and used as inputs to `flametree_grow()`, or can be generated using one of the built in generator functions. For instance, you can use the `spark_linear()` function to create a function that specifies any linear combination of the four inputs:
+Some arguments to `flametree_grow()` take numeric input, but `seg_col`, `seg_wid`, `shift_x`, and `shift_y` all take functions as their input, and are used to control how the colours (`seg_col`) and width (`seg_wid`) of the segments are created, as well as the horizontal (`shift_x`) and vertical (`shift_y`) displacement of the trees are generated. Functions passed to these arguments take four inputs: `coord_x`, `coord_y`, `id_tree`, and `id_time` as input. Any function that takes these variables as input and produces a numeric vector of the same length as the input can be used for this purpose. However, as a convenience, four "spark" functions are provided that can be used to create functions that are suitable for this purpose: `spark_linear()`, `spark_decay()`, `spark_random()`, and `spark_nothing()`. Arguments passed to one of the spark functions determine the specific function is generated. For example, this returns a function that is linear in `coord_x` and `coord_y`:
 
 ```{r spark-linear}
 spark_linear(x = 2, y = 3)
