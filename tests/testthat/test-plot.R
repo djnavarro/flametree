@@ -79,3 +79,45 @@ test_that("invalid plot style names throw error", {
   expect_error(flametree_plot(dat, style = "abc"), style_error_msg)
 
 })
+
+# don't waste CRAN compute time
+skip_on_cran()
+
+test_that("grow & plot works for typical inputs", {
+
+  times <- 2:3
+  seeds <- 1:2
+  scales <- list(c(.5, .8), c(0, .5, 1))
+  angles <- list( c(0, 1000))
+  trees <- 1:3
+  splits <- 2:3
+  styles <- c("plain", "minimal", "themegray",
+              "voronoi", "wisp", "nativeflora")
+
+  for(tm in times) {
+    for(sd in seeds) {
+      for(sc in scales) {
+        for(tr in trees) {
+          for(sp in splits) {
+            for(an in angles) {
+
+              dat <- flametree_grow(seed = sd, time = tm, scale = sc, angle = an,
+                                    trees = tr, split = sp)
+
+              expect_s3_class(dat, "tbl_df")
+              for(st in styles) {
+
+                pic <- flametree_plot(dat, style = st)
+                expect_s3_class(pic, "ggplot")
+
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+})
+
