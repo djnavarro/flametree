@@ -89,20 +89,21 @@ The user can control how this iterative process unfolds. By setting the
 \code{seed} argument the random number generator is reset using
 \code{set.seed()}. The \code{trees} argument specifies the number of trees
 to create using this process, the \code{time} argument specifies how many
-iterations of the branching process will be run, and the \code{split}
-argument specifies how many new segments will be created each time a
-branching occurs.
+iterations of the branching process will be run (at least two), and the
+\code{split} argument specifies how many new segments (at least two) will be
+created each time abranching occurs.
 
 When a new segment is created, its size and orientation are controlled by the
 \code{scale} and \code{angle} arguments. The \code{scale} argument takes a
-vector of positive numbers. One of these numbers is selected at random
-whenever a new segment is created, and the length of the new segment is equal
-to the length of the "parent" segment from which it was created, multiplied
-by this scaling factor. The orientation of the new segment is controlled by
-the angle argument in an analogous way. Every time a new segment is
-generated, one of these angles (interpreted in degrees, not radians) is
-selected at random. The orientation of the new segment is equal to the
-orientation of the parent segment plus the sampled angle.
+vector of at least two positive numbers. One of these numbers is selected at
+random whenever a new segment is created, and the length of the new segment
+is equal to the length of the "parent" segment from which it was created,
+multiplied by this scaling factor. The orientation of the new segment is
+controlled by the angle argument in an analogous way. Every time a new
+segment is generated, one of these angles (interpreted in degrees, not
+radians) is selected at random. The orientation of the new segment is equal
+to the orientation of the parent segment plus the sampled angle. Like the
+\code{scale} argument, \code{angle} must contain at least two values.
 
 The remaining arguments (\code{seg_col}, \code{seg_wid}, \code{shift_x},
 and \code{shift_y}) all take functions as their input, and are used to

@@ -22,20 +22,21 @@
 #' \code{seed} argument the random number generator is reset using
 #' \code{set.seed()}. The \code{trees} argument specifies the number of trees
 #' to create using this process, the \code{time} argument specifies how many
-#' iterations of the branching process will be run, and the \code{split}
-#' argument specifies how many new segments will be created each time a
-#' branching occurs.
+#' iterations of the branching process will be run (at least two), and the
+#' \code{split} argument specifies how many new segments (at least two) will be
+#' created each time abranching occurs.
 #'
 #' When a new segment is created, its size and orientation are controlled by the
 #' \code{scale} and \code{angle} arguments. The \code{scale} argument takes a
-#' vector of positive numbers. One of these numbers is selected at random
-#' whenever a new segment is created, and the length of the new segment is equal
-#' to the length of the "parent" segment from which it was created, multiplied
-#' by this scaling factor. The orientation of the new segment is controlled by
-#' the angle argument in an analogous way. Every time a new segment is
-#' generated, one of these angles (interpreted in degrees, not radians) is
-#' selected at random. The orientation of the new segment is equal to the
-#' orientation of the parent segment plus the sampled angle.
+#' vector of at least two positive numbers. One of these numbers is selected at
+#' random whenever a new segment is created, and the length of the new segment
+#' is equal to the length of the "parent" segment from which it was created,
+#' multiplied by this scaling factor. The orientation of the new segment is
+#' controlled by the angle argument in an analogous way. Every time a new
+#' segment is generated, one of these angles (interpreted in degrees, not
+#' radians) is selected at random. The orientation of the new segment is equal
+#' to the orientation of the parent segment plus the sampled angle. Like the
+#' \code{scale} argument, \code{angle} must contain at least two values.
 #'
 #' The remaining arguments (\code{seg_col}, \code{seg_wid}, \code{shift_x},
 #' and \code{shift_y}) all take functions as their input, and are used to
@@ -288,31 +289,31 @@ ft__check_opts <- function(x) {
   ft__check_soft_integer(x$seed, "seed")
   ft__check_length_exact(x$seed, "seed", 1)
 
-  # time must be a single positive integer
+  # time must be a integer > 1
   ft__check_not_null(x$time, "time")
   ft__check_not_na(x$time, "time")
   ft__check_soft_integer(x$time, "time")
   ft__check_length_exact(x$time, "time", 1)
-  ft__check_value_minimum(x$time, "time", 1)
+  ft__check_value_minimum(x$time, "time", 2)
 
   # scale values must be non-negative numbers
   ft__check_not_null(x$scale, "scale")
   ft__check_not_na(x$scale, "scale")
-  ft__check_length_minimum(x$scale, "scale", 1)
+  ft__check_length_minimum(x$scale, "scale", 2)
   ft__check_value_minimum(x$scale, "scale", 0) # also checks numeric
 
   # angle values must be numeric (note: range of angles is not restricted)
   ft__check_not_null(x$angle, "angle")
   ft__check_not_na(x$angle, "angle")
   ft__check_numeric(x$angle, "angle")
-  ft__check_length_minimum(x$angle, "angle", 1)
+  ft__check_length_minimum(x$angle, "angle", 2)
 
   # split must be a single positive integer
   ft__check_not_null(x$split, "split")
   ft__check_not_na(x$split, "split")
   ft__check_soft_integer(x$split, "split")
   ft__check_length_exact(x$split, "split", 1)
-  ft__check_value_minimum(x$split, "split", 1)
+  ft__check_value_minimum(x$split, "split", 2)
   #
   # # prune must be numeric between 0 and 1
   # ft__check_not_null(x$prune, "prune")

@@ -51,11 +51,11 @@ test_that("invalid scales are forbidden",{
   expect_error(flametree_grow(scale = -.123))
   expect_error(flametree_grow(scale = numeric(0)))
   expect_error(flametree_grow(scale = character(0)))
-  expect_error(flametree_grow(scale = c(.8, -.123)))
-  expect_error(flametree_grow(scale = c(.8, NA)))
+  expect_error(flametree_grow(scale = c(.8, -.123, .1)))
+  expect_error(flametree_grow(scale = c(.8, NA, .1)))
+  expect_error(flametree_grow(scale = 0))
 
-  expect_silent(flametree_grow(scale = 0))
-  expect_silent(flametree_grow(scale = .8))
+  expect_silent(flametree_grow(scale = c(.8, .9)))
   expect_silent(flametree_grow(scale = c(.8, .9, 1.1)))
 
 })
@@ -69,11 +69,10 @@ test_that("invalid angles are forbidden",{
   expect_error(flametree_grow(angle = NA))
   expect_error(flametree_grow(angle = numeric(0)))
   expect_error(flametree_grow(angle = character(0)))
-  expect_error(flametree_grow(angle = c(.8, NA)))
+  expect_error(flametree_grow(angle = c(.8, NA, 10)))
+  expect_error(flametree_grow(angle = -12.3))
 
-  expect_silent(flametree_grow(angle = -12.3))
   expect_silent(flametree_grow(angle = c(0, -12.3)))
-  expect_silent(flametree_grow(angle = 0))
   expect_silent(flametree_grow(angle = c(-700, 1000)))
 
 })
