@@ -9,11 +9,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "80%",
-  fig.width = 50/3, 
-  fig.height = 50/3,  
-  dpi = 300,
-  dev.args = list(bg = "#00000000")
+  dev.args = list(bg = "#00000000"),
+  dpi = 300
 )
 
 
@@ -35,4 +32,10 @@ Flametree provides a system for making generative art in R, written with two goa
 devtools::install_github("djnavarro/flametree")
 ```
 
+Flametree is fairly flexible and produces art in several different styles. One example is shown here, other possibilities are described throughout the documentation.
 
+```{r example, fig.width=8, fig.height=4}
+library(flametree)
+flametree_grow(seed = 2, trees = 3) %>% 
+  flametree_plot(style = "voronoi")
+```
