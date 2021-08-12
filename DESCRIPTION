@@ -8,11 +8,11 @@ Authors@R:
            email = "d.navarro@unsw.edu.au",
            comment = c(ORCID = "0000-0001-7648-6578"))
 Description: A generative art system for producing tree-like
-    images using an L-system to create the structures and 
-    ggplot2 to draw them.
+    images using an L-system to create the structures. The package 
+    includes tools for generating the data structures and visualise
+    them in a variety of styles.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 URL: https://github.com/djnavarro/flametree
 BugReports: https://github.com/djnavarro/flametree/issues
 Imports: 
@@ -24,7 +24,7 @@ Imports:
     ggforce,
     paletteer,
     magrittr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.1.9001
 Suggests: 
     deldir,
     rmarkdown,

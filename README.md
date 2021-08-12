@@ -12,6 +12,8 @@ coverage](https://codecov.io/gh/djnavarro/flametree/branch/master/graph/badge.sv
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/flametree)](https://CRAN.R-project.org/package=flametree)
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/flametree?color=blue)](https://r-pkg.org/pkg/flametree)
 <!-- badges: end -->
 
 Flametree provides a system for making generative art in R, written with

@@ -12,8 +12,6 @@ knitr::opts_chunk$set(
   dev.args = list(bg = "#00000000"),
   dpi = 300
 )
-
-
 ```
 
 # Flametree
@@ -23,6 +21,8 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/djnavarro/flametree/branch/master/graph/badge.svg)](https://codecov.io/gh/djnavarro/flametree?branch=master)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/flametree)](https://CRAN.R-project.org/package=flametree)
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/flametree?color=blue)](https://r-pkg.org/pkg/flametree)
 <!-- badges: end -->
 
 Flametree provides a system for making generative art in R, written with two goals in mind. First, and perhaps foremost, art is inherently enjoyable and generative artists working in R need packages no less than any other R users. Second, the system is designed to be useful in the classroom: getting students to make artwork in class is an enjoyable exercise and flametree can be used as a method to introduce some key R concepts in a fun way. The package is not (yet) on CRAN but you can install the development version of flametree with:
