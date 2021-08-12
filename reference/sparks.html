@@ -219,8 +219,8 @@ produces a function that always returns zero regardless of input.</p>
 #&gt;     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
 #&gt;         id_time) + constant
 #&gt; }
-#&gt; &lt;bytecode: 0x7fe76b2b0400&gt;
-#&gt; &lt;environment: 0x7fe76f1b65c0&gt;</div><div class='input'>
+#&gt; &lt;bytecode: 0x7fe16ec1c7b0&gt;
+#&gt; &lt;environment: 0x7fe176036dd8&gt;</div><div class='input'>
 <span class='co'># returns a function of time that decays</span>
 <span class='co'># exponentially to an asymptote</span>
 <span class='fu'>spark_decay</span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>.1</span>, constant <span class='op'>=</span> <span class='fl'>.1</span><span class='op'>)</span>
@@ -229,8 +229,8 @@ produces a function that always returns zero regardless of input.</p>
 #&gt;     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * 
 #&gt;         id_tree) + (time * id_time))^2) + constant
 #&gt; }
-#&gt; &lt;bytecode: 0x7fe76b2bdec0&gt;
-#&gt; &lt;environment: 0x7fe76f08d200&gt;</div><div class='input'>
+#&gt; &lt;bytecode: 0x7fe16ec33570&gt;
+#&gt; &lt;environment: 0x7fe170cc7b20&gt;</div><div class='input'>
 <span class='co'># returns a numeric vector containing</span>
 <span class='co'># copies of the same uniform random number</span>
 <span class='co'># constrained to lie between -2.5 and 2.5</span>
@@ -242,8 +242,8 @@ produces a function that always returns zero regardless of input.</p>
 #&gt;         constant
 #&gt;     return(rep(u, n))
 #&gt; }
-#&gt; &lt;bytecode: 0x7fe76b273cc0&gt;
-#&gt; &lt;environment: 0x7fe76ba8fbd8&gt;</div><div class='input'>
+#&gt; &lt;bytecode: 0x7fe16ebe8200&gt;
+#&gt; &lt;environment: 0x7fe17604a748&gt;</div><div class='input'>
 <span class='co'># returns a function that always produces</span>
 <span class='co'># a vector of zeros</span>
 <span class='fu'>spark_nothing</span><span class='op'>(</span><span class='op'>)</span>
@@ -252,8 +252,8 @@ produces a function that always returns zero regardless of input.</p>
 #&gt;     n &lt;- length(coord_x)
 #&gt;     return(rep(0, n))
 #&gt; }
-#&gt; &lt;bytecode: 0x7fe76b2a39e8&gt;
-#&gt; &lt;environment: 0x7fe76bc9c4a8&gt;</div><div class='input'>
+#&gt; &lt;bytecode: 0x7fe16ec1a708&gt;
+#&gt; &lt;environment: 0x7fe1708d3548&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

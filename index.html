@@ -92,12 +92,15 @@
 <a href="#flametree" class="anchor"></a>Flametree</h1></div>
 <!-- badges: start -->
 
-<p>Flametree provides a system for making generative art in R, written with two goals in mind. First, and perhaps foremost, art is inherently enjoyable and generative artists working in R need packages no less than any other R users. Second, the system is designed to be useful in the classroom: getting students to make artwork in class is an enjoyable exercise and flametree can be used as a method to introduce some key R concepts in a fun way. The package is not (yet) on CRAN but you can install the development version of flametree with:</p>
+<p>Flametree provides a system for making generative art in R, written with two goals in mind. First, and perhaps foremost, art is inherently enjoyable and generative artists working in R need packages no less than any other R users. Second, the system is designed to be useful in the classroom: getting students to make artwork in class is an enjoyable exercise and flametree can be used as a method to introduce some key R concepts in a fun way. You can install the current version of flametree with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"flametree"</span><span class="op">)</span></code></pre></div>
+<p>Alternatively you can install the development version of flametree with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"djnavarro/flametree"</span><span class="op">)</span></code></pre></div>
 <p>Flametree is fairly flexible and produces art in several different styles. One example is shown here, other possibilities are described throughout the documentation.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/djnavarro/flametree">flametree</a></span><span class="op">)</span>
 <span class="fu"><a href="reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">2</span>, trees <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"voronoi"</span><span class="op">)</span></code></pre></div>
