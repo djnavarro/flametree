@@ -22,7 +22,6 @@ Imports:
     tidyr,
     ggplot2,
     ggforce,
-    paletteer,
     magrittr
 RoxygenNote: 7.1.1.9001
 Suggests: 
