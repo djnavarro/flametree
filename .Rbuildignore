@@ -8,3 +8,4 @@
 ^\.github$
 ^vignettes/articles$
 ^cran-comments\.md$
+^twitter-image.png$

@@ -1,8 +1,8 @@
 url: https://flametree.djnavarro.net
 
 home:
-  title: An R package for bootstrap cards
-  description: Generate beautiful and responsive cards within R markdown documents and websites.
+  title: Flametree
+  description: Generative art that looks a bit like trees
 
 template:
   bootstrap: 5
@@ -10,7 +10,7 @@ template:
     bootswatch: flatly
   opengraph:
     image:
-      src: "https://flametree.djnavarro.net/reference/figures/README-example-1.png"
+      src: "https://flametree.djnavarro.net/reference/figures/twitter-image.png"
       alt: "Artwork generated using the flametree package"
     twitter:
       creator: "@djnavarro"
