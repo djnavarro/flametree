@@ -1,11 +1,11 @@
 Package: flametree
 Title: Generate Random Tree-Like Images
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: 
     person(given = "Danielle",
            family = "Navarro",
            role = c("aut", "cre"),
-           email = "d.navarro@unsw.edu.au",
+           email = "djnavarro@protonmail.com",
            comment = c(ORCID = "0000-0001-7648-6578"))
 Description: A generative art system for producing tree-like
     images using an L-system to create the structures. The package 
@@ -23,9 +23,9 @@ Imports:
     ggplot2,
     ggforce,
     magrittr
-RoxygenNote: 7.1.1.9001
 Suggests: 
     deldir,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+RoxygenNote: 7.1.1
