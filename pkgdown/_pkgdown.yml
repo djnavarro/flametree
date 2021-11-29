@@ -1,9 +1,24 @@
 url: https://flametree.djnavarro.net
 
+home:
+  title: An R package for bootstrap cards
+  description: Generate beautiful and responsive cards within R markdown documents and websites.
+
 template:
-  package: pkgdowngirl
+  bootstrap: 5
   params:
     bootswatch: flatly
+  opengraph:
+    image:
+      src: "https://flametree.djnavarro.net/reference/figures/README-example-1.png"
+      alt: "Artwork generated using the flametree package"
+    twitter:
+      creator: "@djnavarro"
+      site: "https://flametree.djnavarro.net"
+      card: summary_large_image
+  includes:
+    in_header:
+      <script async defer data-domain="flametree.djnavarro.net" src="https://plausible.io/js/plausible.js"></script>
 
 navbar:
   structure:
