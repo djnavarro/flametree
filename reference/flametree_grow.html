@@ -41,6 +41,11 @@
 
 <meta property="og:title" content="Generate the data specifying a flametree — flametree_grow" />
 <meta property="og:description" content="Generate the data specifying a flametree" />
+<meta property="og:image" content="https://flametree.djnavarro.net/reference/figures/README-example-1.png" />
+<meta property="og:image:alt" content="Artwork generated using the flametree package" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@djnavarro" />
+<meta name="twitter:site" content="https://flametree.djnavarro.net" />
 
 
 
@@ -54,15 +59,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-
-
-<!-- BEGIN CUSTOM -->
-
-<!-- adds plausible.io -->
-<script async defer data-domain="flametree.djnavarro.net" src="https://plausible.io/js/plausible.js"></script>
-
-<!-- END CUSTOM -->
 
 
   </head>
@@ -81,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flametree</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -107,6 +103,9 @@
       <a href="../articles/articles/spark-functions.html">Using spark functions</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
 <li>
   <a href="../index.html">
@@ -280,61 +279,64 @@ side by side. To suppress this horizontal displacement, set
 <code>shift_x = spark_nothing()</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># flametree data structure with default parameters</span>
-<span class='fu'>flametree_grow</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 381 × 12</span>
-#&gt;    coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg
-#&gt;      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span>   -<span style='color: #BB0000;'>1.11</span>    0          1       1       1 FALSE   1_1               0      90
-#&gt; <span style='color: #BCBCBC;'> 2</span>   -<span style='color: #BB0000;'>1.11</span>    0.5        1       1       1 FALSE   1_1               1      90
-#&gt; <span style='color: #BCBCBC;'> 3</span>   -<span style='color: #BB0000;'>1.11</span>    1          1       1       1 FALSE   1_1               2      90
-#&gt; <span style='color: #BCBCBC;'> 4</span>   -<span style='color: #BB0000;'>1.11</span>    1          1       2       2 FALSE   1_2               0      80
-#&gt; <span style='color: #BCBCBC;'> 5</span>   -<span style='color: #BB0000;'>1.11</span>    1.3        1       2       2 FALSE   1_2               1      80
-#&gt; <span style='color: #BCBCBC;'> 6</span>   -<span style='color: #BB0000;'>1.00</span>    1.59       1       2       2 FALSE   1_2               2      80
-#&gt; <span style='color: #BCBCBC;'> 7</span>   -<span style='color: #BB0000;'>1.11</span>    1          1       2       3 FALSE   1_3               0     100
-#&gt; <span style='color: #BCBCBC;'> 8</span>   -<span style='color: #BB0000;'>1.11</span>    1.45       1       2       3 FALSE   1_3               1     100
-#&gt; <span style='color: #BCBCBC;'> 9</span>   -<span style='color: #BB0000;'>1.26</span>    1.89       1       2       3 FALSE   1_3               2     100
-#&gt; <span style='color: #BCBCBC;'>10</span>   -<span style='color: #BB0000;'>1.00</span>    1.59       1       3       4 FALSE   1_4               0      90
-#&gt; <span style='color: #949494;'># … with 371 more rows, and 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   seg_wid &lt;dbl&gt;</span></div><div class='input'>
-<span class='co'># setting time = 10 runs the generative process</span>
-<span class='co'># longer resulting in a table with more rows</span>
-<span class='fu'>flametree_grow</span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6,141 × 12</span>
-#&gt;    coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg
-#&gt;      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span>    1.22    0          1       1       1 FALSE   1_1               0      90
-#&gt; <span style='color: #BCBCBC;'> 2</span>    1.22    0.5        1       1       1 FALSE   1_1               1      90
-#&gt; <span style='color: #BCBCBC;'> 3</span>    1.22    1          1       1       1 FALSE   1_1               2      90
-#&gt; <span style='color: #BCBCBC;'> 4</span>    1.22    1          1       2       2 FALSE   1_2               0      80
-#&gt; <span style='color: #BCBCBC;'> 5</span>    1.22    1.3        1       2       2 FALSE   1_2               1      80
-#&gt; <span style='color: #BCBCBC;'> 6</span>    1.33    1.59       1       2       2 FALSE   1_2               2      80
-#&gt; <span style='color: #BCBCBC;'> 7</span>    1.22    1          1       2       3 FALSE   1_3               0     100
-#&gt; <span style='color: #BCBCBC;'> 8</span>    1.22    1.45       1       2       3 FALSE   1_3               1     100
-#&gt; <span style='color: #BCBCBC;'> 9</span>    1.07    1.89       1       2       3 FALSE   1_3               2     100
-#&gt; <span style='color: #BCBCBC;'>10</span>    1.33    1.59       1       3       4 FALSE   1_4               0      90
-#&gt; <span style='color: #949494;'># … with 6,131 more rows, and 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   seg_wid &lt;dbl&gt;</span></div><div class='input'>
-<span class='co'># default behaviour is to randomly displace trees</span>
-<span class='co'># by random horizontal perturbation: to switch this</span>
-<span class='co'># off use the spark_nothing() function</span>
-<span class='fu'>flametree_grow</span><span class='op'>(</span>shift_x <span class='op'>=</span> <span class='fu'><a href='sparks.html'>spark_nothing</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 381 × 12</span>
-#&gt;      coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg
-#&gt;        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span>  0   <span style='color: #949494;'> </span>       0          1       1       1 FALSE   1_1               0      90
-#&gt; <span style='color: #BCBCBC;'> 2</span>  0   <span style='color: #949494;'> </span>       0.5        1       1       1 FALSE   1_1               1      90
-#&gt; <span style='color: #BCBCBC;'> 3</span>  0   <span style='color: #949494;'> </span>       1          1       1       1 FALSE   1_1               2      90
-#&gt; <span style='color: #BCBCBC;'> 4</span>  0   <span style='color: #949494;'> </span>       1          1       2       2 FALSE   1_2               0      80
-#&gt; <span style='color: #BCBCBC;'> 5</span>  1.84<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-17</span>    1.3        1       2       2 FALSE   1_2               1      80
-#&gt; <span style='color: #BCBCBC;'> 6</span>  1.04<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>    1.59       1       2       2 FALSE   1_2               2      80
-#&gt; <span style='color: #BCBCBC;'> 7</span>  0   <span style='color: #949494;'> </span>       1          1       2       3 FALSE   1_3               0     100
-#&gt; <span style='color: #BCBCBC;'> 8</span>  2.76<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-17</span>    1.45       1       2       3 FALSE   1_3               1     100
-#&gt; <span style='color: #BCBCBC;'> 9</span> -<span style='color: #BB0000;'>1.56</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>    1.89       1       2       3 FALSE   1_3               2     100
-#&gt; <span style='color: #BCBCBC;'>10</span>  1.04<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>    1.59       1       3       4 FALSE   1_4               0      90
-#&gt; <span style='color: #949494;'># … with 371 more rows, and 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   seg_wid &lt;dbl&gt;</span></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># flametree data structure with default parameters</span></span>
+<span class='r-in'><span class='fu'>flametree_grow</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 381 × 12</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>   -<span style='color: #BB0000;'>1.11</span>    0          1       1       1 FALSE   1_1               0      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>   -<span style='color: #BB0000;'>1.11</span>    0.5        1       1       1 FALSE   1_1               1      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>   -<span style='color: #BB0000;'>1.11</span>    1          1       1       1 FALSE   1_1               2      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>   -<span style='color: #BB0000;'>1.11</span>    1          1       2       2 FALSE   1_2               0      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>   -<span style='color: #BB0000;'>1.11</span>    1.3        1       2       2 FALSE   1_2               1      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>   -<span style='color: #BB0000;'>1.00</span>    1.59       1       2       2 FALSE   1_2               2      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>   -<span style='color: #BB0000;'>1.11</span>    1          1       2       3 FALSE   1_3               0     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>   -<span style='color: #BB0000;'>1.11</span>    1.45       1       2       3 FALSE   1_3               1     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>   -<span style='color: #BB0000;'>1.26</span>    1.89       1       2       3 FALSE   1_3               2     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>   -<span style='color: #BB0000;'>1.00</span>    1.59       1       3       4 FALSE   1_4               0      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 371 more rows, and 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   seg_wid &lt;dbl&gt;</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># setting time = 10 runs the generative process</span></span>
+<span class='r-in'><span class='co'># longer resulting in a table with more rows</span></span>
+<span class='r-in'><span class='fu'>flametree_grow</span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6,141 × 12</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>    1.22    0          1       1       1 FALSE   1_1               0      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>    1.22    0.5        1       1       1 FALSE   1_1               1      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>    1.22    1          1       1       1 FALSE   1_1               2      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>    1.22    1          1       2       2 FALSE   1_2               0      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>    1.22    1.3        1       2       2 FALSE   1_2               1      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>    1.33    1.59       1       2       2 FALSE   1_2               2      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>    1.22    1          1       2       3 FALSE   1_3               0     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>    1.22    1.45       1       2       3 FALSE   1_3               1     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>    1.07    1.89       1       2       3 FALSE   1_3               2     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>    1.33    1.59       1       3       4 FALSE   1_4               0      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 6,131 more rows, and 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   seg_wid &lt;dbl&gt;</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># default behaviour is to randomly displace trees</span></span>
+<span class='r-in'><span class='co'># by random horizontal perturbation: to switch this</span></span>
+<span class='r-in'><span class='co'># off use the spark_nothing() function</span></span>
+<span class='r-in'><span class='fu'>flametree_grow</span><span class='op'>(</span>shift_x <span class='op'>=</span> <span class='fu'><a href='sparks.html'>spark_nothing</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 381 × 12</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>  0   <span style='color: #949494;'> </span>       0          1       1       1 FALSE   1_1               0      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>  0   <span style='color: #949494;'> </span>       0.5        1       1       1 FALSE   1_1               1      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>  0   <span style='color: #949494;'> </span>       1          1       1       1 FALSE   1_1               2      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>  0   <span style='color: #949494;'> </span>       1          1       2       2 FALSE   1_2               0      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>  1.84<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-17</span>    1.3        1       2       2 FALSE   1_2               1      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>  1.04<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>    1.59       1       2       2 FALSE   1_2               2      80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>  0   <span style='color: #949494;'> </span>       1          1       2       3 FALSE   1_3               0     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>  2.76<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-17</span>    1.45       1       2       3 FALSE   1_3               1     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> -<span style='color: #BB0000;'>1.56</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>    1.89       1       2       3 FALSE   1_3               2     100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>  1.04<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>    1.59       1       3       4 FALSE   1_4               0      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 371 more rows, and 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   seg_wid &lt;dbl&gt;</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

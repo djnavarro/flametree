@@ -41,6 +41,11 @@
 
 <meta property="og:title" content="Spark functions to control tree growth — sparks" />
 <meta property="og:description" content="Spark functions to control tree growth" />
+<meta property="og:image" content="https://flametree.djnavarro.net/reference/figures/README-example-1.png" />
+<meta property="og:image:alt" content="Artwork generated using the flametree package" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@djnavarro" />
+<meta name="twitter:site" content="https://flametree.djnavarro.net" />
 
 
 
@@ -54,15 +59,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-
-
-<!-- BEGIN CUSTOM -->
-
-<!-- adds plausible.io -->
-<script async defer data-domain="flametree.djnavarro.net" src="https://plausible.io/js/plausible.js"></script>
-
-<!-- END CUSTOM -->
 
 
   </head>
@@ -81,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flametree</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -107,6 +103,9 @@
       <a href="../articles/articles/spark-functions.html">Using spark functions</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
 <li>
   <a href="../index.html">
@@ -212,49 +211,53 @@ generate functions that return random values, and <code>spark_nothing()</code>
 produces a function that always returns zero regardless of input.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># returns a linear function of x and y</span>
-<span class='fu'>spark_linear</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>3</span>,  y <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (coord_x, coord_y, id_tree, id_time) 
-#&gt; {
-#&gt;     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
-#&gt;         id_time) + constant
-#&gt; }
-#&gt; &lt;bytecode: 0x7fe16ec1c7b0&gt;
-#&gt; &lt;environment: 0x7fe176036dd8&gt;</div><div class='input'>
-<span class='co'># returns a function of time that decays</span>
-<span class='co'># exponentially to an asymptote</span>
-<span class='fu'>spark_decay</span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>.1</span>, constant <span class='op'>=</span> <span class='fl'>.1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (coord_x, coord_y, id_tree, id_time) 
-#&gt; {
-#&gt;     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * 
-#&gt;         id_tree) + (time * id_time))^2) + constant
-#&gt; }
-#&gt; &lt;bytecode: 0x7fe16ec33570&gt;
-#&gt; &lt;environment: 0x7fe170cc7b20&gt;</div><div class='input'>
-<span class='co'># returns a numeric vector containing</span>
-<span class='co'># copies of the same uniform random number</span>
-<span class='co'># constrained to lie between -2.5 and 2.5</span>
-<span class='fu'>spark_random</span><span class='op'>(</span>multiplier <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (coord_x, coord_y, id_tree, id_time) 
-#&gt; {
-#&gt;     n &lt;- length(coord_x)
-#&gt;     u &lt;- stats::runif(1, min = -multiplier/2, max = multiplier/2) + 
-#&gt;         constant
-#&gt;     return(rep(u, n))
-#&gt; }
-#&gt; &lt;bytecode: 0x7fe16ebe8200&gt;
-#&gt; &lt;environment: 0x7fe17604a748&gt;</div><div class='input'>
-<span class='co'># returns a function that always produces</span>
-<span class='co'># a vector of zeros</span>
-<span class='fu'>spark_nothing</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (coord_x, coord_y, id_tree, id_time) 
-#&gt; {
-#&gt;     n &lt;- length(coord_x)
-#&gt;     return(rep(0, n))
-#&gt; }
-#&gt; &lt;bytecode: 0x7fe16ec1a708&gt;
-#&gt; &lt;environment: 0x7fe1708d3548&gt;</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># returns a linear function of x and y</span></span>
+<span class='r-in'><span class='fu'>spark_linear</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>3</span>,  y <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (coord_x, coord_y, id_tree, id_time) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         id_time) + constant</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;bytecode: 0x7fe9da69c338&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fe9d6e67fe0&gt;</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># returns a function of time that decays</span></span>
+<span class='r-in'><span class='co'># exponentially to an asymptote</span></span>
+<span class='r-in'><span class='fu'>spark_decay</span><span class='op'>(</span>time <span class='op'>=</span> <span class='fl'>.1</span>, constant <span class='op'>=</span> <span class='fl'>.1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (coord_x, coord_y, id_tree, id_time) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         id_tree) + (time * id_time))^2) + constant</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;bytecode: 0x7fe9da6b3490&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fe9db112ac8&gt;</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># returns a numeric vector containing</span></span>
+<span class='r-in'><span class='co'># copies of the same uniform random number</span></span>
+<span class='r-in'><span class='co'># constrained to lie between -2.5 and 2.5</span></span>
+<span class='r-in'><span class='fu'>spark_random</span><span class='op'>(</span>multiplier <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (coord_x, coord_y, id_tree, id_time) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     n &lt;- length(coord_x)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     u &lt;- stats::runif(1, min = -multiplier/2, max = multiplier/2) + </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         constant</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(rep(u, n))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;bytecode: 0x7fe9da685228&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fe9d8523440&gt;</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># returns a function that always produces</span></span>
+<span class='r-in'><span class='co'># a vector of zeros</span></span>
+<span class='r-in'><span class='fu'>spark_nothing</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (coord_x, coord_y, id_tree, id_time) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     n &lt;- length(coord_x)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(rep(0, n))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;bytecode: 0x7fe9da697b20&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fe9d83d40e0&gt;</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
