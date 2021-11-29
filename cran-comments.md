@@ -11,3 +11,14 @@
 
 ## R CMD check results
 
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Danielle Navarro <djnavarro@protonmail.com>'
+
+New maintainer:
+  Danielle Navarro <djnavarro@protonmail.com>
+Old maintainer(s):
+  Danielle Navarro <d.navarro@unsw.edu.au>
+  
+## Developer note
+
+The primary purpose of this release is to update the maintainer email
