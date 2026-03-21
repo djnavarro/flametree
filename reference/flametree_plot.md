@@ -100,10 +100,6 @@ the ggplot2 `theme_gray()` function.
 ``` r
 # the default tree in the plain style
 flametree_grow() %>% flametree_plot()
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> ℹ The deprecated feature was likely used in the flametree package.
-#>   Please report the issue at <https://github.com/djnavarro/flametree/issues>.
 
 
 # 10 trees drawn in the nativeflora style

@@ -92,8 +92,8 @@ generated. For example, this returns a function that is linear in
 <span><span class="co">#&gt;     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * </span></span>
 <span><span class="co">#&gt;         id_time) + constant</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x557bab906480&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x557bab903098&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;bytecode: 0x55ebdfb28220&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55ebdfb28c68&gt;</span></span></code></pre></div>
 <p>We could use this function to control how the colours in the tree
 change:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -101,14 +101,7 @@ change:</p>
 <span>  time <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>  seg_col <span class="op">=</span> <span class="fu"><a href="../reference/sparks.html">spark_linear</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">flametree</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/djnavarro/flametree/issues&gt;</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spark-functions_files/figure-html/spark-linear-tree-1-1.png" class="r-plt" alt="" width="700"></p>
 <p>Different parameter settings will produce different linear gradients.
 For example, we could have the colours change linearly across tree

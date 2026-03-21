@@ -33,8 +33,8 @@ spark_linear(x = 2, y = 3)
 #>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
 #>         id_time) + constant
 #> }
-#> <bytecode: 0x557bab906480>
-#> <environment: 0x557bab903098>
+#> <bytecode: 0x55ebdfb28220>
+#> <environment: 0x55ebdfb28c68>
 ```
 
 We could use this function to control how the colours in the tree
@@ -46,13 +46,6 @@ flametree_grow(
   seg_col = spark_linear(x = 2, y = 3)
 ) %>% 
   flametree_plot()
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> ℹ The deprecated feature was likely used in the flametree package.
-#>   Please report the issue at <https://github.com/djnavarro/flametree/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 ```
 
 ![](spark-functions_files/figure-html/spark-linear-tree-1-1.png)

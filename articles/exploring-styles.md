@@ -34,13 +34,6 @@ flametree_grow(time = 14) %>%
     palette = shades, 
     style = "plain"
   )
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> ℹ The deprecated feature was likely used in the flametree package.
-#>   Please report the issue at <https://github.com/djnavarro/flametree/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 ```
 
 ![](exploring-styles_files/figure-html/plain-style-1.png)
