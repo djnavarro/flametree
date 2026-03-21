@@ -1,30 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://flametree.djnavarro.net/index.html</loc>
-  </url>
-  <url>
-    <loc>https://flametree.djnavarro.net/reference/flametree_grow.html</loc>
-  </url>
-  <url>
-    <loc>https://flametree.djnavarro.net/reference/flametree_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://flametree.djnavarro.net/reference/flametree_save.html</loc>
-  </url>
-  <url>
-    <loc>https://flametree.djnavarro.net/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://flametree.djnavarro.net/reference/sparks.html</loc>
-  </url>
-  <url>
-    <loc>https://flametree.djnavarro.net/articles/articles/exploring-styles.html</loc>
-  </url>
-  <url>
-    <loc>https://flametree.djnavarro.net/articles/articles/getting-started.html</loc>
-  </url>
-  <url>
-    <loc>https://flametree.djnavarro.net/articles/articles/spark-functions.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://flametree.djnavarro.net/404.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/LICENSE-text.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/LICENSE.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/articles/exploring-styles.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/articles/getting-started.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/articles/index.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/articles/spark-functions.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/authors.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/index.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/news/index.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/reference/flametree_grow.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/reference/flametree_plot.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/reference/flametree_save.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/reference/index.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/reference/pipe.html</loc></url>
+<url><loc>https://flametree.djnavarro.net/reference/sparks.html</loc></url>
 </urlset>
+
