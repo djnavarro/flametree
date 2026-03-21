@@ -18,8 +18,8 @@ ft__check_not_na <- function(x, name) {
 }
 
 ft__check_not_closure <- function(x, name) {
-  if(typeof(x) == "closure" | class(x) == "function") {
-    stop("`", name, "` must not be a function or closure", call. = FALSE)
+  if(methods::is(x, "closure")) {
+    stop("`", name, "` must not be a function", call. = FALSE)
   }
 }
 

@@ -5,17 +5,13 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/djnavarro/flametree/workflows/R-CMD-check/badge.svg)](https://github.com/djnavarro/flametree/actions)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/flametree)](https://CRAN.R-project.org/package=flametree)
-[![](https://codecov.io/gh/djnavarro/flametree/branch/master/graph/badge.svg)](https://app.codecov.io/gh/djnavarro/flametree)
 [![CRAN RStudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/flametree?color=blue)](https://r-pkg.org/pkg/flametree)
 [![R-CMD-check](https://github.com/djnavarro/flametree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/djnavarro/flametree/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/djnavarro/flametree/graph/badge.svg)](https://app.codecov.io/gh/djnavarro/flametree)
 <!-- badges: end -->
 
 Flametree provides a system for making generative art in R, written with
@@ -58,13 +54,6 @@ dat %>%
     palette = shades, 
     style = "nativeflora"
   )
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> ℹ The deprecated feature was likely used in the flametree package.
-#>   Please report the issue at <https://github.com/djnavarro/flametree/issues>.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
