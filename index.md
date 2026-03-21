@@ -40,6 +40,13 @@ dat %>%
     palette = shades, 
     style = "nativeflora"
   )
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> ℹ The deprecated feature was likely used in the flametree package.
+#>   Please report the issue at <https://github.com/djnavarro/flametree/issues>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 ```
 
 ![](reference/figures/README-example-1.png)
