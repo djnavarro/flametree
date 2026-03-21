@@ -1,24 +1,6 @@
-url: https://flametree.djnavarro.net
-
-home:
-  title: Flametree
-  description: Generative art that looks a bit like trees
-
+url: https://flametree.djnavarro.net/
 template:
-  bootstrap: 5
-  params:
-    bootswatch: flatly
-  opengraph:
-    image:
-      src: "https://flametree.djnavarro.net/reference/figures/twitter-image.png"
-      alt: "Artwork generated using the flametree package"
-    twitter:
-      creator: "@djnavarro"
-      site: "https://flametree.djnavarro.net"
-      card: summary_large_image
-  includes:
-    in_header:
-      <script async defer data-domain="flametree.djnavarro.net" src="https://plausible.io/js/plausible.js"></script>
+  package: waeponwifestre
 
 navbar:
   structure:
@@ -45,3 +27,4 @@ navbar:
         href: articles/articles/exploring-styles.html
       - text: Using spark functions
         href: articles/articles/spark-functions.html
+
