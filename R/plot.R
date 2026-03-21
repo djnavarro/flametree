@@ -180,13 +180,13 @@ ft__plot_plain <- function(data, background, palette) {
       x = coord_x,          # x-coordinate
       y = coord_y,          # y-coordinate
       group = id_pathtree,  # each segment/path is a single bezier curve
-      size = seg_wid,       # the seg_wid variable is used to set line width
+      linewidth = seg_wid,  # the seg_wid variable is used to set line width
       color = seg_col       # the seg_col variable is used to set line colour
     )
   ) +
     ggforce::geom_bezier2(show.legend = FALSE, lineend = "round") +
     ggplot2::scale_color_gradientn(colours = palette) +
-    ggplot2::scale_size_identity() +
+    ggplot2::scale_linewidth_identity() +
     ggplot2::coord_equal() +
     ggplot2::theme_void() +
     ggplot2::theme(
@@ -210,13 +210,13 @@ ft__plot_minimal <- function(data, background, palette) {
       x = coord_x,          # x-coordinate
       y = coord_y,          # y-coordinate
       group = id_pathtree,  # each segment/path defines its own path
-      size = seg_wid,       # the seg_wid variable is used to set line width
+      linewidth = seg_wid,  # the seg_wid variable is used to set line width
       color = seg_col       # the seg_col variable is used to set line colour
     )
   ) +
     ggplot2::geom_path(show.legend = FALSE) +
     ggplot2::scale_color_gradientn(colours = palette) +
-    ggplot2::scale_size_identity() +
+    ggplot2::scale_linewidth_identity() +
     ggplot2::coord_equal() +
     ggplot2::theme_void() +
     ggplot2::theme(
@@ -240,11 +240,11 @@ ft__plot_themegray <- function(data, background, palette) {
       x = coord_x,          # x-coordinate
       y = coord_y,          # y-coordinate
       group = id_pathtree,  # each segment/path defines its own path
-      size = seg_wid        # the seg_wid variable is used to set line width
+      linewidth = seg_wid   # the seg_wid variable is used to set line width
     )
   ) +
     ggplot2::geom_path(show.legend = FALSE) +
-    ggplot2::scale_size_identity() +
+    ggplot2::scale_linewidth_identity() +
     ggplot2::coord_equal() +
     ggplot2::theme_gray()
 
@@ -279,7 +279,7 @@ ft__plot_voronoi <- function(data, background, palette) {
         x = coord_x,
         y = coord_y,
         group = id_pathtree,
-        size = seg_wid
+        linewidth = seg_wid
       ),
       color = palette[1],
       lineend = "round",
@@ -298,12 +298,12 @@ ft__plot_voronoi <- function(data, background, palette) {
       inherit.aes = FALSE,
       show.legend = FALSE,
       max.radius = .2,
-      size = .1
+      linewidth = .1
     ) +
 
     ggplot2::scale_fill_gradientn(colours = palette[-1]) +
     ggplot2::scale_colour_gradientn(colours = palette[-1]) +
-    ggplot2::scale_size_identity() +
+    ggplot2::scale_linewidth_identity() +
     ggplot2::coord_equal() +
     ggplot2::theme_void() +
     ggplot2::theme(
@@ -334,7 +334,7 @@ ft__plot_wisp <- function(data, background, palette) {
       mapping = ggplot2::aes(
         x = coord_x,
         y = coord_y,
-        size = seg_wid,
+        linewidth = seg_wid,
         group = id_pathtree
       ),
       colour = tree_shade,
@@ -359,7 +359,7 @@ ft__plot_wisp <- function(data, background, palette) {
       fill = background,
       colour = background
     )) +
-    ggplot2::scale_size_identity() +
+    ggplot2::scale_linewidth_identity() +
     ggplot2::coord_equal()
 
   return(picture)
@@ -392,7 +392,7 @@ ft__plot_nativeflora <- function(data, background, palette) {
       size = 0.3,
       show.legend = FALSE, lineend = "round") +
     ggplot2::geom_point(data = leaf, show.legend = FALSE, size = 1.3, stroke = 0) +
-    ggplot2::scale_size_identity() +
+    ggplot2::scale_linewidth_identity() +
     ggplot2::scale_color_gradientn(colours = palette) +
     ggplot2::theme_void() +
     ggplot2::coord_equal() +
