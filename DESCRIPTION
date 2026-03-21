@@ -23,8 +23,9 @@ Imports:
     ggplot2,
     ggforce,
     magrittr,
-    deldir
+    methods
 Suggests: 
+    deldir,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

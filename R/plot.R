@@ -389,7 +389,7 @@ ft__plot_nativeflora <- function(data, background, palette) {
     )) +
     ggforce::geom_bezier(
       alpha = 1,
-      size = 0.3,
+      linewidth = 0.3,
       show.legend = FALSE, lineend = "round") +
     ggplot2::geom_point(data = leaf, show.legend = FALSE, size = 1.3, stroke = 0) +
     ggplot2::scale_linewidth_identity() +
