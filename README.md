@@ -12,6 +12,8 @@ status](https://www.r-pkg.org/badges/version/flametree)](https://CRAN.R-project.
 [![CRAN RStudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/flametree?color=blue)](https://r-pkg.org/pkg/flametree)
 [![R-CMD-check](https://github.com/djnavarro/flametree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/djnavarro/flametree/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/djnavarro/flametree/graph/badge.svg)](https://app.codecov.io/gh/djnavarro/flametree)
 <!-- badges: end -->
 
 Flametree provides a system for making generative art in R, written with
