@@ -22,11 +22,11 @@ Imports:
     tidyr,
     ggplot2,
     ggforce,
-    magrittr
+    magrittr,
+    deldir
 Suggests: 
-    deldir,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.3
 Config/Needs/website: djnavarro/waeponwifestre
