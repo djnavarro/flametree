@@ -10,6 +10,7 @@ concepts in a fun way. This article will help you get started with the
 package.
 
 ``` r
+
 library(flametree)
 ```
 
@@ -22,6 +23,7 @@ function takes this tibble and creates plots using ggplot2. First we
 look at the data structure:
 
 ``` r
+
 flametree_grow()
 #> # A tibble: 381 × 12
 #>    coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg
@@ -44,6 +46,7 @@ Segments are arranged so that when plotted, the overall image looks a
 little like a tree:
 
 ``` r
+
 flametree_grow() %>% flametree_plot()
 ```
 
@@ -94,12 +97,14 @@ None of the structural features of the generative process change, but
 you get a different random outcome of the “same” process:
 
 ``` r
+
 flametree_grow(seed = 1) %>% flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-seeds-1.png)
 
 ``` r
+
 flametree_grow(seed = 2) %>% flametree_plot()
 ```
 
@@ -110,18 +115,21 @@ number of distinct trees generated and the number of iterations over
 which the branching process will be run:
 
 ``` r
+
 flametree_grow(trees = 6) %>% flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-trees-and-time-1.png)
 
 ``` r
+
 flametree_grow(time = 10) %>% flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-trees-and-time-2.png)
 
 ``` r
+
 flametree_grow(trees = 3, time = 10) %>% flametree_plot()
 ```
 
@@ -135,12 +143,14 @@ length of the new segment is equal to the length of the “parent” segment
 from which it was created, multiplied by this scaling factor:
 
 ``` r
+
 flametree_grow(scale = c(.5, .8, 1.1)) %>% flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-scale-1.png)
 
 ``` r
+
 flametree_grow(scale = c(.8, .9)) %>% flametree_plot()
 ```
 
@@ -154,12 +164,14 @@ is equal to the orientation of the parent segment plus the sampled
 angle:
 
 ``` r
+
 flametree_grow(angle = c(-20, 5, 10)) %>% flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-angle-1.png)
 
 ``` r
+
 flametree_grow(angle = -10:10) %>% flametree_plot()
 ```
 
@@ -182,6 +194,7 @@ unsurprisingly, sets the background colour to the plot. Of more interest
 is the `palette` argument, which takes a vector of colours as input:
 
 ``` r
+
 # use hex codes to set colours
 # https://www.canva.com/colors/color-palettes/arts-and-crafts/
 flametree_grow(time = 10) %>% 
@@ -198,6 +211,7 @@ flametree_grow(time = 10) %>%
 ![](getting-started_files/figure-html/changing-palette-1.png)
 
 ``` r
+
 
 # use colour names that R recognises
 flametree_grow(time = 10) %>% 

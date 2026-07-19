@@ -1,6 +1,7 @@
 # Exploring plot styles
 
 ``` r
+
 library(flametree)
 ```
 
@@ -19,6 +20,7 @@ image. I’ll walk through the different styles in this article, using the
 following palette:
 
 ``` r
+
 shades <- c("#A06AB4", "#FFD743", "#07BB9C", "#D773A2")
 ```
 
@@ -29,6 +31,7 @@ the original “flametree” images: colours vary along the body of the
 trees, and no “leaves” are drawn.
 
 ``` r
+
 flametree_grow(time = 14) %>% 
   flametree_plot(
     palette = shades, 
@@ -47,6 +50,7 @@ nodes. Note that computing the tesselation is computationally expensive,
 and this will likely produce errors if there are too many nodes.
 
 ``` r
+
 flametree_grow(time = 6, trees = 5) %>% 
   flametree_plot(
     palette = shades, 
@@ -63,6 +67,7 @@ are rendered as thin segments, with a proportion of those segments
 removed, and small points are drawn at the end of each terminal segment.
 
 ``` r
+
 flametree_grow(
   time = 10, 
   trees = 12, 
@@ -82,6 +87,7 @@ Setting `style = "wisp"` is similar to the “nativeflora” style, but no
 segments are removed, and the tree body is wider at the base.
 
 ``` r
+
 flametree_grow(time = 14) %>% 
   flametree_plot(
     palette = shades,
@@ -97,6 +103,7 @@ Setting `style = "minimal"` produces a variant that does not use curved
 segments.
 
 ``` r
+
 flametree_grow(time = 10, trees = 5) %>% 
   flametree_plot(
     palette = shades, 
@@ -112,6 +119,7 @@ Finally, if the user sets `style = "themegray"` the result will be a
 plot that uses the traditional gray theme used in ggplot2.
 
 ``` r
+
 flametree_grow(time = 10, trees = 5) %>% 
   flametree_plot(
     palette = shades, 

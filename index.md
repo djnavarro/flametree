@@ -10,12 +10,14 @@ concepts in a fun way. You can install the current version of flametree
 with:
 
 ``` r
+
 install.packages("flametree")
 ```
 
 Alternatively you can install the development version of flametree with:
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("djnavarro/flametree")
 ```
@@ -25,6 +27,7 @@ styles. One example is shown here, other possibilities are described
 throughout the documentation.
 
 ``` r
+
 library(flametree)
 
 # pick some colours

@@ -1,6 +1,7 @@
 # Using spark functions
 
 ``` r
+
 library(flametree)
 ```
 
@@ -27,20 +28,22 @@ function is generated. For example, this returns a function that is
 linear in `coord_x` and `coord_y`:
 
 ``` r
+
 spark_linear(x = 2, y = 3)
 #> function (coord_x, coord_y, id_tree, id_time) 
 #> {
 #>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
 #>         id_time) + constant
 #> }
-#> <bytecode: 0x55ebd2e946b8>
-#> <environment: 0x55ebd2e951a8>
+#> <bytecode: 0x5627cb92feb8>
+#> <environment: 0x5627cb930ba0>
 ```
 
 We could use this function to control how the colours in the tree
 change:
 
 ``` r
+
 flametree_grow(
   time = 12,
   seg_col = spark_linear(x = 2, y = 3)
@@ -56,6 +59,7 @@ number and time, and have the horizontal spacing of the trees vary
 linearly with tree number:
 
 ``` r
+
 flametree_grow(
   trees = 5,
   time = 10,
@@ -78,6 +82,7 @@ function injects uniform random noise. This can be useful with the
 “native flora” plot style:
 
 ``` r
+
 flametree_grow(
   trees = 10,
   time = 7,
@@ -92,6 +97,7 @@ flametree_grow(
 Defining your own spark function can be fun…
 
 ``` r
+
 jittr <- function(coord_x, coord_y, id_tree, id_time) {
   stats::runif(n = length(coord_x), min = -.2, max = .2)
 }
