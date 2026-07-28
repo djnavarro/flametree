@@ -87,6 +87,58 @@ test_that("ft__check_numeric works", {
 })
 
 
+test_that("ft__check_colour works", {
+
+  ft__check_colour_pattern <- "must contain valid colours"
+
+  # cases that should fail
+  expect_error(ft__check_colour("##f6b6a6", "name"), ft__check_colour_pattern)
+  expect_error(ft__check_colour("not_a_colour", "name"), ft__check_colour_pattern)
+  expect_error(ft__check_colour(c("red", "not_a_colour"), "name"), ft__check_colour_pattern)
+  expect_error(ft__check_colour("#12345", "name"), ft__check_colour_pattern)
+  expect_error(ft__check_colour(123, "name")) # fails ft__check_character first
+
+  # cases that should pass
+  expect_silent(ft__check_colour("red", "name"))
+  expect_silent(ft__check_colour("black", "name"))
+  expect_silent(ft__check_colour("#f6b6a6", "name"))
+  expect_silent(ft__check_colour("#f6b6a6ff", "name"))
+  expect_silent(ft__check_colour(c("red", "#000000", "blue"), "name"))
+
+})
+
+
+test_that("ft__estimate_rows works", {
+
+  # 1 tree, time = 0 (just the sapling): 3 rows regardless of split
+  expect_equal(ft__estimate_rows(time = 0, split = 2, trees = 1), 3)
+
+  # defaults-like case: time = 6, split = 2, trees = 1
+  # layers 0:6 of split 2 sum to 2^7 - 1 = 127, times 3 = 381
+  expect_equal(ft__estimate_rows(time = 6, split = 2, trees = 1), 381)
+
+  # scales linearly with trees
+  expect_equal(
+    ft__estimate_rows(time = 6, split = 2, trees = 5),
+    5 * ft__estimate_rows(time = 6, split = 2, trees = 1)
+  )
+
+})
+
+test_that("ft__check_growth_size works", {
+
+  small <- list(time = 6, split = 2, trees = 1)
+  large <- list(time = 20, split = 6, trees = 10)
+
+  expect_silent(ft__check_growth_size(small))
+  expect_warning(ft__check_growth_size(large), "will generate approximately")
+
+  # respects a custom row_limit
+  expect_warning(ft__check_growth_size(small, row_limit = 10), "will generate approximately")
+
+})
+
+
 test_that("ft__check_soft_integer works", {
 
   ft__check_soft_integer_pattern <- "must be integer valued"

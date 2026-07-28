@@ -96,3 +96,35 @@ ft__check_value_minimum <- function(x, name, val) {
 #     stop("`", name, "` cannot be greater than ", val, call. = FALSE)
 #   }
 # }
+
+
+
+# growth size guard ---------------------------------------------------------
+
+# the number of "shoots" doubles (more generally, multiplies by `split`) at
+# every one of the `time` layers grown from the initial sapling, and
+# ft__shape_tree() later expands every shoot into three rows (id_step
+# 0, 1, 2). This estimates the number of rows in the final data frame
+# for a single call to flametree_grow(), before any growing happens
+ft__estimate_rows <- function(time, split, trees) {
+  layers <- split ^ (0:time)
+  3 * trees * sum(layers)
+}
+
+# warn (but don't block) when the requested combination of `time`, `split`,
+# and `trees` will produce a very large data frame, since this is the most
+# common cause of the "cannot allocate vector" memory errors reported
+# against flametree_grow() (e.g. #18)
+ft__check_growth_size <- function(x, row_limit = 5e6) {
+  n_row <- ft__estimate_rows(x$time, x$split, x$trees)
+  if(n_row > row_limit) {
+    warning(
+      "the combination of `time` = ", x$time, ", `split` = ", x$split,
+      ", and `trees` = ", x$trees, " will generate approximately ",
+      format(round(n_row), big.mark = ",", scientific = FALSE),
+      " rows, which may exhaust available memory or take a long time. ",
+      "Consider reducing `time`, `split`, or `trees`.",
+      call. = FALSE
+    )
+  }
+}

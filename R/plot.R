@@ -135,9 +135,25 @@ ft__check_plot_input <- function(data, background, palette, style) {
 
 }
 
-# might need to be a little more precise here
 ft__check_colour <- function(x, name) {
   ft__check_character(x, name)
+  valid <- vapply(x, ft__is_colour, logical(1))
+  if(any(!valid)) {
+    bad <- unique(x[!valid])
+    stop(
+      "`", name, "` must contain valid colours, but does not: ",
+      paste(bad, collapse = ", "),
+      call. = FALSE
+    )
+  }
+}
+
+# grDevices::col2rgb() throws an error for invalid colour strings
+ft__is_colour <- function(x) {
+  isTRUE(tryCatch({
+    grDevices::col2rgb(x)
+    TRUE
+  }, error = function(e) FALSE))
 }
 
 ft__check_flametree <- function(data) {

@@ -26,6 +26,15 @@
 #' \code{split} argument specifies how many new segments (at least two) will be
 #' created each time abranching occurs.
 #'
+#' Because the number of segments grows by a factor of \code{split} at every
+#' one of the \code{time} iterations, the size of the resulting data grows
+#' exponentially: roughly \code{trees * split ^ time} segments are created in
+#' total (each represented by three rows in the output). Large values of
+#' \code{time} and/or \code{split} (especially in combination with a large
+#' number of \code{trees}) can therefore produce very large data frames and
+#' may exhaust available memory; \code{flametree_grow()} will warn when this
+#' is likely to happen.
+#'
 #' When a new segment is created, its size and orientation are controlled by the
 #' \code{scale} and \code{angle} arguments. The \code{scale} argument takes a
 #' vector of at least two positive numbers. One of these numbers is selected at
@@ -133,6 +142,7 @@ flametree_grow <- function(
     seg_wid = seg_wid # function to control segment width
   )
   ft__check_opts(options)
+  ft__check_growth_size(options)
 
   set.seed(options$seed)
   seeds <- sample(100000, size = options$trees)
