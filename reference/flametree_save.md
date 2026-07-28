@@ -48,19 +48,13 @@ ensures that the image has the same background colour everywhere.
 ## Examples
 
 ``` r
-# typical usage
 out_file <- tempfile(fileext = ".png")
-flametree_grow(trees = 5, time = 8) |>
-  flametree_plot() |>
-  flametree_save(filename = out_file)
+tree_plot <- flametree_grow(trees = 3, time = 6) |> flametree_plot()
+
+# typical usage
+flametree_save(tree_plot, filename = out_file)
 #> Saving 6.67 x 6.67 in image
 
 # passing additional arguments to ggsave()
-flametree_grow(trees = 5, time = 8) |>
-  flametree_plot() |>
-  flametree_save(
-    filename = out_file,
-    height = 8,
-    width = 8
-  )
+flametree_save(tree_plot, filename = out_file, height = 8, width = 8)
 ```

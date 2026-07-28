@@ -87,21 +87,15 @@ background colour everywhere.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># typical usage</span></span></span>
-<span class="r-in"><span><span class="va">out_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".png"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="flametree_grow.html">flametree_grow</a></span><span class="op">(</span>trees <span class="op">=</span> <span class="fl">5</span>, time <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">flametree_save</span><span class="op">(</span>filename <span class="op">=</span> <span class="va">out_file</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">out_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".png"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tree_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="flametree_grow.html">flametree_grow</a></span><span class="op">(</span>trees <span class="op">=</span> <span class="fl">3</span>, time <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># typical usage</span></span></span>
+<span class="r-in"><span><span class="fu">flametree_save</span><span class="op">(</span><span class="va">tree_plot</span>, filename <span class="op">=</span> <span class="va">out_file</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Saving 6.67 x 6.67 in image</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># passing additional arguments to ggsave()</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="flametree_grow.html">flametree_grow</a></span><span class="op">(</span>trees <span class="op">=</span> <span class="fl">5</span>, time <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">flametree_save</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    filename <span class="op">=</span> <span class="va">out_file</span>,</span></span>
-<span class="r-in"><span>    height <span class="op">=</span> <span class="fl">8</span>,</span></span>
-<span class="r-in"><span>    width <span class="op">=</span> <span class="fl">8</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">flametree_save</span><span class="op">(</span><span class="va">tree_plot</span>, filename <span class="op">=</span> <span class="va">out_file</span>, height <span class="op">=</span> <span class="fl">8</span>, width <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
