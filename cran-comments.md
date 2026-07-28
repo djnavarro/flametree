@@ -27,8 +27,16 @@ fixes. See NEWS.md for the full list of user-facing changes.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes, on all platforms checked (local,
+0 errors | 0 warnings | 0 notes on all platforms checked (local,
 GitHub Actions CI, R-hub, and win-builder release/devel).
+
+Note: an earlier build of 0.2.0 triggered a NOTE from CRAN's automatic
+incoming pretest ("Examples with CPU (user + system) or elapsed time >
+10s", for `flametree_save`). This was caused by that function's examples
+building and rendering two separate five-tree plots. Fixed by reusing a
+single plot across both example calls and using smaller `trees`/`time`
+values; example runtime is now well under a second. Reconfirmed via a
+fresh win-builder run after the fix.
 
 ## Downstream dependencies
 
