@@ -49,28 +49,28 @@ input, and returns a numeric vector as output.
 
 Some arguments to
 [`flametree_grow()`](https://flametree.djnavarro.net/reference/flametree_grow.md)
-take numeric input, but `seg_col`, `seg_wid`, `shift_x`, and `shift_y`
-all take functions as their input, and are used to control how the
-colours (`seg_col`) and width (`seg_wid`) of the segments are created,
-as well as the horizontal (`shift_x`) and vertical (`shift_y`)
-displacement of the trees are generated. Functions passed to these
-arguments take four inputs: `coord_x`, `coord_y`, `id_tree`, and
-`id_time` as input. Any function that takes these variables as input and
-produces a numeric vector of the same length as the input can be used
-for this purpose. However, as a convenience, four "spark" functions are
-provided that can be used to create functions that are suitable for this
-purpose: `spark_linear()`, `spark_decay()`, `spark_random()`, and
-`spark_nothing()`. Arguments passed to one of the spark functions
-determine the specific function is generated. For example,
-`spark_linear()` can be used to construct any linear combination of the
-inputs: `spark_linear(x = 3, y = 2)` would return a function that
-computes the sum `(3 * coord_x) + (2 * coord_y)`. Different values
-provided as input produce different linear functions. Analogously,
-`spark_decay()` returns functions that are exponentially decaying
-functions of a linear combination of inputs. The `spark_random()`
-generator can be used to generate functions that return random values,
-and `spark_nothing()` produces a function that always returns zero
-regardless of input.
+take numeric input, but `seg_col`, `seg_wid`, `shift_x`, `shift_y`, and
+`prune` all take functions as their input, and are used to control how
+the colours (`seg_col`) and width (`seg_wid`) of the segments are
+created, the horizontal (`shift_x`) and vertical (`shift_y`)
+displacement of the trees, and the probability that a given shoot stops
+growing (`prune`). Functions passed to these arguments take four inputs:
+`coord_x`, `coord_y`, `id_tree`, and `id_time` as input. Any function
+that takes these variables as input and produces a numeric vector of the
+same length as the input can be used for this purpose. However, as a
+convenience, four "spark" functions are provided that can be used to
+create functions that are suitable for this purpose: `spark_linear()`,
+`spark_decay()`, `spark_random()`, and `spark_nothing()`. Arguments
+passed to one of the spark functions determine the specific function is
+generated. For example, `spark_linear()` can be used to construct any
+linear combination of the inputs: `spark_linear(x = 3, y = 2)` would
+return a function that computes the sum `(3 * coord_x) + (2 * coord_y)`.
+Different values provided as input produce different linear functions.
+Analogously, `spark_decay()` returns functions that are exponentially
+decaying functions of a linear combination of inputs. The
+`spark_random()` generator can be used to generate functions that return
+random values, and `spark_nothing()` produces a function that always
+returns zero regardless of input.
 
 ## Examples
 
@@ -82,8 +82,8 @@ spark_linear(x = 3,  y = 2)
 #>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
 #>         id_time) + constant
 #> }
-#> <bytecode: 0x559596ec4730>
-#> <environment: 0x5595a0aa6008>
+#> <bytecode: 0x5587bd5a7300>
+#> <environment: 0x5587c12bbb48>
 
 # returns a function of time that decays
 # exponentially to an asymptote
@@ -93,8 +93,8 @@ spark_decay(time = .1, constant = .1)
 #>     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * 
 #>         id_tree) + (time * id_time))^2) + constant
 #> }
-#> <bytecode: 0x559597cdf0a0>
-#> <environment: 0x5595a0aff330>
+#> <bytecode: 0x5587bd5c8dc0>
+#> <environment: 0x5587c14b2fa0>
 
 # returns a numeric vector containing
 # copies of the same uniform random number
@@ -107,8 +107,8 @@ spark_random(multiplier = 5)
 #>         constant
 #>     return(rep(u, n))
 #> }
-#> <bytecode: 0x55959abcf048>
-#> <environment: 0x5595a0f71c68>
+#> <bytecode: 0x5587bd586918>
+#> <environment: 0x5587c10f3d78>
 
 # returns a function that always produces
 # a vector of zeros
@@ -118,6 +118,6 @@ spark_nothing()
 #>     n <- length(coord_x)
 #>     return(rep(0, n))
 #> }
-#> <bytecode: 0x559598e63660>
-#> <environment: 0x5595a0fc7c08>
+#> <bytecode: 0x5587bd5a2df8>
+#> <environment: 0x5587c13af8a0>
 ```

@@ -88,11 +88,12 @@ and <code>id_time</code> as input, and returns a numeric vector as output.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Some arguments to <code><a href="flametree_grow.html">flametree_grow()</a></code> take numeric input, but
-<code>seg_col</code>, <code>seg_wid</code>, <code>shift_x</code>, and <code>shift_y</code> all
-take functions as their input, and are used to
+<code>seg_col</code>, <code>seg_wid</code>, <code>shift_x</code>, <code>shift_y</code>, and
+<code>prune</code> all take functions as their input, and are used to
 control how the colours (<code>seg_col</code>) and width (<code>seg_wid</code>) of the
-segments are created, as well as the horizontal (<code>shift_x</code>) and
-vertical (<code>shift_y</code>) displacement of the trees are generated. Functions
+segments are created, the horizontal (<code>shift_x</code>) and
+vertical (<code>shift_y</code>) displacement of the trees, and the probability
+that a given shoot stops growing (<code>prune</code>). Functions
 passed to these arguments take four inputs: <code>coord_x</code>, <code>coord_y</code>,
 <code>id_tree</code>, and <code>id_time</code> as input. Any function that takes
 these variables as input and produces a numeric vector of the same length
@@ -121,8 +122,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         id_time) + constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x559596ec4730&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5595a0aa6008&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587bd5a7300&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5587c12bbb48&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a function of time that decays</span></span></span>
 <span class="r-in"><span><span class="co"># exponentially to an asymptote</span></span></span>
@@ -132,8 +133,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         id_tree) + (time * id_time))^2) + constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x559597cdf0a0&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5595a0aff330&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587bd5c8dc0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5587c14b2fa0&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a numeric vector containing</span></span></span>
 <span class="r-in"><span><span class="co"># copies of the same uniform random number</span></span></span>
@@ -146,8 +147,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(rep(u, n))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55959abcf048&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5595a0f71c68&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587bd586918&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5587c10f3d78&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a function that always produces</span></span></span>
 <span class="r-in"><span><span class="co"># a vector of zeros</span></span></span>
@@ -157,8 +158,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- length(coord_x)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(rep(0, n))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x559598e63660&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5595a0fc7c08&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587bd5a2df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5587c13af8a0&gt;</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

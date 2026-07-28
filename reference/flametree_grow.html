@@ -53,7 +53,8 @@
 <span>  seg_col <span class="op">=</span> <span class="fu"><a href="sparks.html">spark_linear</a></span><span class="op">(</span>tree <span class="op">=</span> <span class="fl">2</span>, time <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  seg_wid <span class="op">=</span> <span class="fu"><a href="sparks.html">spark_decay</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">0.3</span>, multiplier <span class="op">=</span> <span class="fl">5</span>, constant <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span>
 <span>  shift_x <span class="op">=</span> <span class="fu"><a href="sparks.html">spark_random</a></span><span class="op">(</span>multiplier <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>  shift_y <span class="op">=</span> <span class="fu"><a href="sparks.html">spark_nothing</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  shift_y <span class="op">=</span> <span class="fu"><a href="sparks.html">spark_nothing</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  prune <span class="op">=</span> <span class="fu"><a href="sparks.html">spark_nothing</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -100,6 +101,10 @@
 <dt id="arg-shift-y">shift_y<a class="anchor" aria-label="anchor" href="#arg-shift-y"></a></dt>
 <dd><p>Spark function to control vertical jitter</p></dd>
 
+
+<dt id="arg-prune">prune<a class="anchor" aria-label="anchor" href="#arg-prune"></a></dt>
+<dd><p>Spark function to control the probability that a shoot stops growing</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -120,7 +125,10 @@ midpoint, or the end point of the relevant curved segment in a tree. In
 addition, there are two identifier columns used to denote the segments
 themselves. The <code>id_path</code> column is numeric, and assigns value 1 to
 the "first" segment (i.e., the lowest part of the tree trunk) for every
-tree, with values increasing numerically for each subsequent segment. Values
+tree, with values increasing numerically for each subsequent segment. The
+<code>id_leaf</code> column is TRUE for terminal segments: those grown in the
+final iteration of the process, and any earlier segment whose growth was
+stopped early by the <code>prune</code> argument. Values
 for <code>id_path</code> will uniquely identify a segment within a tree, but when
 multiple trees are generated there will be multiple segments that have the
 same <code>id_path</code> value. If a unique identifier across trees is needed,
@@ -149,8 +157,10 @@ first iteration. Over multiple iterations this creates a tree-like structure.</p
 <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code>. The <code>trees</code> argument specifies the number of trees
 to create using this process, the <code>time</code> argument specifies how many
 iterations of the branching process will be run (at least two), and the
-<code>split</code> argument specifies how many new segments (at least two) will be
-created each time abranching occurs.</p>
+<code>split</code> argument specifies how many new segments (at least one) will be
+created each time abranching occurs. Setting <code>split = 1</code> disables
+branching altogether, producing a single winding path per tree rather than
+a branching structure.</p>
 <p>Because the number of segments grows by a factor of <code>split</code> at every
 one of the <code>time</code> iterations, the size of the resulting data grows
 exponentially: roughly <code>trees * split ^ time</code> segments are created in
@@ -171,16 +181,27 @@ radians) is selected at random. The orientation of the new segment is equal
 to the orientation of the parent segment plus the sampled angle. Like the
 <code>scale</code> argument, <code>angle</code> must contain at least two values.</p>
 <p>The remaining arguments (<code>seg_col</code>, <code>seg_wid</code>, <code>shift_x</code>,
-and <code>shift_y</code>) all take functions as their input, and are used to
-control how the colours (<code>seg_col</code>) and width (<code>seg_wid</code>) of the
-segments are created, as well as the horizontal (<code>shift_x</code>) and
-vertical (<code>shift_y</code>) displacement of the trees are generated. Functions
+<code>shift_y</code>, and <code>prune</code>) all take functions as their input, and are
+used to control how the colours (<code>seg_col</code>) and width (<code>seg_wid</code>)
+of the segments are created, the horizontal (<code>shift_x</code>) and
+vertical (<code>shift_y</code>) displacement of the trees, and the probability
+that growth of a given shoot is pruned (<code>prune</code>). Functions
 passed to these arguments take four inputs: <code>coord_x</code>, <code>coord_y</code>,
 <code>id_tree</code>, and <code>id_time</code>. Any function that takes
 these variables as input can be used for this purpose. However, as a
 convenience, four "spark" functions are provided that can be used to create
 functions that are suitable for this purpose: <code><a href="sparks.html">spark_linear()</a></code>,
 <code><a href="sparks.html">spark_decay()</a></code>, <code><a href="sparks.html">spark_random()</a></code>, and <code><a href="sparks.html">spark_nothing()</a></code>.</p>
+<p>The <code>prune</code> argument is interpreted as a probability: at each
+iteration, every newly created shoot has its endpoint passed to the
+<code>prune</code> function, and is pruned (i.e., stops growing any further) with
+that probability. The segment that shoot has already grown is still
+included in the output and is marked as a leaf node (see <code>id_leaf</code>
+below), but no descendants are grown from it. The default,
+<code><a href="sparks.html">spark_nothing()</a></code>, always returns 0 and therefore disables pruning
+entirely. A constant pruning probability can be obtained with, for
+example, <code>spark_linear(constant = 0.2)</code>, and space- or time-varying
+pruning can be created using <code><a href="sparks.html">spark_decay()</a></code> or a custom function.</p>
 <p>These functions are documented in their own help files. To give an example,
 the default behaviour of <code>flametree_grow()</code> adds a random horizontal
 displacement to each tree to give the impression of multiple trees growing
@@ -195,16 +216,16 @@ side by side. To suppress this horizontal displacement, set
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 381 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>   -<span style="color: #BB0000;">1.11</span>    0          1       1       1 FALSE   1_1               0      90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>   -<span style="color: #BB0000;">1.11</span>    0.5        1       1       1 FALSE   1_1               1      90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>   -<span style="color: #BB0000;">1.11</span>    1          1       1       1 FALSE   1_1               2      90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   -<span style="color: #BB0000;">1.11</span>    1          1       2       2 FALSE   1_2               0      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>   -<span style="color: #BB0000;">1.11</span>    1.3        1       2       2 FALSE   1_2               1      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>   -<span style="color: #BB0000;">1.00</span>    1.59       1       2       2 FALSE   1_2               2      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   -<span style="color: #BB0000;">1.11</span>    1          1       2       3 FALSE   1_3               0     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>   -<span style="color: #BB0000;">1.11</span>    1.45       1       2       3 FALSE   1_3               1     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>   -<span style="color: #BB0000;">1.26</span>    1.89       1       2       3 FALSE   1_3               2     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>   -<span style="color: #BB0000;">1.00</span>    1.59       1       3       4 FALSE   1_4               0      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    1.48    0          1       1       1 FALSE   1_1               0      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    1.48    0.5        1       1       1 FALSE   1_1               1      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    1.48    1          1       1       1 FALSE   1_1               2      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    1.48    1          1       2       2 FALSE   1_2               0      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    1.48    1.3        1       2       2 FALSE   1_2               1      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    1.59    1.59       1       2       2 FALSE   1_2               2      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    1.48    1          1       2       3 FALSE   1_3               0     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    1.48    1.4        1       2       3 FALSE   1_3               1     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    1.21    1.75       1       2       3 FALSE   1_3               2     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    1.59    1.59       1       3       4 FALSE   1_4               0      70</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 371 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;, seg_wid &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
@@ -214,16 +235,16 @@ side by side. To suppress this horizontal displacement, set
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6,141 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    1.22    0          1       1       1 FALSE   1_1               0      90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    1.22    0.5        1       1       1 FALSE   1_1               1      90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    1.22    1          1       1       1 FALSE   1_1               2      90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    1.22    1          1       2       2 FALSE   1_2               0      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    1.22    1.3        1       2       2 FALSE   1_2               1      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    1.33    1.59       1       2       2 FALSE   1_2               2      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    1.22    1          1       2       3 FALSE   1_3               0     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    1.22    1.45       1       2       3 FALSE   1_3               1     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    1.07    1.89       1       2       3 FALSE   1_3               2     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    1.33    1.59       1       3       4 FALSE   1_4               0      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>   0.391    0          1       1       1 FALSE   1_1               0      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>   0.391    0.5        1       1       1 FALSE   1_1               1      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>   0.391    1          1       1       1 FALSE   1_1               2      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   0.391    1          1       2       2 FALSE   1_2               0      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>   0.391    1.3        1       2       2 FALSE   1_2               1      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>   0.495    1.59       1       2       2 FALSE   1_2               2      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   0.391    1          1       2       3 FALSE   1_3               0     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>   0.391    1.4        1       2       3 FALSE   1_3               1     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>   0.118    1.75       1       2       3 FALSE   1_3               2     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>   0.495    1.59       1       3       4 FALSE   1_4               0      70</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6,131 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;, seg_wid &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
@@ -240,10 +261,10 @@ side by side. To suppress this horizontal displacement, set
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  0   <span style="color: #949494;"> </span>       1          1       2       2 FALSE   1_2               0      80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  1.84<span style="color: #949494;">e</span><span style="color: #BB0000;">-17</span>    1.3        1       2       2 FALSE   1_2               1      80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  1.04<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span>    1.59       1       2       2 FALSE   1_2               2      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  0   <span style="color: #949494;"> </span>       1          1       2       3 FALSE   1_3               0     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  2.76<span style="color: #949494;">e</span><span style="color: #BB0000;">-17</span>    1.45       1       2       3 FALSE   1_3               1     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> -<span style="color: #BB0000;">1.56</span><span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span>    1.89       1       2       3 FALSE   1_3               2     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  1.04<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span>    1.59       1       3       4 FALSE   1_4               0      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  0   <span style="color: #949494;"> </span>       1          1       2       3 FALSE   1_3               0     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  2.45<span style="color: #949494;">e</span><span style="color: #BB0000;">-17</span>    1.4        1       2       3 FALSE   1_3               1     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> -<span style="color: #BB0000;">2.74</span><span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span>    1.75       1       2       3 FALSE   1_3               2     110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  1.04<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span>    1.59       1       3       4 FALSE   1_4               0      70</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 371 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: seg_len &lt;dbl&gt;, seg_col &lt;dbl&gt;, seg_wid &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>

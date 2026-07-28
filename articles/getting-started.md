@@ -28,16 +28,16 @@ flametree_grow()
 #> # A tibble: 381 × 12
 #>    coord_x coord_y id_tree id_time id_path id_leaf id_pathtree id_step seg_deg
 #>      <dbl>   <dbl>   <int>   <int>   <int> <lgl>   <chr>         <int>   <dbl>
-#>  1   -1.11    0          1       1       1 FALSE   1_1               0      90
-#>  2   -1.11    0.5        1       1       1 FALSE   1_1               1      90
-#>  3   -1.11    1          1       1       1 FALSE   1_1               2      90
-#>  4   -1.11    1          1       2       2 FALSE   1_2               0      80
-#>  5   -1.11    1.3        1       2       2 FALSE   1_2               1      80
-#>  6   -1.00    1.59       1       2       2 FALSE   1_2               2      80
-#>  7   -1.11    1          1       2       3 FALSE   1_3               0     100
-#>  8   -1.11    1.45       1       2       3 FALSE   1_3               1     100
-#>  9   -1.26    1.89       1       2       3 FALSE   1_3               2     100
-#> 10   -1.00    1.59       1       3       4 FALSE   1_4               0      90
+#>  1    1.48    0          1       1       1 FALSE   1_1               0      90
+#>  2    1.48    0.5        1       1       1 FALSE   1_1               1      90
+#>  3    1.48    1          1       1       1 FALSE   1_1               2      90
+#>  4    1.48    1          1       2       2 FALSE   1_2               0      80
+#>  5    1.48    1.3        1       2       2 FALSE   1_2               1      80
+#>  6    1.59    1.59       1       2       2 FALSE   1_2               2      80
+#>  7    1.48    1          1       2       3 FALSE   1_3               0     110
+#>  8    1.48    1.4        1       2       3 FALSE   1_3               1     110
+#>  9    1.21    1.75       1       2       3 FALSE   1_3               2     110
+#> 10    1.59    1.59       1       3       4 FALSE   1_4               0      70
 #> # ℹ 371 more rows
 #> # ℹ 3 more variables: seg_len <dbl>, seg_col <dbl>, seg_wid <dbl>
 ```
