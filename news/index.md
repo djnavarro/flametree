@@ -2,6 +2,17 @@
 
 ## flametree 0.1.3.9000
 
+- Sets up spell checking for the package documentation, using the
+  `spelling` package. Sets `Language: en-GB` in `DESCRIPTION` (the
+  package consistently uses British spellings such as “colour” and
+  “visualise”), and adds an `inst/WORDLIST` of accepted technical terms.
+  Along the way, fixes a handful of genuine typos found by the spell
+  check: “tesselation” → “tessellation”, “wdith” → “width”, and
+  “abranching” → “a branching” (in
+  [`flametree_plot()`](https://flametree.djnavarro.net/reference/flametree_plot.md)
+  and
+  [`flametree_grow()`](https://flametree.djnavarro.net/reference/flametree_grow.md)’s
+  documentation).
 - `ft__check_colour()` now validates that the `background` and `palette`
   arguments to
   [`flametree_plot()`](https://flametree.djnavarro.net/reference/flametree_plot.md)

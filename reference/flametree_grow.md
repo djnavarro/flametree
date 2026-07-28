@@ -122,7 +122,7 @@ The user can control how this iterative process unfolds. By setting the
 specifies the number of trees to create using this process, the `time`
 argument specifies how many iterations of the branching process will be
 run (at least two), and the `split` argument specifies how many new
-segments (at least one) will be created each time abranching occurs.
+segments (at least one) will be created each time a branching occurs.
 Setting `split = 1` disables branching altogether, producing a single
 winding path per tree rather than a branching structure.
 

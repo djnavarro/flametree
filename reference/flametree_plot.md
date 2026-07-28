@@ -62,8 +62,8 @@ Plots in the "voronoi" style draw the shape of the tree the same way as
 the plain style, except that the segments do not vary in colour and are
 rendered using `geom_bezier()` instead of `geom_bezier2()`. Unlike the
 plain style, stylised "leaves" are drawn by constructing a Voronoi
-tesselation of the terminal nodes in the tree. Note that computing the
-tesselation is computationally expensive and this will likely produce
+tessellation of the terminal nodes in the tree. Note that computing the
+tessellation is computationally expensive and this will likely produce
 errors if there are too many nodes (typically when the `time` parameter
 to
 [`flametree_grow()`](https://flametree.djnavarro.net/reference/flametree_grow.md)
@@ -71,7 +71,7 @@ is large). The interpretation of the `palette` argument is slightly
 different: the first element of the palette is used to set the colour of
 the trees, and the rest of the palette colours are used to create the
 gradient palette used to colour the tiles depicted in the Voronoi
-tesselation.
+tessellation.
 
 The `style = "nativeflora"` style creates a plot in which tree branches
 are rendered as thin segments, with a proportion of those segments
@@ -83,7 +83,7 @@ the `id_tree` variable to do so. As with the plain style, the `palette`
 colours are used to define an n-colour gradient.
 
 The "wisp" style is similar to nativeflora, but no segments are removed,
-and the wdith of the branches is mapped to `seg_wid`. It only uses the
+and the width of the branches is mapped to `seg_wid`. It only uses the
 first two elements of `palette`: the first element specifies the colour
 of the branches, and the second element specifies the colour of the leaf
 dots.
