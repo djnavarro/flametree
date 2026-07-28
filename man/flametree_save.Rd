@@ -37,20 +37,19 @@ overriding the default behaviour of \code{ggsave()}, the
 background colour everywhere.
 }
 \examples{
-\dontrun{
 # typical usage
+out_file <- tempfile(fileext = ".png")
 flametree_grow(trees = 5, time = 8) |>
-  flametree_plot(style = "voronoi") |>
-  flametree_save(filename = "~/Desktop/myfile.png")
+  flametree_plot() |>
+  flametree_save(filename = out_file)
 
 # passing additional arguments to ggsave()
 flametree_grow(trees = 5, time = 8) |>
-  flametree_plot(style = "voronoi") |>
+  flametree_plot() |>
   flametree_save(
-    filename = "~/Desktop/myfile.png",
+    filename = out_file,
     height = 8,
     width = 8
   )
-}
 
 }

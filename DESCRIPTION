@@ -4,7 +4,7 @@ Version: 0.2.0
 Authors@R: 
     person(given = "Danielle",
            family = "Navarro",
-           role = c("aut", "cre"),
+           role = c("aut", "cre", "cph"),
            email = "djnavarro@protonmail.com",
            comment = c(ORCID = "0000-0001-7648-6578"))
 Description: A generative art system for producing tree-like
