@@ -8,9 +8,9 @@ Authors@R:
            email = "djnavarro@protonmail.com",
            comment = c(ORCID = "0000-0001-7648-6578"))
 Description: A generative art system for producing tree-like
-    images using an L-system to create the structures. The package 
-    includes tools for generating the data structures and visualise
-    them in a variety of styles.
+    images using a stochastic branching process to create the
+    structures. The package includes tools for generating the data
+    structures and visualising them in a variety of styles.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-GB

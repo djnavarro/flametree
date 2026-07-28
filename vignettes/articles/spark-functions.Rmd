@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 library(flametree)
 ```
 
-Some arguments to `flametree_grow()` take numeric input, but `seg_col`, `seg_wid`, `shift_x`, and `shift_y` all take functions as their input, and are used to control how the colours (`seg_col`) and width (`seg_wid`) of the segments are created, as well as the horizontal (`shift_x`) and vertical (`shift_y`) displacement of the trees are generated. Functions passed to these arguments take four inputs: `coord_x`, `coord_y`, `id_tree`, and `id_time` as input. Any function that takes these variables as input and produces a numeric vector of the same length as the input can be used for this purpose. However, as a convenience, four "spark" functions are provided that can be used to create functions that are suitable for this purpose: `spark_linear()`, `spark_decay()`, `spark_random()`, and `spark_nothing()`. Arguments passed to one of the spark functions determine the specific function is generated. For example, this returns a function that is linear in `coord_x` and `coord_y`:
+Some arguments to `flametree_grow()` take numeric input, but `seg_col`, `seg_wid`, `shift_x`, `shift_y`, and `prune` all take functions as their input, and are used to control how the colours (`seg_col`) and width (`seg_wid`) of the segments are created, the horizontal (`shift_x`) and vertical (`shift_y`) displacement of the trees, and the probability that a given shoot is pruned (`prune`). Functions passed to these arguments take four inputs: `coord_x`, `coord_y`, `id_tree`, and `id_time` as input. Any function that takes these variables as input and produces a numeric vector of the same length as the input can be used for this purpose. However, as a convenience, four "spark" functions are provided that can be used to create functions that are suitable for this purpose: `spark_linear()`, `spark_decay()`, `spark_random()`, and `spark_nothing()`. Arguments passed to one of the spark functions determine the specific function is generated. For example, this returns a function that is linear in `coord_x` and `coord_y`:
 
 ```{r spark-linear}
 spark_linear(x = 2, y = 3)
@@ -41,7 +41,7 @@ flametree_grow(
   flametree_plot()
 ```
 
-The previous examples all use `spark_linear()`, but flametree provides three other spark function generators. The `spark_nothing()` generator produces spark function that always returns zero, which is occasionally useful, wheras the `spark_random()` function injects uniform random noise. This can be useful with the "native flora" plot style:
+The previous examples all use `spark_linear()`, but flametree provides three other spark function generators. The `spark_nothing()` generator produces a spark function that always returns zero, which is occasionally useful, whereas the `spark_random()` function injects uniform random noise. This can be useful with the "native flora" plot style:
 
 ```{r spark-random-1}
 flametree_grow(

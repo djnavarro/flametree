@@ -94,7 +94,9 @@ ft__check_value_minimum <- function(x, name, val) {
   }
 }
 
-# no longer used now that prune is gone
+# unused: `prune` is a spark function rather than a bounded numeric
+# probability, so its output isn't validated with a min/max check the
+# way a plain numeric argument would be
 #
 # ft__check_value_maximum <- function(x, name, val) {
 #   ft__check_numeric(x, name)

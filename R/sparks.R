@@ -3,7 +3,7 @@
 #'
 #' @name sparks
 #' @param x Weight given to the horizontal co-ordinate
-#' @param y Weight given to the horizontal co-ordinate
+#' @param y Weight given to the vertical co-ordinate
 #' @param tree Weight given to the tree number
 #' @param time Weight given to the time point
 #' @param multiplier Scaling parameter that multiplies the output

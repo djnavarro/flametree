@@ -42,7 +42,7 @@ flametree_grow(
 \item{prune}{Spark function to control the probability that a shoot stops growing}
 }
 \value{
-The output of \code{flametree_grow()}` is a tibble with the following
+The output of \code{flametree_grow()} is a tibble with the following
 columns: \code{coord_x}, \code{coord_y}, \code{id_tree}, \code{id_time},
 \code{id_path}, \code{id_leaf}, \code{id_pathtree}, \code{id_step},
 \code{seg_deg}, \code{seg_len}, \code{seg_col}, and \code{seg_wid}. Each

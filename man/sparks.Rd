@@ -19,7 +19,7 @@ spark_nothing()
 \arguments{
 \item{x}{Weight given to the horizontal co-ordinate}
 
-\item{y}{Weight given to the horizontal co-ordinate}
+\item{y}{Weight given to the vertical co-ordinate}
 
 \item{tree}{Weight given to the tree number}
 

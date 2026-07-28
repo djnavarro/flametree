@@ -37,7 +37,8 @@ argument should be a vector of colours. However, the \code{palette} argument
 is  interpreted slightly differently depending on which style of plot is
 created, discussed below. To set the \code{style} of the resulting plot,
 pass one of the following style names: "plain" (the default), "voronoi",
-"wisp", "nativeflora", "minimal", or "themegray".
+"wisp", "nativeflora", "minimal", or "themegray" (the British spelling,
+"themegrey", is also accepted).
 
 Plots in the "plain" style have the following properties. Branches of
 the trees vary in width using the \code{seg_wid} data column. Each branch
