@@ -11,6 +11,7 @@
 #' @param seg_wid Spark function to control the segment width
 #' @param shift_x Spark function to control horizontal jitter
 #' @param shift_y Spark function to control vertical jitter
+#' @param prune Spark function to control the probability that a shoot stops growing
 #'
 #' @details Generative art created with flametree is a visualisation of a data
 #' structure created by calling \code{flametree_grow()}. The underlying
@@ -23,8 +24,10 @@
 #' \code{set.seed()}. The \code{trees} argument specifies the number of trees
 #' to create using this process, the \code{time} argument specifies how many
 #' iterations of the branching process will be run (at least two), and the
-#' \code{split} argument specifies how many new segments (at least two) will be
-#' created each time abranching occurs.
+#' \code{split} argument specifies how many new segments (at least one) will be
+#' created each time abranching occurs. Setting \code{split = 1} disables
+#' branching altogether, producing a single winding path per tree rather than
+#' a branching structure.
 #'
 #' Because the number of segments grows by a factor of \code{split} at every
 #' one of the \code{time} iterations, the size of the resulting data grows
@@ -48,16 +51,28 @@
 #' \code{scale} argument, \code{angle} must contain at least two values.
 #'
 #' The remaining arguments (\code{seg_col}, \code{seg_wid}, \code{shift_x},
-#' and \code{shift_y}) all take functions as their input, and are used to
-#' control how the colours (\code{seg_col}) and width (\code{seg_wid}) of the
-#' segments are created, as well as the horizontal (\code{shift_x}) and
-#' vertical (\code{shift_y}) displacement of the trees are generated. Functions
+#' \code{shift_y}, and \code{prune}) all take functions as their input, and are
+#' used to control how the colours (\code{seg_col}) and width (\code{seg_wid})
+#' of the segments are created, the horizontal (\code{shift_x}) and
+#' vertical (\code{shift_y}) displacement of the trees, and the probability
+#' that growth of a given shoot is pruned (\code{prune}). Functions
 #' passed to these arguments take four inputs: \code{coord_x}, \code{coord_y},
 #' \code{id_tree}, and \code{id_time}. Any function that takes
 #' these variables as input can be used for this purpose. However, as a
 #' convenience, four "spark" functions are provided that can be used to create
 #' functions that are suitable for this purpose: \code{spark_linear()},
 #' \code{spark_decay()}, \code{spark_random()}, and \code{spark_nothing()}.
+#'
+#' The \code{prune} argument is interpreted as a probability: at each
+#' iteration, every newly created shoot has its endpoint passed to the
+#' \code{prune} function, and is pruned (i.e., stops growing any further) with
+#' that probability. The segment that shoot has already grown is still
+#' included in the output and is marked as a leaf node (see \code{id_leaf}
+#' below), but no descendants are grown from it. The default,
+#' \code{spark_nothing()}, always returns 0 and therefore disables pruning
+#' entirely. A constant pruning probability can be obtained with, for
+#' example, \code{spark_linear(constant = 0.2)}, and space- or time-varying
+#' pruning can be created using \code{spark_decay()} or a custom function.
 #'
 #' These functions are documented in their own help files. To give an example,
 #' the default behaviour of \code{flametree_grow()} adds a random horizontal
@@ -83,7 +98,10 @@
 #' addition, there are two identifier columns used to denote the segments
 #' themselves. The \code{id_path} column is numeric, and assigns value 1 to
 #' the "first" segment (i.e., the lowest part of the tree trunk) for every
-#' tree, with values increasing numerically for each subsequent segment. Values
+#' tree, with values increasing numerically for each subsequent segment. The
+#' \code{id_leaf} column is TRUE for terminal segments: those grown in the
+#' final iteration of the process, and any earlier segment whose growth was
+#' stopped early by the \code{prune} argument. Values
 #' for \code{id_path} will uniquely identify a segment within a tree, but when
 #' multiple trees are generated there will be multiple segments that have the
 #' same \code{id_path} value. If a unique identifier across trees is needed,
@@ -125,7 +143,8 @@ flametree_grow <- function(
   seg_col = spark_linear(tree = 2, time = 1),
   seg_wid = spark_decay(time = .3, multiplier = 5, constant = .1),
   shift_x = spark_random(multiplier = 3),
-  shift_y = spark_nothing()
+  shift_y = spark_nothing(),
+  prune = spark_nothing()
 ) {
 
   # collect parameters into a list
@@ -139,7 +158,8 @@ flametree_grow <- function(
     shift_x = shift_x, # function to control horizontal jitter
     shift_y = shift_y, # function to control vertical jitter
     seg_col = seg_col, # function to control segment colour
-    seg_wid = seg_wid # function to control segment width
+    seg_wid = seg_wid, # function to control segment width
+    prune = prune # function to control probability a shoot stops growing
   )
   ft__check_opts(options)
   ft__check_growth_size(options)
@@ -186,24 +206,31 @@ ft__grow_tree <- function(param, id, local_seed) {
 
 
 
-# to grow a "layer" of the shrub, we extend (and possibly prune) each
-# existing shoot multiple times
+# to grow a "layer" of the shrub, we extend each shoot that has not
+# already been pruned multiple times (once per `split`); shoots that
+# were pruned in an earlier layer are dropped here so they don't
+# generate any further descendants, but they remain in the tree's
+# history as terminal (leaf) segments
 ft__grow_layer <- function(shoots, time, param, id) {
+
+  live_shoots <- dplyr::filter(shoots, !pruned)
 
   new_shoots <- purrr::map_dfr(
     .x = 1:param$split,
     .f = ft__grow_shoots,
-    shoots = shoots,
-    param = param
+    shoots = live_shoots,
+    param = param,
+    id = id
   )
   return(new_shoots)
 }
 
 
 
-# for each existing shoot on the tree, grow an additional shoot that
-# extends it; then prune some of them away
-ft__grow_shoots <- function(time, shoots, param) {
+# for each existing (live) shoot on the tree, grow an additional shoot
+# that extends it, then decide (via the `prune` spark function) whether
+# each new shoot should stop growing after this
+ft__grow_shoots <- function(time, shoots, param, id) {
 
   n_shoots <- nrow(shoots)
 
@@ -221,6 +248,7 @@ ft__grow_shoots <- function(time, shoots, param) {
       id_time = id_time + 1L,
       x_2 = x_0 + ft__extend_x(seg_len, seg_deg) ,
       y_2 = y_0 + ft__extend_y(seg_len, seg_deg),
+      pruned = stats::runif(dplyr::n()) < param$prune(x_2, y_2, id, id_time)
     )
 
   return(shoots)
@@ -237,7 +265,8 @@ ft__grow_sapling <- function() {
     x_2 = 0, y_2 = 1,  # first shoot grow to y = 1
     seg_deg = 90,      # segment orientation is vertical
     seg_len = 1,       # segment length is 1
-    id_time = 1L       # the acorn grows at "time 1"
+    id_time = 1L,      # the acorn grows at "time 1"
+    pruned = FALSE     # the acorn has not been pruned
   )
   return(sapling)
 }
@@ -261,7 +290,10 @@ ft__shape_tree <- function(tree, id) {
     tidyr::pivot_wider(names_from = axis, values_from = coord) %>%
     dplyr::mutate(
       id_step = as.integer(id_step),
-      id_leaf = id_time == max(id_time),  # adds leaf node indicator
+      # a segment is a leaf if it was pruned, or if it belongs to the
+      # final layer of growth (i.e. it stopped because `time` ran out,
+      # not because it was pruned)
+      id_leaf = pruned | (id_time == max(id_time)),
       id_tree = id,                       # adds tree identifier
       id_pathtree = paste(id_tree, id_path, sep = "_")
     ) %>%
@@ -318,19 +350,16 @@ ft__check_opts <- function(x) {
   ft__check_numeric(x$angle, "angle")
   ft__check_length_minimum(x$angle, "angle", 2)
 
-  # split must be a single positive integer
+  # split must be a single positive integer; split = 1 disables
+  # branching altogether, producing a single winding path per tree
   ft__check_not_null(x$split, "split")
   ft__check_not_na(x$split, "split")
   ft__check_soft_integer(x$split, "split")
   ft__check_length_exact(x$split, "split", 1)
-  ft__check_value_minimum(x$split, "split", 2)
-  #
-  # # prune must be numeric between 0 and 1
-  # ft__check_not_null(x$prune, "prune")
-  # ft__check_not_na(x$prune, "prune")
-  # ft__check_length_exact(x$prune, "prune", 1)
-  # ft__check_value_minimum(x$prune, "prune", 0)
-  # ft__check_value_maximum(x$prune, "prune", 1)
+  ft__check_value_minimum(x$split, "split", 1)
+
+  # prune, like the other spark-function arguments (seg_col, seg_wid,
+  # shift_x, shift_y), is validated when it is called rather than here
 
 }
 

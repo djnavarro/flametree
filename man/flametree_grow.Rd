@@ -14,7 +14,8 @@ flametree_grow(
   seg_col = spark_linear(tree = 2, time = 1),
   seg_wid = spark_decay(time = 0.3, multiplier = 5, constant = 0.1),
   shift_x = spark_random(multiplier = 3),
-  shift_y = spark_nothing()
+  shift_y = spark_nothing(),
+  prune = spark_nothing()
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ flametree_grow(
 \item{shift_x}{Spark function to control horizontal jitter}
 
 \item{shift_y}{Spark function to control vertical jitter}
+
+\item{prune}{Spark function to control the probability that a shoot stops growing}
 }
 \value{
 The output of \code{flametree_grow()}` is a tibble with the following
@@ -57,7 +60,10 @@ midpoint, or the end point of the relevant curved segment in a tree. In
 addition, there are two identifier columns used to denote the segments
 themselves. The \code{id_path} column is numeric, and assigns value 1 to
 the "first" segment (i.e., the lowest part of the tree trunk) for every
-tree, with values increasing numerically for each subsequent segment. Values
+tree, with values increasing numerically for each subsequent segment. The
+\code{id_leaf} column is TRUE for terminal segments: those grown in the
+final iteration of the process, and any earlier segment whose growth was
+stopped early by the \code{prune} argument. Values
 for \code{id_path} will uniquely identify a segment within a tree, but when
 multiple trees are generated there will be multiple segments that have the
 same \code{id_path} value. If a unique identifier across trees is needed,
@@ -90,8 +96,10 @@ The user can control how this iterative process unfolds. By setting the
 \code{set.seed()}. The \code{trees} argument specifies the number of trees
 to create using this process, the \code{time} argument specifies how many
 iterations of the branching process will be run (at least two), and the
-\code{split} argument specifies how many new segments (at least two) will be
-created each time abranching occurs.
+\code{split} argument specifies how many new segments (at least one) will be
+created each time abranching occurs. Setting \code{split = 1} disables
+branching altogether, producing a single winding path per tree rather than
+a branching structure.
 
 Because the number of segments grows by a factor of \code{split} at every
 one of the \code{time} iterations, the size of the resulting data grows
@@ -115,16 +123,28 @@ to the orientation of the parent segment plus the sampled angle. Like the
 \code{scale} argument, \code{angle} must contain at least two values.
 
 The remaining arguments (\code{seg_col}, \code{seg_wid}, \code{shift_x},
-and \code{shift_y}) all take functions as their input, and are used to
-control how the colours (\code{seg_col}) and width (\code{seg_wid}) of the
-segments are created, as well as the horizontal (\code{shift_x}) and
-vertical (\code{shift_y}) displacement of the trees are generated. Functions
+\code{shift_y}, and \code{prune}) all take functions as their input, and are
+used to control how the colours (\code{seg_col}) and width (\code{seg_wid})
+of the segments are created, the horizontal (\code{shift_x}) and
+vertical (\code{shift_y}) displacement of the trees, and the probability
+that growth of a given shoot is pruned (\code{prune}). Functions
 passed to these arguments take four inputs: \code{coord_x}, \code{coord_y},
 \code{id_tree}, and \code{id_time}. Any function that takes
 these variables as input can be used for this purpose. However, as a
 convenience, four "spark" functions are provided that can be used to create
 functions that are suitable for this purpose: \code{spark_linear()},
 \code{spark_decay()}, \code{spark_random()}, and \code{spark_nothing()}.
+
+The \code{prune} argument is interpreted as a probability: at each
+iteration, every newly created shoot has its endpoint passed to the
+\code{prune} function, and is pruned (i.e., stops growing any further) with
+that probability. The segment that shoot has already grown is still
+included in the output and is marked as a leaf node (see \code{id_leaf}
+below), but no descendants are grown from it. The default,
+\code{spark_nothing()}, always returns 0 and therefore disables pruning
+entirely. A constant pruning probability can be obtained with, for
+example, \code{spark_linear(constant = 0.2)}, and space- or time-varying
+pruning can be created using \code{spark_decay()} or a custom function.
 
 These functions are documented in their own help files. To give an example,
 the default behaviour of \code{flametree_grow()} adds a random horizontal

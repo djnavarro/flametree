@@ -93,6 +93,64 @@ test_that("invalid splits are forbidden", {
   expect_error(flametree_grow(split = list(2)))
 
   expect_silent(flametree_grow(split = 3))
+  expect_silent(flametree_grow(split = 1)) # disables branching (a "vine")
+
+})
+
+
+test_that("split = 1 produces a single unbranched path per tree", {
+
+  dat <- flametree_grow(time = 5, split = 1, trees = 2)
+
+  # one segment ("id_path") grown per time step (including the initial
+  # sapling), per tree: time + 1 segments, for each of 2 trees
+  expect_equal(
+    dat |> dplyr::distinct(id_tree, id_time, id_path) |> nrow(),
+    12
+  )
+
+  # exactly one leaf per tree (the final segment)
+  expect_equal(sum(dat$id_leaf) / 3, 2) # 3 rows per segment, 2 trees
+
+})
+
+
+test_that("prune stops growth early without discarding the grown segment", {
+
+  # a moderate constant pruning probability, applied via spark_linear()
+  dat_pruned <- flametree_grow(
+    seed = 552,
+    time = 10,
+    split = 3,
+    trees = 3,
+    prune = spark_linear(constant = 0.4)
+  )
+
+  dat_unpruned <- flametree_grow(seed = 552, time = 10, split = 3, trees = 3)
+
+  # pruning reduces the size of the tree (fewer descendants overall)
+  expect_lt(nrow(dat_pruned), nrow(dat_unpruned))
+
+  # leaves occur at more than just the final time point, i.e. some
+  # branches stopped early and are still present/marked as leaves
+  leaf_times <- dat_pruned$id_time[dat_pruned$id_leaf]
+  expect_gt(length(unique(leaf_times)), 1)
+  expect_true(all(dat_pruned$id_time <= 11)) # time + 1, including the sapling
+
+  # the data structure is still internally well-formed
+  expect_equal(nrow(dat_pruned) %% 3, 0)
+  expect_equal(nrow(dat_pruned), length(unique(dat_pruned$id_pathtree)) * 3)
+
+})
+
+
+test_that("default prune (spark_nothing) reproduces unpruned behaviour", {
+
+  dat <- flametree_grow(seed = 331, time = 7, split = 2, trees = 2)
+
+  # every leaf occurs at the final time point when pruning is disabled
+  expect_true(all(dat$id_time[dat$id_leaf] == max(dat$id_time)))
+  expect_true(all(dat$id_leaf == (dat$id_time == max(dat$id_time))))
 
 })
 

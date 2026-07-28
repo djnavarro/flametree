@@ -18,5 +18,6 @@ utils::globalVariables(c(
   "y",
   "id_leaf",
   "id_pathtree",
-  "id_tree"
+  "id_tree",
+  "pruned"
 ))

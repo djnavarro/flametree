@@ -10,11 +10,12 @@
 #' @param constant Constant value to be added to the output
 #'
 #' @details Some arguments to \code{flametree_grow()} take numeric input, but
-#' \code{seg_col}, \code{seg_wid}, \code{shift_x}, and \code{shift_y} all
-#' take functions as their input, and are used to
+#' \code{seg_col}, \code{seg_wid}, \code{shift_x}, \code{shift_y}, and
+#' \code{prune} all take functions as their input, and are used to
 #' control how the colours (\code{seg_col}) and width (\code{seg_wid}) of the
-#' segments are created, as well as the horizontal (\code{shift_x}) and
-#' vertical (\code{shift_y}) displacement of the trees are generated. Functions
+#' segments are created, the horizontal (\code{shift_x}) and
+#' vertical (\code{shift_y}) displacement of the trees, and the probability
+#' that a given shoot stops growing (\code{prune}). Functions
 #' passed to these arguments take four inputs: \code{coord_x}, \code{coord_y},
 #' \code{id_tree}, and \code{id_time} as input. Any function that takes
 #' these variables as input and produces a numeric vector of the same length
