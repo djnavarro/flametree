@@ -36,9 +36,8 @@ incoming pretest ("Examples with CPU (user + system) or elapsed time >
 building and rendering two separate five-tree plots. Fixed by reusing a
 single plot across both example calls and using smaller `trees`/`time`
 values; example runtime is now well under a second. Reconfirmed clean
-(including example timing) on all five R-hub platforms above; a fresh
-win-builder devel run was also triggered after the fix and is pending
-confirmation.
+(including example timing) on all five R-hub platforms above and on a
+fresh win-builder devel run.
 
 ## Downstream dependencies
 
