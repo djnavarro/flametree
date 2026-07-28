@@ -31,6 +31,11 @@
   was technically misleading. Also fixes a grammatical mismatch in the
   same field (“generating the data structures and visualise them” →
   “…and visualising them”).
+- Switches all internal code, `@examples`, `README.Rmd`, and vignettes
+  to use the base R native pipe `|>` instead of the magrittr pipe `%>%`.
+  Adds `Depends: R (>= 4.1.0)` accordingly. The `%>%` operator
+  re-exported from magrittr (`?flametree::\%>\%`) is unaffected and
+  still available for backward compatibility.
 - `ft__check_colour()` now validates that the `background` and `palette`
   arguments to
   [`flametree_plot()`](https://flametree.djnavarro.net/reference/flametree_plot.md)

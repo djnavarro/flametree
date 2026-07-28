@@ -32,7 +32,7 @@ trees, and no “leaves” are drawn.
 
 ``` r
 
-flametree_grow(time = 14) %>% 
+flametree_grow(time = 14) |> 
   flametree_plot(
     palette = shades, 
     style = "plain"
@@ -52,7 +52,7 @@ nodes.
 
 ``` r
 
-flametree_grow(time = 6, trees = 5) %>% 
+flametree_grow(time = 6, trees = 5) |> 
   flametree_plot(
     palette = shades, 
     style = "voronoi"
@@ -73,7 +73,7 @@ flametree_grow(
   time = 10, 
   trees = 12, 
   shift_x = spark_nothing()
-) %>% 
+) |> 
   flametree_plot(
     palette = shades, 
     style = "nativeflora"
@@ -89,7 +89,7 @@ segments are removed, and the tree body is wider at the base.
 
 ``` r
 
-flametree_grow(time = 14) %>% 
+flametree_grow(time = 14) |> 
   flametree_plot(
     palette = shades,
     style = "wisp"
@@ -105,7 +105,7 @@ segments.
 
 ``` r
 
-flametree_grow(time = 10, trees = 5) %>% 
+flametree_grow(time = 10, trees = 5) |> 
   flametree_plot(
     palette = shades, 
     style = "minimal"
@@ -121,7 +121,7 @@ plot that uses the traditional gray theme used in ggplot2.
 
 ``` r
 
-flametree_grow(time = 10, trees = 5) %>% 
+flametree_grow(time = 10, trees = 5) |> 
   flametree_plot(
     palette = shades, 
     style = "themegray"

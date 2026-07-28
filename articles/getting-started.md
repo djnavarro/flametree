@@ -47,7 +47,7 @@ little like a tree:
 
 ``` r
 
-flametree_grow() %>% flametree_plot()
+flametree_grow() |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/make-flametree-plot-1.png)
@@ -98,14 +98,14 @@ you get a different random outcome of the “same” process:
 
 ``` r
 
-flametree_grow(seed = 1) %>% flametree_plot()
+flametree_grow(seed = 1) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-seeds-1.png)
 
 ``` r
 
-flametree_grow(seed = 2) %>% flametree_plot()
+flametree_grow(seed = 2) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-seeds-2.png)
@@ -116,21 +116,21 @@ which the branching process will be run:
 
 ``` r
 
-flametree_grow(trees = 6) %>% flametree_plot()
+flametree_grow(trees = 6) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-trees-and-time-1.png)
 
 ``` r
 
-flametree_grow(time = 10) %>% flametree_plot()
+flametree_grow(time = 10) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-trees-and-time-2.png)
 
 ``` r
 
-flametree_grow(trees = 3, time = 10) %>% flametree_plot()
+flametree_grow(trees = 3, time = 10) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-trees-and-time-3.png)
@@ -144,14 +144,14 @@ from which it was created, multiplied by this scaling factor:
 
 ``` r
 
-flametree_grow(scale = c(.5, .8, 1.1)) %>% flametree_plot()
+flametree_grow(scale = c(.5, .8, 1.1)) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-scale-1.png)
 
 ``` r
 
-flametree_grow(scale = c(.8, .9)) %>% flametree_plot()
+flametree_grow(scale = c(.8, .9)) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-scale-2.png)
@@ -165,14 +165,14 @@ angle:
 
 ``` r
 
-flametree_grow(angle = c(-20, 5, 10)) %>% flametree_plot()
+flametree_grow(angle = c(-20, 5, 10)) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-angle-1.png)
 
 ``` r
 
-flametree_grow(angle = -10:10) %>% flametree_plot()
+flametree_grow(angle = -10:10) |> flametree_plot()
 ```
 
 ![](getting-started_files/figure-html/changing-angle-2.png)
@@ -197,7 +197,7 @@ is the `palette` argument, which takes a vector of colours as input:
 
 # use hex codes to set colours
 # https://www.canva.com/colors/color-palettes/arts-and-crafts/
-flametree_grow(time = 10) %>% 
+flametree_grow(time = 10) |> 
   flametree_plot(
     palette = c(
       "#A06AB4", # lavender
@@ -214,7 +214,7 @@ flametree_grow(time = 10) %>%
 
 
 # use colour names that R recognises
-flametree_grow(time = 10) %>% 
+flametree_grow(time = 10) |> 
   flametree_plot(
     palette = c(
       "antiquewhite", 

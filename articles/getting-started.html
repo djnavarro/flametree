@@ -100,7 +100,7 @@ plots using ggplot2. First we look at the data structure:</p>
 <p>Segments are arranged so that when plotted, the overall image looks a
 little like a tree:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/make-flametree-plot-1.png" class="r-plt" alt="" width="576"></p>
 <p>The output of <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> is always a tibble with
 the same 12 columns. Each row specifies the location of a point in the
@@ -144,22 +144,22 @@ to control the behaviour of the generative process. By setting the
 the structural features of the generative process change, but you get a
 different random outcome of the “same” process:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-seeds-1.png" class="r-plt" alt="" width="576"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-seeds-2.png" class="r-plt" alt="" width="576"></p>
 <p>In contrast, the <code>trees</code> and <code>time</code> arguments
 can be used to change the number of distinct trees generated and the
 number of iterations over which the branching process will be run:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>trees <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>trees <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-trees-and-time-1.png" class="r-plt" alt="" width="576"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-trees-and-time-2.png" class="r-plt" alt="" width="576"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>trees <span class="op">=</span> <span class="fl">3</span>, time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>trees <span class="op">=</span> <span class="fl">3</span>, time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-trees-and-time-3.png" class="r-plt" alt="" width="576"></p>
 <p>You can also control how the length and orientation of the branches
 change, using the <code>scale</code> and <code>angle</code> arguments
@@ -169,10 +169,10 @@ is created, and the length of the new segment is equal to the length of
 the “parent” segment from which it was created, multiplied by this
 scaling factor:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.8</span>, <span class="fl">1.1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.8</span>, <span class="fl">1.1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-scale-1.png" class="r-plt" alt="" width="576"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.8</span>, <span class="fl">.9</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.8</span>, <span class="fl">.9</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-scale-2.png" class="r-plt" alt="" width="576"></p>
 <p>The orientation of the new segment is controlled by the
 <code>angle</code> argument in an analogous way. Every time a new
@@ -181,10 +181,10 @@ that the values in <code>angle</code> are interpreted as degrees, not
 radians. The orientation of the new segment is equal to the orientation
 of the parent segment plus the sampled angle:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-angle-1.png" class="r-plt" alt="" width="576"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="op">-</span><span class="fl">10</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="op">-</span><span class="fl">10</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/changing-angle-2.png" class="r-plt" alt="" width="576"></p>
 <p>The other arguments to <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> allow slightly
 more fine-grained control over the generative process, discussed in the
@@ -204,7 +204,7 @@ input:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># use hex codes to set colours</span></span>
 <span><span class="co"># https://www.canva.com/colors/color-palettes/arts-and-crafts/</span></span>
-<span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span></span>
 <span>    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>      <span class="st">"#A06AB4"</span>, <span class="co"># lavender</span></span>
@@ -217,7 +217,7 @@ input:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># use colour names that R recognises</span></span>
-<span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span></span>
 <span>    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>      <span class="st">"antiquewhite"</span>, </span>

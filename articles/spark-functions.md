@@ -35,8 +35,8 @@ spark_linear(x = 2, y = 3)
 #>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
 #>         id_time) + constant
 #> }
-#> <bytecode: 0x56457bf6f3e8>
-#> <environment: 0x56457bf6c000>
+#> <bytecode: 0x5561c8261c50>
+#> <environment: 0x5561c8262778>
 ```
 
 We could use this function to control how the colours in the tree
@@ -47,7 +47,7 @@ change:
 flametree_grow(
   time = 12,
   seg_col = spark_linear(x = 2, y = 3)
-) %>% 
+) |> 
   flametree_plot()
 ```
 
@@ -65,7 +65,7 @@ flametree_grow(
   time = 10,
   seg_col = spark_linear(time = 1, tree = 2),
   shift_x = spark_linear(tree = 1)
-) %>% 
+) |> 
   flametree_plot()
 ```
 
@@ -88,7 +88,7 @@ flametree_grow(
   time = 7,
   shift_x = spark_random(multiplier = 1),
   shift_y = spark_random(multiplier = 1)
-) %>% 
+) |> 
   flametree_plot(style = "nativeflora")
 ```
 
@@ -107,7 +107,7 @@ flametree_grow(
   seg_wid = spark_linear(constant = .2),
   shift_x = jittr,
   shift_y = jittr
-) %>% 
+) |> 
   flametree_plot(
     palette = c("hotpink4", "ghostwhite"),
     style = "wisp"

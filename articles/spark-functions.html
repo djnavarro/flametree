@@ -93,15 +93,15 @@ generated. For example, this returns a function that is linear in
 <span><span class="co">#&gt;     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * </span></span>
 <span><span class="co">#&gt;         id_time) + constant</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x56457bf6f3e8&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x56457bf6c000&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;bytecode: 0x5561c8261c50&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x5561c8262778&gt;</span></span></code></pre></div>
 <p>We could use this function to control how the colours in the tree
 change:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/flametree_grow.html">flametree_grow</a></span><span class="op">(</span></span>
 <span>  time <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>  seg_col <span class="op">=</span> <span class="fu"><a href="../reference/sparks.html">spark_linear</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spark-functions_files/figure-html/spark-linear-tree-1-1.png" class="r-plt" alt="" width="700"></p>
 <p>Different parameter settings will produce different linear gradients.
@@ -114,7 +114,7 @@ linearly with tree number:</p>
 <span>  time <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  seg_col <span class="op">=</span> <span class="fu"><a href="../reference/sparks.html">spark_linear</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">1</span>, tree <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  shift_x <span class="op">=</span> <span class="fu"><a href="../reference/sparks.html">spark_linear</a></span><span class="op">(</span>tree <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spark-functions_files/figure-html/spark-linear-tree-2-1.png" class="r-plt" alt="" width="700"></p>
 <p>The previous examples all use <code><a href="../reference/sparks.html">spark_linear()</a></code>, but
@@ -129,7 +129,7 @@ can be useful with the “native flora” plot style:</p>
 <span>  time <span class="op">=</span> <span class="fl">7</span>,</span>
 <span>  shift_x <span class="op">=</span> <span class="fu"><a href="../reference/sparks.html">spark_random</a></span><span class="op">(</span>multiplier <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  shift_y <span class="op">=</span> <span class="fu"><a href="../reference/sparks.html">spark_random</a></span><span class="op">(</span>multiplier <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"nativeflora"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spark-functions_files/figure-html/spark-random-1-1.png" class="r-plt" alt="" width="700"></p>
 <p>Defining your own spark function can be fun…</p>
@@ -143,7 +143,7 @@ can be useful with the “native flora” plot style:</p>
 <span>  seg_wid <span class="op">=</span> <span class="fu"><a href="../reference/sparks.html">spark_linear</a></span><span class="op">(</span>constant <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span>,</span>
 <span>  shift_x <span class="op">=</span> <span class="va">jittr</span>,</span>
 <span>  shift_y <span class="op">=</span> <span class="va">jittr</span></span>
-<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/flametree_plot.html">flametree_plot</a></span><span class="op">(</span></span>
 <span>    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hotpink4"</span>, <span class="st">"ghostwhite"</span><span class="op">)</span>,</span>
 <span>    style <span class="op">=</span> <span class="st">"wisp"</span></span>
