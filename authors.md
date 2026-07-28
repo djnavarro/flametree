@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/djnavarro/flametree/blob/v0.2/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/djnavarro/flametree/blob/main/DESCRIPTION)
 
 Navarro D (2026). *flametree: Generate Random Tree-Like Images*. R
 package version 0.2.0, <https://github.com/djnavarro/flametree>.
