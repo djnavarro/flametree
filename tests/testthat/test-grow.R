@@ -155,6 +155,26 @@ test_that("default prune (spark_nothing) reproduces unpruned behaviour", {
 })
 
 
+test_that("invalid trees are forbidden", {
+
+  expect_error(flametree_grow(trees = 0))
+  expect_error(flametree_grow(trees = -1))
+  expect_error(flametree_grow(trees = 2.5))
+  expect_error(flametree_grow(trees = c(2, 3)))
+  expect_error(flametree_grow(trees = NA_integer_))
+  expect_error(flametree_grow(trees = NaN))
+  expect_error(flametree_grow(trees = Inf))
+  expect_error(flametree_grow(trees = "abc"))
+  expect_error(flametree_grow(trees = NULL))
+  expect_error(flametree_grow(trees = TRUE))
+  expect_error(flametree_grow(trees = list(2)))
+
+  expect_silent(flametree_grow(trees = 1))
+  expect_silent(flametree_grow(trees = 3))
+
+})
+
+
 test_that("flametree data has correct columns", {
 
   dat <- flametree_grow()

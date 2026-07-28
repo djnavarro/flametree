@@ -358,6 +358,13 @@ ft__check_opts <- function(x) {
   ft__check_length_exact(x$split, "split", 1)
   ft__check_value_minimum(x$split, "split", 1)
 
+  # trees must be a single positive integer
+  ft__check_not_null(x$trees, "trees")
+  ft__check_not_na(x$trees, "trees")
+  ft__check_soft_integer(x$trees, "trees")
+  ft__check_length_exact(x$trees, "trees", 1)
+  ft__check_value_minimum(x$trees, "trees", 1)
+
   # prune, like the other spark-function arguments (seg_col, seg_wid,
   # shift_x, shift_y), is validated when it is called rather than here
 

@@ -81,6 +81,12 @@ ft__check_dataframe <- function(x, name) {
   }
 }
 
+ft__check_ggplot <- function(x, name) {
+  if(!inherits(x, "gg")) {
+    stop("`", name, "` must be a ggplot object", call. = FALSE)
+  }
+}
+
 ft__check_value_minimum <- function(x, name, val) {
   ft__check_numeric(x, name)
   if(any(x < val)) {

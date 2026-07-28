@@ -44,6 +44,10 @@
 
 #'
 flametree_save <- function(plot, filename, ...) {
+
+  ft__check_not_null(plot, "plot")
+  ft__check_ggplot(plot, "plot")
+
   background <- plot$theme$panel.background$fill
   ggplot2::ggsave(
     plot = plot,
