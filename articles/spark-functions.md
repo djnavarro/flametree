@@ -35,8 +35,8 @@ spark_linear(x = 2, y = 3)
 #>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
 #>         id_time) + constant
 #> }
-#> <bytecode: 0x562788ac00e8>
-#> <environment: 0x562788ac0c10>
+#> <bytecode: 0x563113b48120>
+#> <environment: 0x563113b48c48>
 ```
 
 We could use this function to control how the colours in the tree
