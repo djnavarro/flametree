@@ -35,8 +35,10 @@ incoming pretest ("Examples with CPU (user + system) or elapsed time >
 10s", for `flametree_save`). This was caused by that function's examples
 building and rendering two separate five-tree plots. Fixed by reusing a
 single plot across both example calls and using smaller `trees`/`time`
-values; example runtime is now well under a second. Reconfirmed via a
-fresh win-builder run after the fix.
+values; example runtime is now well under a second. Reconfirmed clean
+(including example timing) on all five R-hub platforms above; a fresh
+win-builder devel run was also triggered after the fix and is pending
+confirmation.
 
 ## Downstream dependencies
 
