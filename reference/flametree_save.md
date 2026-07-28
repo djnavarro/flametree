@@ -48,19 +48,19 @@ ensures that the image has the same background colour everywhere.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # typical usage
+out_file <- tempfile(fileext = ".png")
 flametree_grow(trees = 5, time = 8) |>
-  flametree_plot(style = "voronoi") |>
-  flametree_save(filename = "~/Desktop/myfile.png")
+  flametree_plot() |>
+  flametree_save(filename = out_file)
+#> Saving 6.67 x 6.67 in image
 
 # passing additional arguments to ggsave()
 flametree_grow(trees = 5, time = 8) |>
-  flametree_plot(style = "voronoi") |>
+  flametree_plot() |>
   flametree_save(
-    filename = "~/Desktop/myfile.png",
+    filename = out_file,
     height = 8,
     width = 8
   )
-} # }
 ```

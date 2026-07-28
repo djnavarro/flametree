@@ -2,7 +2,7 @@
 
 ## Authors
 
-- **Danielle Navarro**. Author, maintainer.
+- **Danielle Navarro**. Author, maintainer, copyright holder.
   [](https://orcid.org/0000-0001-7648-6578)
 
 ## Citation
