@@ -33,7 +33,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Spark functions to control tree growth</h1>
-      <small class="dont-index">Source: <a href="https://github.com/djnavarro/flametree/blob/main/R/sparks.R" class="external-link"><code>R/sparks.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/djnavarro/flametree/blob/v0.2/R/sparks.R" class="external-link"><code>R/sparks.R</code></a></small>
       <div class="d-none name"><code>sparks.Rd</code></div>
     </div>
 
@@ -122,8 +122,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         id_time) + constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x559a695cd918&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x559a707d05e0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c002327198&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c00946c870&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a function of time that decays</span></span></span>
 <span class="r-in"><span><span class="co"># exponentially to an asymptote</span></span></span>
@@ -133,8 +133,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         id_tree) + (time * id_time))^2) + constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x559a695ee2f0&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x559a708448d0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c002343c98&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c0094e12a0&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a numeric vector containing</span></span></span>
 <span class="r-in"><span><span class="co"># copies of the same uniform random number</span></span></span>
@@ -147,8 +147,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(rep(u, n))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x559a695ae6f0&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x559a708b33e0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c002304108&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c00954fdb0&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a function that always produces</span></span></span>
 <span class="r-in"><span><span class="co"># a vector of zeros</span></span></span>
@@ -158,8 +158,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- length(coord_x)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(rep(0, n))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x559a695cb3a0&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x559a70918c80&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c002324b78&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c0095b5c50&gt;</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
