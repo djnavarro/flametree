@@ -27,7 +27,7 @@ shades <- c("#A06AB4", "#FFD743", "#07BB9C", "#D773A2")
 Setting `style = "plain"` (the default) creates an output that resembles the original "flametree" images: colours vary along the body of the trees, and no "leaves" are drawn. 
 
 ```{r plain-style, cache=TRUE}
-flametree_grow(time = 14) %>% 
+flametree_grow(time = 14) |> 
   flametree_plot(
     palette = shades, 
     style = "plain"
@@ -39,7 +39,7 @@ flametree_grow(time = 14) %>%
 Setting `style = "voronoi"` creates a plot where the tree bodies are uniform in colour, and coloured "leaves" are drawn at the top of the trees using a Voronoi tessellation of the locations of the terminal nodes. Note that computing the tessellation is computationally expensive, and this will likely produce errors if there are too many nodes. 
 
 ```{r voronoi-style, cache=TRUE}
-flametree_grow(time = 6, trees = 5) %>% 
+flametree_grow(time = 6, trees = 5) |> 
   flametree_plot(
     palette = shades, 
     style = "voronoi"
@@ -55,7 +55,7 @@ flametree_grow(
   time = 10, 
   trees = 12, 
   shift_x = spark_nothing()
-) %>% 
+) |> 
   flametree_plot(
     palette = shades, 
     style = "nativeflora"
@@ -68,7 +68,7 @@ flametree_grow(
 Setting `style = "wisp"` is similar to the "nativeflora" style, but no segments are removed, and the tree body is wider at the base. 
 
 ```{r wisp-style, cache=TRUE}
-flametree_grow(time = 14) %>% 
+flametree_grow(time = 14) |> 
   flametree_plot(
     palette = shades,
     style = "wisp"
@@ -82,7 +82,7 @@ Setting `style = "minimal"` produces a variant that does not use curved segments
 
 
 ```{r minimal-style, cache=TRUE}
-flametree_grow(time = 10, trees = 5) %>% 
+flametree_grow(time = 10, trees = 5) |> 
   flametree_plot(
     palette = shades, 
     style = "minimal"
@@ -94,7 +94,7 @@ flametree_grow(time = 10, trees = 5) %>%
 Finally, if the user sets `style = "themegray"` the result will be a plot that uses the traditional gray theme used in ggplot2.
 
 ```{r themegray-style, cache=TRUE, dev.args=list(bg="white")}
-flametree_grow(time = 10, trees = 5) %>% 
+flametree_grow(time = 10, trees = 5) |> 
   flametree_plot(
     palette = shades, 
     style = "themegray"

@@ -84,14 +84,14 @@ in black, set against the default gray background specified by the ggplot2
 }
 \examples{
 # the default tree in the plain style
-flametree_grow() \%>\% flametree_plot()
+flametree_grow() |> flametree_plot()
 
 # 10 trees drawn in the nativeflora style
-flametree_grow(trees = 10, shift_x = spark_nothing()) \%>\%
+flametree_grow(trees = 10, shift_x = spark_nothing()) |>
   flametree_plot(style = "nativeflora")
 
 # changing the palette
 shades <- c("#A06AB4", "#FFD743", "#07BB9C", "#D773A2")
-flametree_grow() \%>\% flametree_plot(palette = shades)
+flametree_grow() |> flametree_plot(palette = shades)
 
 }

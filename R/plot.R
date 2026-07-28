@@ -67,15 +67,15 @@
 #'
 #' @examples
 #' # the default tree in the plain style
-#' flametree_grow() %>% flametree_plot()
+#' flametree_grow() |> flametree_plot()
 #'
 #' # 10 trees drawn in the nativeflora style
-#' flametree_grow(trees = 10, shift_x = spark_nothing()) %>%
+#' flametree_grow(trees = 10, shift_x = spark_nothing()) |>
 #'   flametree_plot(style = "nativeflora")
 #'
 #' # changing the palette
 #' shades <- c("#A06AB4", "#FFD743", "#07BB9C", "#D773A2")
-#' flametree_grow() %>% flametree_plot(palette = shades)
+#' flametree_grow() |> flametree_plot(palette = shades)
 #'
 flametree_plot <- function(
   data,
@@ -279,8 +279,8 @@ ft__plot_voronoi <- function(data, background, palette) {
 
   # "leaf" coordinates are at terminal locations (id_step = 2)
   # on the terminal branches (id_leaf == TRUE) in the tree
-  leaf <- data %>%
-    dplyr::filter(id_leaf == TRUE, id_step == 2) %>%
+  leaf <- data |>
+    dplyr::filter(id_leaf == TRUE, id_step == 2) |>
     dplyr::select(coord_x, coord_y, id_path)
 
   # remove duplicated rows
@@ -343,7 +343,7 @@ ft__plot_wisp <- function(data, background, palette) {
 
   # "leaf" coordinates are at terminal locations (id_step = 2)
   # on the terminal branches (id_leaf == TRUE) in the tree
-  leaf <- data %>% dplyr::filter(id_leaf == TRUE, id_step == 2)
+  leaf <- data |> dplyr::filter(id_leaf == TRUE, id_step == 2)
 
   picture <- ggplot2::ggplot() +
     ggforce::geom_bezier(
@@ -386,18 +386,18 @@ ft__plot_wisp <- function(data, background, palette) {
 
 ft__plot_nativeflora <- function(data, background, palette) {
 
-  data <- data %>%
-    dplyr::group_by(id_tree) %>%
+  data <- data |>
+    dplyr::group_by(id_tree) |>
     dplyr::filter(
       id_path %in% sample(max(id_path), 0.5 * max(id_path)),
       id_time > 2
-    ) %>%
+    ) |>
     dplyr::ungroup()
 
-  leaf <- data %>%
+  leaf <- data |>
     dplyr::filter(id_time == max(id_time), id_step == 2)
 
-  picture <- data %>%
+  picture <- data |>
     ggplot2::ggplot(ggplot2::aes(
       x = coord_x,
       y = coord_y,

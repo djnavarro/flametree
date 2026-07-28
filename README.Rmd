@@ -50,7 +50,7 @@ shades <- c("#1b2e3c", "#0c0c1e", "#74112f", "#f3e3e2")
 dat <- flametree_grow(time = 10, trees = 10)
 
 # draw the plot
-dat %>% 
+dat |> 
   flametree_plot(
     background = "antiquewhite",
     palette = shades, 

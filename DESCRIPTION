@@ -16,6 +16,8 @@ Encoding: UTF-8
 Language: en-GB
 URL: https://github.com/djnavarro/flametree, https://flametree.djnavarro.net/
 BugReports: https://github.com/djnavarro/flametree/issues
+Depends: 
+    R (>= 4.1.0)
 Imports: 
     tibble,
     dplyr,

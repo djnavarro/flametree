@@ -192,8 +192,8 @@ ft__grow_tree <- function(param, id, local_seed) {
     id = id
   )
 
-  tree <- tree %>%
-    ft__shape_tree(id) %>%
+  tree <- tree |>
+    ft__shape_tree(id) |>
     dplyr::mutate(
       coord_x = coord_x + param$shift_x(coord_x, coord_y, id, id_time),
       coord_y = coord_y + param$shift_y(coord_x, coord_y, id, id_time),
@@ -237,7 +237,7 @@ ft__grow_shoots <- function(time, shoots, param, id) {
   ch_seg_len <- sample(x = param$scale, size = n_shoots, replace = TRUE)
   ch_seg_deg <- sample(x = param$angle, size = n_shoots, replace = TRUE)
 
-  shoots <- shoots %>%
+  shoots <- shoots |>
     dplyr::mutate(
       x_0 = x_2,
       y_0 = y_2,
@@ -278,16 +278,16 @@ ft__grow_sapling <- function() {
 # be reshaped into a convenient form
 ft__shape_tree <- function(tree, id) {
 
-  tree <- tree %>%
-    dplyr::bind_rows() %>%
-    dplyr::mutate(id_path = as.integer(1:dplyr::n())) %>%
+  tree <- tree |>
+    dplyr::bind_rows() |>
+    dplyr::mutate(id_path = as.integer(1:dplyr::n())) |>
     tidyr::pivot_longer(
       cols = x_0:y_2,
       names_to = "id_step",
       values_to = "coord"
-    ) %>%
-    tidyr::separate(col = id_step, into = c("axis", "id_step")) %>%
-    tidyr::pivot_wider(names_from = axis, values_from = coord) %>%
+    ) |>
+    tidyr::separate(col = id_step, into = c("axis", "id_step")) |>
+    tidyr::pivot_wider(names_from = axis, values_from = coord) |>
     dplyr::mutate(
       id_step = as.integer(id_step),
       # a segment is a leaf if it was pruned, or if it belongs to the
@@ -296,8 +296,8 @@ ft__shape_tree <- function(tree, id) {
       id_leaf = pruned | (id_time == max(id_time)),
       id_tree = id,                       # adds tree identifier
       id_pathtree = paste(id_tree, id_path, sep = "_")
-    ) %>%
-    dplyr::rename(coord_x = x, coord_y = y) %>%
+    ) |>
+    dplyr::rename(coord_x = x, coord_y = y) |>
     dplyr::select(coord_x, coord_y, id_tree, id_time, id_path, id_leaf,
                   id_pathtree, id_step, seg_deg, seg_len)
 
