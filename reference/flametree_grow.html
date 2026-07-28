@@ -151,6 +151,14 @@ to create using this process, the <code>time</code> argument specifies how many
 iterations of the branching process will be run (at least two), and the
 <code>split</code> argument specifies how many new segments (at least two) will be
 created each time abranching occurs.</p>
+<p>Because the number of segments grows by a factor of <code>split</code> at every
+one of the <code>time</code> iterations, the size of the resulting data grows
+exponentially: roughly <code>trees * split ^ time</code> segments are created in
+total (each represented by three rows in the output). Large values of
+<code>time</code> and/or <code>split</code> (especially in combination with a large
+number of <code>trees</code>) can therefore produce very large data frames and
+may exhaust available memory; <code>flametree_grow()</code> will warn when this
+is likely to happen.</p>
 <p>When a new segment is created, its size and orientation are controlled by the
 <code>scale</code> and <code>angle</code> arguments. The <code>scale</code> argument takes a
 vector of at least two positive numbers. One of these numbers is selected at
