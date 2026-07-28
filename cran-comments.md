@@ -6,6 +6,11 @@ This is a resubmission. flametree 0.1.3 is the version currently on CRAN
 validation across several functions, and includes a number of documentation
 fixes. See NEWS.md for the full list of user-facing changes.
 
+A previous submission of this same 0.2.0 tarball was rejected by CRAN's
+automatic incoming pretest for a long-running-examples NOTE on
+`flametree_save()`. That has been fixed (see below) and reconfirmed across
+all test environments; this is the corrected resubmission of 0.2.0.
+
 ## Test environments
 
 * local: Ubuntu 24.04, R 4.6.1
@@ -16,9 +21,10 @@ fixes. See NEWS.md for the full list of user-facing changes.
   - ubuntu-latest, R release
   - ubuntu-latest, R oldrel-1
 * win-builder:
-  - R-release (Windows Server 2022 x64)
-  - R-devel (Windows Server 2022 x64)
-* R-hub v2 (via GitHub Actions):
+  - R-release (Windows Server 2022 x64) — checked prior to the fix below;
+    was already clean
+  - R-devel (Windows Server 2022 x64) — reconfirmed clean after the fix
+* R-hub v2 (via GitHub Actions), reconfirmed clean after the fix:
   - ubuntu-release (R-devel, r-release-linux-x86_64)
   - ubuntu-gcc12 (R-devel, Debian/Ubuntu gcc)
   - macos (R-devel)
@@ -27,17 +33,13 @@ fixes. See NEWS.md for the full list of user-facing changes.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes on all platforms checked (local,
-GitHub Actions CI, R-hub, and win-builder release/devel).
+0 errors | 0 warnings | 0 notes on all platforms above.
 
-Note: an earlier build of 0.2.0 triggered a NOTE from CRAN's automatic
-incoming pretest ("Examples with CPU (user + system) or elapsed time >
-10s", for `flametree_save`). This was caused by that function's examples
-building and rendering two separate five-tree plots. Fixed by reusing a
-single plot across both example calls and using smaller `trees`/`time`
-values; example runtime is now well under a second. Reconfirmed clean
-(including example timing) on all five R-hub platforms above and on a
-fresh win-builder devel run.
+Previous attempt: CRAN's incoming pretest flagged "Examples with CPU (user
++ system) or elapsed time > 10s" for `flametree_save`, caused by its
+examples building and rendering two separate five-tree plots. Fixed by
+reusing a single plot across both example calls and reducing `trees`/
+`time`; example runtime is now well under a second.
 
 ## Downstream dependencies
 
