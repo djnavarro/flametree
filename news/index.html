@@ -39,16 +39,41 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.3.9000" id="flametree-0139000">flametree 0.1.3.9000<a class="anchor" aria-label="anchor" href="#flametree-0139000"></a></h2>
 <ul><li>
-<code>ft__check_colour()</code> now validates that <code>background</code> and <code>palette</code> inputs to <code><a href="../reference/flametree_plot.html">flametree_plot()</a></code> are colours that R actually recognises (via <code><a href="https://rdrr.io/r/grDevices/col2rgb.html" class="external-link">grDevices::col2rgb()</a></code>), rather than only checking they are character vectors. Invalid colours (e.g. <code>"##f6b6a6"</code>) now throw an informative error instead of failing deep inside grid graphics code (<a href="https://github.com/djnavarro/flametree/issues/17" class="external-link">#17</a>).</li>
+<code>ft__check_colour()</code> now validates that the <code>background</code> and <code>palette</code> arguments to <code><a href="../reference/flametree_plot.html">flametree_plot()</a></code> are colours that R actually recognises (via <code><a href="https://rdrr.io/r/grDevices/col2rgb.html" class="external-link">grDevices::col2rgb()</a></code>), rather than only checking that they are character vectors. Invalid colours (e.g. <code>"##f6b6a6"</code>) now throw an informative error from <code><a href="../reference/flametree_plot.html">flametree_plot()</a></code> itself, rather than failing deep inside grid graphics code (<a href="https://github.com/djnavarro/flametree/issues/17" class="external-link">#17</a>).</li>
 <li>
 <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> now warns when the requested <code>time</code>, <code>split</code>, and <code>trees</code> combination is expected to produce a very large data frame (row count grows as <code>trees * split ^ time</code>), since this was the most common cause of “cannot allocate vector” memory errors (<a href="https://github.com/djnavarro/flametree/issues/18" class="external-link">#18</a>).</li>
-<li>Reintroduces <code>prune</code> support, removed prior to the 0.1.3 release. <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> gains a <code>prune</code> argument, a spark function (like <code>seg_col</code>, <code>seg_wid</code>, <code>shift_x</code>, and <code>shift_y</code>) that controls the probability that a given shoot stops growing early. The default, <code><a href="../reference/sparks.html">spark_nothing()</a></code>, disables pruning and reproduces prior behaviour exactly. Pruned shoots keep the segment they already grew and are marked as leaves (<code>id_leaf</code>). Also relaxes <code>split</code> to allow a value of 1, which disables branching altogether and produces a single winding path per tree (<a href="https://github.com/djnavarro/flametree/issues/19" class="external-link">#19</a>).</li>
+<li>Reintroduces <code>prune</code> support, which had been removed prior to the 0.1.3 release. <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> gains a <code>prune</code> argument: a spark function (like <code>seg_col</code>, <code>seg_wid</code>, <code>shift_x</code>, and <code>shift_y</code>) that controls the probability that a given shoot stops growing early. The default, <code><a href="../reference/sparks.html">spark_nothing()</a></code>, disables pruning and reproduces prior behaviour exactly. Pruned shoots keep the segment they already grew, and that segment is marked as a leaf (<code>id_leaf</code>), but it produces no further descendants. Also relaxes <code>split</code> to allow a value of 1, which disables branching altogether and produces a single winding path per tree (<a href="https://github.com/djnavarro/flametree/issues/19" class="external-link">#19</a>).</li>
+<li>The <code>trees</code> argument to <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> is now validated (it previously had no checks at all, so invalid input such as <code>trees = 2.5</code> or <code>trees = -1</code> could silently misbehave or fail with a cryptic low-level error).</li>
+<li>
+<code><a href="../reference/flametree_save.html">flametree_save()</a></code> now checks that <code>plot</code> is a ggplot object. Previously, passing something other than a ggplot object (including <code>NULL</code>) either failed with a cryptic error or, in the case of <code>NULL</code>, silently saved an unrelated plot via <code><a href="https://ggplot2.tidyverse.org/reference/get_last_plot.html" class="external-link">ggplot2::last_plot()</a></code> instead of erroring.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.3" id="flametree-013">flametree 0.1.3<a class="anchor" aria-label="anchor" href="#flametree-013"></a></h2><p class="text-muted">CRAN release: 2021-11-29</p>
-<ul><li>Removes unnecessary dependency on paletteer.</li>
-<li>Changes maintainer email to one I’ll have long term control over.</li>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<ul><li>Removes an unnecessary dependency on the paletteer package.</li>
+<li>Changes the maintainer email address to one under long-term personal control, rather than a university address.</li>
+<li>Adds this <code>NEWS.md</code> file to track user-facing changes to the package going forward.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.2" id="flametree-012">flametree 0.1.2<a class="anchor" aria-label="anchor" href="#flametree-012"></a></h2><p class="text-muted">CRAN release: 2021-04-27</p>
+<ul><li>Tightens validation of the arguments to <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> and <code><a href="../reference/flametree_plot.html">flametree_plot()</a></code>.</li>
+<li>Updates and extends the documentation for <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> and the <code>sparks</code> functions, and lightly reworks the “voronoi” style documentation.</li>
+<li>Adds a Voronoi-style example image to the README, and removes an unused vignette.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.1" id="flametree-011">flametree 0.1.1<a class="anchor" aria-label="anchor" href="#flametree-011"></a></h2>
+<ul><li>Fixes a bug in the “wisp” style where segments were grouped by <code>id_path</code> instead of <code>id_pathtree</code>, causing segments from different trees that happened to share an <code>id_path</code> value to be incorrectly joined together (<a href="https://github.com/djnavarro/flametree/issues/14" class="external-link">#14</a>).</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1" id="flametree-01">flametree 0.1<a class="anchor" aria-label="anchor" href="#flametree-01"></a></h2>
+<ul><li>First CRAN release.</li>
+<li>Consolidates what had been several separate, inconsistent plotting systems (<code>ashtree</code>, <code>wisptree</code>, <code>voronoitree</code>, and the original <code>flametree</code> functions) into the single, unified interface that the package still uses: <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code> to generate the underlying data, and <code><a href="../reference/flametree_plot.html">flametree_plot()</a></code> to render it in a chosen <code>style</code> (“plain”, “minimal”, “themegray”, “voronoi”, “wisp”, or “nativeflora”).</li>
+<li>Introduces the “spark function” system (<code><a href="../reference/sparks.html">spark_linear()</a></code>, <code><a href="../reference/sparks.html">spark_decay()</a></code>, <code><a href="../reference/sparks.html">spark_random()</a></code>, <code><a href="../reference/sparks.html">spark_nothing()</a></code>) for controlling segment colour, segment width, and horizontal/vertical displacement during growth.</li>
+<li>Adds <code>id_leaf</code> to the data structure returned by <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code>, identifying terminal segments.</li>
+<li>Renames all unexported functions to use a consistent <code>ft__</code> prefix, and adds an initial test suite and package documentation site (via pkgdown).</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.1" id="flametree-001">flametree 0.0.1<a class="anchor" aria-label="anchor" href="#flametree-001"></a></h2>
+<ul><li>Early development version, predating the unified <code><a href="../reference/flametree_grow.html">flametree_grow()</a></code>/<code><a href="../reference/flametree_plot.html">flametree_plot()</a></code> interface introduced in 0.1. Establishes the core data structure for representing a grown tree, and simplifies the internal API and default parameter values.</li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
