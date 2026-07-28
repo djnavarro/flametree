@@ -15,14 +15,20 @@ fixes. See NEWS.md for the full list of user-facing changes.
   - ubuntu-latest, R devel
   - ubuntu-latest, R release
   - ubuntu-latest, R oldrel-1
-* win-builder (devel and release) [TODO: run `devtools::check_win_devel()` /
-  `check_win_release()` before submission and paste results here]
-* R-hub v2 [TODO: run `rhub::rhub_check()` before submission and paste
-  results here]
+* win-builder:
+  - R-release (Windows Server 2022 x64)
+  - R-devel (Windows Server 2022 x64)
+* R-hub v2 (via GitHub Actions):
+  - ubuntu-release (R-devel, r-release-linux-x86_64)
+  - ubuntu-gcc12 (R-devel, Debian/Ubuntu gcc)
+  - macos (R-devel)
+  - windows (R-devel)
+  - nosuggests (R-devel, Fedora, Suggests packages not installed)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 0 notes, on all platforms checked (local,
+GitHub Actions CI, R-hub, and win-builder release/devel).
 
 ## Downstream dependencies
 
