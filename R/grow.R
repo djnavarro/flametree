@@ -25,7 +25,7 @@
 #' to create using this process, the \code{time} argument specifies how many
 #' iterations of the branching process will be run (at least two), and the
 #' \code{split} argument specifies how many new segments (at least one) will be
-#' created each time abranching occurs. Setting \code{split = 1} disables
+#' created each time a branching occurs. Setting \code{split = 1} disables
 #' branching altogether, producing a single winding path per tree rather than
 #' a branching structure.
 #'

@@ -30,14 +30,14 @@
 #' the plain style, except that the segments do not vary in colour and are
 #' rendered using \code{geom_bezier()} instead of \code{geom_bezier2()}. Unlike
 #' the plain style, stylised "leaves" are drawn by constructing a Voronoi
-#' tesselation of the terminal nodes in the tree. Note that computing the
-#' tesselation is computationally expensive and this will likely produce
+#' tessellation of the terminal nodes in the tree. Note that computing the
+#' tessellation is computationally expensive and this will likely produce
 #' errors if there are too many nodes (typically when the \code{time} parameter
 #' to \code{flametree_grow()} is large). The interpretation of the
 #' \code{palette} argument is slightly different: the first element of the
 #' palette is used to set the colour of the trees, and the rest of the palette
 #' colours are used to create the gradient palette used to colour the tiles
-#' depicted in the Voronoi tesselation.
+#' depicted in the Voronoi tessellation.
 #'
 #' The \code{style = "nativeflora"} style creates a plot in which tree branches
 #' are rendered as thin segments, with a proportion of those segments removed,
@@ -49,7 +49,7 @@
 #' \code{palette} colours are used to define an n-colour gradient.
 #'
 #' The "wisp" style is similar to nativeflora, but no segments are removed, and
-#' the wdith of the branches is mapped to \code{seg_wid}. It only uses the first
+#' the width of the branches is mapped to \code{seg_wid}. It only uses the first
 #' two elements of \code{palette}: the first element specifies the colour of the
 #' branches, and the second element specifies the colour of the leaf dots.
 #'
