@@ -13,6 +13,24 @@
   and
   [`flametree_grow()`](https://flametree.djnavarro.net/reference/flametree_grow.md)’s
   documentation).
+- Further documentation clarity pass: fixes a copy-paste error in the
+  `@param y` description for the `sparks` functions (previously said
+  “horizontal” for both `x` and `y`); removes a stray backtick in
+  [`flametree_grow()`](https://flametree.djnavarro.net/reference/flametree_grow.md)’s
+  `@return` docs; documents that `flametree_plot(style = "themegray")`
+  also accepts the British spelling `"themegrey"`; updates a stale
+  comment in `checks.R` that referred to `prune` as removed, when it has
+  since been reintroduced; and, in the vignettes, mentions the `prune`
+  spark argument (previously omitted) and fixes a couple more typos
+  (“wheras”, a missing article, and another instance of “tesselation”)
+  that weren’t caught by the spell check because vignettes are currently
+  excluded from it.
+- Rewords the `Description` field in `DESCRIPTION`: the growth algorithm
+  is a stochastic branching process, not a formal L-system (which
+  implies a deterministic rewriting grammar), so the earlier description
+  was technically misleading. Also fixes a grammatical mismatch in the
+  same field (“generating the data structures and visualise them” →
+  “…and visualising them”).
 - `ft__check_colour()` now validates that the `background` and `palette`
   arguments to
   [`flametree_plot()`](https://flametree.djnavarro.net/reference/flametree_plot.md)

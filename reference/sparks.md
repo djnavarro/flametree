@@ -22,7 +22,7 @@ spark_nothing()
 
 - y:
 
-  Weight given to the horizontal co-ordinate
+  Weight given to the vertical co-ordinate
 
 - tree:
 
@@ -82,8 +82,8 @@ spark_linear(x = 3,  y = 2)
 #>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
 #>         id_time) + constant
 #> }
-#> <bytecode: 0x5592ff1c0310>
-#> <environment: 0x5593019e26d8>
+#> <bytecode: 0x55c8dacbd3f0>
+#> <environment: 0x55c8dd14d2a8>
 
 # returns a function of time that decays
 # exponentially to an asymptote
@@ -93,8 +93,8 @@ spark_decay(time = .1, constant = .1)
 #>     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * 
 #>         id_tree) + (time * id_time))^2) + constant
 #> }
-#> <bytecode: 0x5592ff1e2ee0>
-#> <environment: 0x5593018d6f30>
+#> <bytecode: 0x55c8dacdbf60>
+#> <environment: 0x55c8dd979530>
 
 # returns a numeric vector containing
 # copies of the same uniform random number
@@ -107,8 +107,8 @@ spark_random(multiplier = 5)
 #>         constant
 #>     return(rep(u, n))
 #> }
-#> <bytecode: 0x5592ff1a26f0>
-#> <environment: 0x559301910d10>
+#> <bytecode: 0x55c8dac99c40>
+#> <environment: 0x55c8dd1d3b98>
 
 # returns a function that always produces
 # a vector of zeros
@@ -118,6 +118,6 @@ spark_nothing()
 #>     n <- length(coord_x)
 #>     return(rep(0, n))
 #> }
-#> <bytecode: 0x5592ff1c1bc8>
-#> <environment: 0x5593018f7c60>
+#> <bytecode: 0x55c8dacbadd0>
+#> <environment: 0x55c8dd74ac60>
 ```

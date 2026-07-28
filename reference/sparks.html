@@ -61,7 +61,7 @@
 
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Weight given to the horizontal co-ordinate</p></dd>
+<dd><p>Weight given to the vertical co-ordinate</p></dd>
 
 
 <dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
@@ -122,8 +122,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         id_time) + constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5592ff1c0310&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5593019e26d8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c8dacbd3f0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c8dd14d2a8&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a function of time that decays</span></span></span>
 <span class="r-in"><span><span class="co"># exponentially to an asymptote</span></span></span>
@@ -133,8 +133,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     multiplier * exp(-abs((x * coord_x) + (y * coord_y) + (tree * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         id_tree) + (time * id_time))^2) + constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5592ff1e2ee0&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5593018d6f30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c8dacdbf60&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c8dd979530&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a numeric vector containing</span></span></span>
 <span class="r-in"><span><span class="co"># copies of the same uniform random number</span></span></span>
@@ -147,8 +147,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         constant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(rep(u, n))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5592ff1a26f0&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x559301910d10&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c8dac99c40&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c8dd1d3b98&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns a function that always produces</span></span></span>
 <span class="r-in"><span><span class="co"># a vector of zeros</span></span></span>
@@ -158,8 +158,8 @@ produces a function that always returns zero regardless of input.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- length(coord_x)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(rep(0, n))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5592ff1c1bc8&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5593018f7c60&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c8dacbadd0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c8dd74ac60&gt;</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

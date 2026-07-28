@@ -7,17 +7,17 @@ library(flametree)
 
 Some arguments to
 [`flametree_grow()`](https://flametree.djnavarro.net/reference/flametree_grow.md)
-take numeric input, but `seg_col`, `seg_wid`, `shift_x`, and `shift_y`
-all take functions as their input, and are used to control how the
-colours (`seg_col`) and width (`seg_wid`) of the segments are created,
-as well as the horizontal (`shift_x`) and vertical (`shift_y`)
-displacement of the trees are generated. Functions passed to these
-arguments take four inputs: `coord_x`, `coord_y`, `id_tree`, and
-`id_time` as input. Any function that takes these variables as input and
-produces a numeric vector of the same length as the input can be used
-for this purpose. However, as a convenience, four “spark” functions are
-provided that can be used to create functions that are suitable for this
-purpose:
+take numeric input, but `seg_col`, `seg_wid`, `shift_x`, `shift_y`, and
+`prune` all take functions as their input, and are used to control how
+the colours (`seg_col`) and width (`seg_wid`) of the segments are
+created, the horizontal (`shift_x`) and vertical (`shift_y`)
+displacement of the trees, and the probability that a given shoot is
+pruned (`prune`). Functions passed to these arguments take four inputs:
+`coord_x`, `coord_y`, `id_tree`, and `id_time` as input. Any function
+that takes these variables as input and produces a numeric vector of the
+same length as the input can be used for this purpose. However, as a
+convenience, four “spark” functions are provided that can be used to
+create functions that are suitable for this purpose:
 [`spark_linear()`](https://flametree.djnavarro.net/reference/sparks.md),
 [`spark_decay()`](https://flametree.djnavarro.net/reference/sparks.md),
 [`spark_random()`](https://flametree.djnavarro.net/reference/sparks.md),
@@ -35,8 +35,8 @@ spark_linear(x = 2, y = 3)
 #>     (x * coord_x) + (y * coord_y) + (tree * id_tree) + (time * 
 #>         id_time) + constant
 #> }
-#> <bytecode: 0x55f8004db778>
-#> <environment: 0x55f8004dc1c0>
+#> <bytecode: 0x56457bf6f3e8>
+#> <environment: 0x56457bf6c000>
 ```
 
 We could use this function to control how the colours in the tree
@@ -75,8 +75,8 @@ The previous examples all use
 [`spark_linear()`](https://flametree.djnavarro.net/reference/sparks.md),
 but flametree provides three other spark function generators. The
 [`spark_nothing()`](https://flametree.djnavarro.net/reference/sparks.md)
-generator produces spark function that always returns zero, which is
-occasionally useful, wheras the
+generator produces a spark function that always returns zero, which is
+occasionally useful, whereas the
 [`spark_random()`](https://flametree.djnavarro.net/reference/sparks.md)
 function injects uniform random noise. This can be useful with the
 “native flora” plot style:

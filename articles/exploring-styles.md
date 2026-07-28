@@ -45,9 +45,10 @@ flametree_grow(time = 14) %>%
 
 Setting `style = "voronoi"` creates a plot where the tree bodies are
 uniform in colour, and coloured “leaves” are drawn at the top of the
-trees using a Voronoi tesselation of the locations of the terminal
-nodes. Note that computing the tesselation is computationally expensive,
-and this will likely produce errors if there are too many nodes.
+trees using a Voronoi tessellation of the locations of the terminal
+nodes. Note that computing the tessellation is computationally
+expensive, and this will likely produce errors if there are too many
+nodes.
 
 ``` r
 

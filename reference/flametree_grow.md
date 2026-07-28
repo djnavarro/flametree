@@ -68,11 +68,11 @@ flametree_grow(
 
 ## Value
 
-The output of `flametree_grow()`\` is a tibble with the following
-columns: `coord_x`, `coord_y`, `id_tree`, `id_time`, `id_path`,
-`id_leaf`, `id_pathtree`, `id_step`, `seg_deg`, `seg_len`, `seg_col`,
-and `seg_wid`. Each row in the tibble specifies a single point: every
-curved segment is defined by three such rows.
+The output of `flametree_grow()` is a tibble with the following columns:
+`coord_x`, `coord_y`, `id_tree`, `id_time`, `id_path`, `id_leaf`,
+`id_pathtree`, `id_step`, `seg_deg`, `seg_len`, `seg_col`, and
+`seg_wid`. Each row in the tibble specifies a single point: every curved
+segment is defined by three such rows.
 
 The two "coord" columns are numeric variables that specify the location
 of the point itself. The "id" columns are used as indicators of various
